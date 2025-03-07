@@ -1,44 +1,50 @@
-from pipeline import run_pipline
-import pickle
+from pipeline import run_pipline, format_history
 import os
 
 
-def load_history(file_path="history.pkl"):
-    """Load the conversation history from a pickle file."""
+def load_history(file_path="history.txt"):
+    """Load the conversation history from a text file."""
     if os.path.exists(file_path):
-        with open(file_path, "rb") as f:
-            return pickle.load(f)
+        with open(file_path, "r", encoding="utf-8") as f:
+            return f.readlines()  # Read lines as a list
     return []
 
-def save_history(history, file_path="history.pkl"):
-    """Save the conversation history to a pickle file."""
-    with open(file_path, "wb") as f:
-        pickle.dump(history, f)
+def save_history(history, file_path="history.txt"):
+    """Save the conversation history to a text file."""
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.writelines(format_history(history))  # Write list of strings to file
+
 
 
 def main():
-    history_file = 'history.pkl'
+    history_file = 'history.txt'
     saved_history = load_history(history_file)
     
-    current_history = run_pipline("The deterministic \"select\" algorithm, which we studied in class, works as follows:\
-a. The array is divided into groups of size 5\
-b. Sort each group\
-c. Choose a pivot as the median of the medians (recursively)\
-d. Perform \"partition\" with the chosen pivot\
-e. Recursively apply the algorithm on the relevant part.\
-Assume that instead of groups of size 5, we take groups of size 3. \
-In this question, we will deal with the running time of the new algorithm with groups of size 3.\
-What is the cost of step b? \
-Cost:\
-Explanation:")
+    current_history = run_pipline("""
+\\begin{itemize}
+    \\item What is the data structure with the worst-case search time?
+    \\item A. A hash table with collision resolution by linked lists.
+    \\item B. Perfect Hash
+    \\item C. A max heap implemented by an array.
+    \\item D. answers A and B
+    \\item E. answers A and C
+    \\item F. answers A and B and C
+\\end{itemize}
+""")
+
 
     # Print the conversation history
-    print("\n--- Conversation History ---")
-    print("\n".join(current_history))
+    #print("\n--- Conversation History ---")
+    #print("\n".join(current_history))
 
     saved_history.append(current_history)
     # Save the updated conversation history
     save_history(current_history, history_file)
+
+def count_repetitions():
+    history_file = 'history.txt'
+    saved_history = load_history(history_file)
+
 
 if __name__ == '__main__':
     main()
