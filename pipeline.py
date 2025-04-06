@@ -4,10 +4,13 @@ from langchain.chat_models import init_chat_model
 import os
 from typing import List, Tuple
 
-os.environ["OPENAI_API_KEY"] = "your-api-key-here"
+os.environ["OPENAI_API_KEY"] = # TODO enter your key
 # Configure your language model (ensure you have your API key set up)
 llm_student = init_chat_model("gpt-4o-mini", model_provider="openai", temperature = 0.3)
-llm_teacher = init_chat_model("gpt-4o-mini", model_provider="openai", temperature = 0.7)
+# llm_teacher = init_chat_model("gpt-4o-mini", model_provider="openai", temperature = 0.5)
+
+# llm_student = init_chat_model("o3-mini", model_provider="openai")
+llm_teacher = init_chat_model("o3-mini", model_provider="openai")
 
 # Define prompt templates for each side
 student_prompt_template = PromptTemplate(
@@ -84,45 +87,20 @@ Instructions:
     - You may rephrase the question the way that will help you the best to understand the question and to guide the student.
 3. Guiding the Process: Once you outline the steps, guide them by following this pipeline:
     a. Ask the student to solve the next step and only the next step towards the final answer.
-    b. Read the students response, and give feedback: asking clarifying or guiding questions about this specific step.
-    c. If needed, provide correction, hints and helpful thoughts and ask the student to revise his answer.
-    d. Remember you are teacher, you don't solve the steps. You are only there to guide the student.
+    b. Read the students response, Check each answer/calculation/conclution of the student. Don't assume the student is correct! 
+    c. Give feedback: asking clarifying or guiding questions about this specific step. 
+    d. If needed, provide correction, hints and helpful thoughts and ask the student to revise his answer.
+    e. Remember you are teacher, you don't solve the steps. You are only there to guide the student.
 4. Iterative Interaction: Continue the conversation by working through each step together, encouraging the student to reflect on their reasoning and to revise their approach if necessary.
 5. Summarization: After the process has been thoroughly discussed and each step has been addressed, conclude by summarizing the main points of the conversation, highlighting the correct approach and the final answer.
-6. Tone & Style: Maintain a warm, friendly, and supportive tone throughout the interaction.
-7. When you are ready and have a final answer, mention the final answer in the end of your output and put the $ after it.
+6. When the student reaches the final answer, mention it and add the $ in the end without any punctuation marks. Finish the conversation immediatly without offering other help.
+
 
 This is the messaging history:
 {history}
 """
 )
-
-
-teacher_prompt_template_2 = PromptTemplate(
-    input_variables=["question", "history"],
-    template="""
-Role: You are a teacher.
-
-Instructions:
-
-1. Role Identification: Remember, you are playing the role of an encouraging and helpful teacher.
-2. Initial Engagement: When you receive a new question, do not ask for the final answer immediately. Instead, ask the student to outline the steps needed to solve the problem.
-3. Guiding the Process: Once the student outlines the steps, guide them step-by-step by:
-    -Asking clarifying or guiding questions about each step.
-    -If identified incorrect answer, provide corrections for this specific step, and ask the student to reason the answer before moving to the next step.
-    - Providing hints and helpful thoughts to ensure they are on the right track.
-4. Iterative Interaction: Continue the conversation by working through each step together, encouraging the student to reflect on their reasoning and to revise their approach if necessary.
-5. Summarization: After the process has been thoroughly discussed and each step has been addressed, conclude by summarizing the main points of the conversation, highlighting the correct approach and the final answer.
-6. Tone & Style: Maintain a warm, friendly, and supportive tone throughout the interaction.
-7. When you are ready and have a final answer add the $ in the end.
-
-this is the question:
-{question}
-this is the messaging history:
-{history}
-"""
-)
-
+# 6. Tone & Style: Maintain a warm, friendly, and supportive tone throughout the interaction.
 def format_history(history: List[Tuple[str, str]]) -> str:
     """
     Formats the conversation history as a string.
@@ -153,7 +131,7 @@ def run_pipline(input_question: str) -> List[Tuple[str,str]]:
     history.append(("Teacher",f"{response_a.content.strip()}"))
 
     cnt = 0
-    while response_a.content[-1] != "$" and cnt < 15: # TODO fix this to something smarter
+    while end_session(response_a.content) == False and cnt < 15: # TODO fix this to something smarter
         cnt += 1
         # student chain takes the latest response from the teacher and the updated history
         student_prompt = student_prompt_template.invoke({"history": format_history(history)})
@@ -168,3 +146,15 @@ def run_pipline(input_question: str) -> List[Tuple[str,str]]:
         history.append(("Teacher",f"{response_a.content.strip()}"))
     
     return history
+
+def run_pipline_without_history(input_question: str) -> List[Tuple[str, str]]:
+    cnt = 0
+    # student chain takes the latest response from the teacher and the updated history
+    response_b = llm_student.invoke(input_question)
+    print(f"****/n \033[94m Student: \033[0m{response_b.content.strip()}")
+    return response_b
+
+def end_session(response: str) -> bool:
+    if response.endswith("$") or response.endswith("$."):
+        return True
+    return False

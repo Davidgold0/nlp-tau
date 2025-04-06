@@ -1,4 +1,4 @@
-from pipeline import run_pipline, format_history
+from pipeline import run_pipline, format_history, run_pipline_without_history
 import os
 
 
@@ -20,7 +20,7 @@ def main():
     history_file = 'history.txt'
     saved_history = load_history(history_file)
     
-    current_history = run_pipline("""
+    exam_question = """
 \\begin{itemize}
     \\item What is the data structure with the worst-case search time?
     \\item A. A hash table with collision resolution by linked lists.
@@ -30,8 +30,22 @@ def main():
     \\item E. answers A and C
     \\item F. answers A and B and C
 \\end{itemize}
-""")
+"""
+    chess_question = """
+You are a very strong chess engine.
 
+The chess board is in the following state (FEN):
+ '8/5p2/P4p1p/1p1k4/8/7P/6PK/8 w - - 1 45'  
+
+What is the best move for white? Answer in the format of UCI for a single best move.
+
+"""
+
+    math_question = r"""
+"Because of redistricting, Liberty Middle School\'s enrollment increased to 598 students.
+This is an increase of $4\%$ over last year\'s enrollment. What was last year\'s enrollment?"
+"""
+    current_history = run_pipline(chess_question)
 
     # Print the conversation history
     #print("\n--- Conversation History ---")
@@ -40,6 +54,13 @@ def main():
     saved_history.append(current_history)
     # Save the updated conversation history
     save_history(current_history, history_file)
+
+def main2():
+    math_question = r"""
+"Because of redistricting, Liberty Middle School\'s enrollment increased to 598 students.
+This is an increase of $4\%$ over last year\'s enrollment. What was last year\'s enrollment?"
+"""
+    response = run_pipline_without_history(math_question)
 
 def count_repetitions():
     history_file = 'history.txt'
