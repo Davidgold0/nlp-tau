@@ -1,0 +1,21 @@
+Question: Natasha has more than $\$1$ but less than $\$10$ worth of dimes. When she puts her dimes in stacks of 3, she has 1 left over. When she puts them in stacks of 4, she has 1 left over. When she puts them in stacks of 5, she also has 1 left over. How many dimes does Natasha have?
+3o-mini: Let d be the number of dimes. Since each dime is worth 10 cents, Natasha has between 11 dimes (more than $1) and 99 dimes (less than $10).
+
+The problem states:
+ • d leaves a remainder of 1 when divided by 3 (d ≡ 1 mod 3)
+ • d leaves a remainder of 1 when divided by 4 (d ≡ 1 mod 4)
+ • d leaves a remainder of 1 when divided by 5 (d ≡ 1 mod 5)
+
+This implies that d – 1 is divisible by 3, 4, and 5. In other words, d – 1 is a multiple of the least common multiple (LCM) of 3, 4, and 5.
+
+The LCM of 3, 4, and 5 is:
+ LCM(3, 4) = 12, and then LCM(12, 5) = 60
+
+Therefore, we have:
+ d – 1 = 60k for some positive integer k, or equivalently, d = 60k + 1
+
+Since 10*dime is less than $10, we need d < 100 and d > 10:
+ • For k = 1: d = 60(1) + 1 = 61, which is between 11 and 99.
+ • For k = 0 or k ≥ 2, the values are either too small or too large.
+
+Thus, Natasha has 61 dimes.

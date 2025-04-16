@@ -1,0 +1,34 @@
+Question: Simplify_x000D_
+\[\cos^2 x + \cos^2 \left( \frac{\pi}{3} + x \right) + \cos^2 \left( \frac{\pi}{3} -  x \right).\]
+3o-mini: We start with the expression
+
+  cos² x + cos² (π/3 + x) + cos² (π/3 − x).
+
+A useful approach is to use the double-angle identity for cosine squared:
+  cos² θ = (1 + cos(2θ)) / 2.
+
+Applying this to each term gives:
+
+  cos² x = (1 + cos 2x) / 2,
+  cos² (π/3 + x) = (1 + cos(2(π/3 + x))) / 2 = (1 + cos(2π/3 + 2x)) / 2,
+  cos² (π/3 − x) = (1 + cos(2(π/3 − x))) / 2 = (1 + cos(2π/3 − 2x)) / 2.
+
+Now, add the three results:
+  [1 + cos 2x + 1 + cos(2π/3 + 2x) + 1 + cos(2π/3 − 2x)] / 2
+  = (3 + cos 2x + cos(2π/3 + 2x) + cos(2π/3 − 2x)) / 2.
+
+Next, combine cos(2π/3 + 2x) and cos(2π/3 − 2x). Using the cosine sum identity:
+  cos A + cos B = 2 cos[(A+B)/2] cos[(A−B)/2],
+set A = 2π/3 + 2x and B = 2π/3 − 2x. Then,
+  (A+B)/2 = (4π/3) / 2 = 2π/3,
+  (A−B)/2 = (4x) / 2 = 2x.
+Thus,
+  cos(2π/3 + 2x) + cos(2π/3 − 2x) = 2 cos(2π/3) cos 2x.
+
+Since cos(2π/3) = −1/2, the expression simplifies to:
+  2 (−1/2) cos 2x = −cos 2x.
+
+Substitute back into the sum:
+  (3 + cos 2x − cos 2x) / 2 = 3/2.
+
+Thus, the simplified result is 3/2.

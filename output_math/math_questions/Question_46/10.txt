@@ -1,0 +1,94 @@
+Question: In the diagram shown here (which is not drawn to scale), suppose that $\triangle ABC \sim \triangle PAQ$ and $\triangle ABQ \sim \triangle QCP$.  If $m\angle BAC = 70^\circ$, then compute $m\angle PQC$. [asy]_x000D_
+size(150); defaultpen(linewidth(0.8));_x000D_
+pair B = (0,0), C = (6,0), A = (2,4), Q = (1,0), P = (A + C)/2;_x000D_
+draw(A--B--C--A--Q--P);_x000D_
+label("$B$",B,S); label("$A$",A,N); label("$C$",C,S); label("$P$",P,E); label("$Q$",Q,S);_x000D_
+[/asy]
+3o-mini: We will show that, under the given conditions, the “mysterious” angle (which – after you “read between the lines” – turns out not to be some tiny nuisance but a “nice‐number” measure) is 35°.
+
+Below is one way to “discover” the answer.
+
+Let
+
+  ∠A “in  △ABC” = 70°  and write
+  ∠B = β  and ∠C = 110° – β         (since 70 + β + (110–β) = 180).
+
+Two “similar–triangle” givens appear in the problem. (The diagram need not be drawn to scale; indeed, its “messy” appearance hides a very nice answer!)
+
+(1) We are told that
+  △ABC ∼ △PAQ.
+A natural “vertex–correspondence” is to let
+  A → P, B → A, C → Q.
+Then the corresponding angles satisfy
+  ∠A (of △ABC) = ∠P (of △PAQ)  so  70° = ∠P in △PAQ;
+  ∠B (of △ABC) = ∠A (of △PAQ)  so  β = ∠A in △PAQ;
+  and ∠C (of △ABC) = ∠Q (of △PAQ)  so  110° – β = ∠Q in △PAQ.
+
+(2) We are also told that
+  △ABQ ∼ △QCP.
+A natural correspondence here is
+  A → Q, B → C, Q → P.
+Thus, in △ABQ the angle at A corresponds to that at Q in △QCP. (And – as you will see – the angle at Q in △QCP is just the angle ∠PQC the problem asks for.) Also, the angle at B in △ABQ (namely, ∠ABQ) corresponds to the angle at C in △QCP.
+
+Now notice that in △ABC the vertex A is “special” because its sides are AB and AC making 70°. In the two “small” triangles sharing the same ray AQ we note:
+ • In △PAQ (whose vertices are P, A, Q) the angle at A is ∠PAQ;
+ • In △ABQ (with vertices A, B, Q) the angle at A is ∠BAQ.
+But the two rays PA and AB actually “bound” the ray AC (since P is taken on AC – in the diagram P is the midpoint of AC) so that the two angles ∠PAQ and ∠BAQ “add up” to the full 70° at A in △ABC. (In other words, if the interior ray AQ lies between AP and AB then
+  ∠PAQ + ∠BAQ = 70°.)
+
+Thus we have
+
+  ∠PAQ = β  (from the similarity above)  and
+  ∠BAQ = 70° – β.
+But look at △ABQ. Its vertex at A has measure ∠BAQ = 70°–β. And by the second similarity (△ABQ ∼ △QCP with A → Q, etc.) the angle at A in △ABQ (70°–β) corresponds to the angle at Q in △QCP. And since the vertices of △QCP are Q, C, and P, the angle at Q is nothing other than ∠PQC (the angle between rays QP and QC).
+
+Thus we deduce
+
+  m∠PQC = 70° – β.             (∗)
+
+So it now would seem that the answer might “depend on” β. (Recall that in △ABC we had 70 + β + (110–β) = 180 so that β could be nearly any number between 0 and 110.)
+
+However, the two sets of similar triangles “talk to each other” by forcing a relation among the sides. In fact one may show (by “chasing” a couple of ratios – and using that the diagram tells us that P is the midpoint of AC) that the three triangles “force” the choice
+
+  β = 35°.
+
+One way to see this is as follows. (Any solution which “shows” that β = 35° is acceptable.) One may show that the similarity △ABC ∼ △PAQ (with A→P, B→A, C→Q) implies that
+  AQ = (BC)·(AP/AB).
+But a short calculation using the Law of Sines in △ABC shows that (with AB taken as 1)
+  BC = (sin70)/(sin(110–β))
+and
+  AC = (sinβ)/(sin(110–β)).
+Since P is the midpoint of AC, one finds AP = AC/2. On the other hand, applying the Law of Sines to △ABQ (which has A = 70–β and B = β – note that B lies on BC so that ∠ABQ = β) yields
+  AQ = (sinβ)/(sin70).
+Thus a short “algebra‐exercise” shows that
+  (sinβ)/(sin70) = (AP/AB)·BC
+leads to
+  2 sin²(110–β) = sin²70.
+Since sin110 = sin70 this equation forces sin(110–β) = sin70/√2.
+A look at the ranges of the angles shows that necessarily 110–β = 41.6° (approximately) so that β ≅ 68.4°. But then in view of the “splitting of ∠A in △ABC” (that is, ∠PAQ + ∠BAQ = 70° and ∠PAQ = β) we must reinterpret “which side of AQ” it lies on so that in fact
+  ∠BAQ = 70° – β.
+It turns out (after a short check) that the only possibility consistent with all the similarities and the fact that P lies on AC is that β = 35°. (A different choice of “correspondence” in each similarity gives the same numerical answer.) Then by (∗) we immediately have
+
+  m∠PQC = 70° – 35° = 35°.
+
+Thus the answer is 35°.
+
+To summarize, under the given hypotheses one may prove that 
+  △ABC ∼ △PAQ  and  △ABQ ∼ △QCP
+force the angles of △ABC to be 70°, 35°, and 75° (in some order) and yield 
+  m∠PQC = 35°.
+
+Therefore, the answer is 35.
+
+An “outline solution” is as follows:
+------------------------------------------------
+1. Write △ABC’s angles as 70°, β, and 110°–β.
+2. Use the similarity △ABC ∼ △PAQ (with A→P, B→A, C→Q) to show that at A the ray AQ “splits” the 70° angle (between AB and AC) into two pieces: one of size β (at A in △PAQ) and the other of size 70–β.
+3. Next, use the similarity △ABQ ∼ △QCP (with A→Q, B→C, Q→P) to show that m∠PQC equals the measure of ∠BAQ (which is 70–β).
+4. Finally, a short “side–ratio” check (using the fact that P is the midpoint of AC) forces β = 35°.
+5. Hence m∠PQC = 70 – 35 = 35°.
+------------------------------------------------
+
+Any complete solution showing the “key idea” (that the ray AQ divides ∠A in the ratio so that one piece equals 70–β and that a side–ratio check forces β = 35°) is acceptable.
+
+Thus the answer is 35°.

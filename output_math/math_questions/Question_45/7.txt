@@ -1,0 +1,39 @@
+Question: If $n$ is the smallest positive integer for which there exist positive real numbers $a$ and $b$ such that_x000D_
+\[(a + bi)^n = (a - bi)^n,\]compute $\frac{b}{a}.$
+3o-mini: Let a + bi be written in polar form as r·e^(iθ) where r > 0 and 0 < θ < π/2 (since a and b are positive). Then its conjugate is a - bi = r·e^(–iθ). Raise both to the nth power:
+
+  (a + bi)ⁿ = rⁿ·e^(i nθ)
+  (a – bi)ⁿ = rⁿ·e^(–i nθ)
+
+The given equation (a + bi)ⁿ = (a – bi)ⁿ becomes
+
+  rⁿ·e^(i nθ) = rⁿ·e^(–i nθ).
+
+Since rⁿ ≠ 0, we have
+
+  e^(i nθ) = e^(–i nθ).
+
+Multiply both sides by e^(i nθ) to obtain
+
+  e^(2i nθ) = 1.
+
+This equation means that 2nθ must be an integer multiple of 2π:
+  2nθ = 2πk  for some integer k,
+or
+  θ = (kπ)/n.
+
+Because a and b are both positive, the angle θ must lie strictly between 0 and π/2; that is,
+  0 < (kπ)/n < π/2   or  k/n < 1/2.
+
+We are looking for the smallest positive integer n for which some integer k exists with k/n < 1/2 (and k > 0).
+
+• For n = 1: With k = 1, θ = π, which is too large.
+• For n = 2: With k = 1, θ = π/2, but that corresponds to a = r·cos(θ) = 0, which is not allowed.
+• For n = 3: With k = 1, θ = π/3, which satisfies 0 < π/3 < π/2.
+
+Thus, the smallest such n is 3.
+
+Now, since tan θ = b/a, we compute
+  b/a = tan(π/3) = √3.
+
+Therefore, the answer is √3.

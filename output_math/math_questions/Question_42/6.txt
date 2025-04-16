@@ -1,0 +1,79 @@
+Question: In a right triangle, one of the acute angles $\alpha$ satisfies_x000D_
+\[\tan \frac{\alpha}{2} = \frac{1}{\sqrt[3]{2}}.\]Let $\theta$ be the angle between the median and the angle bisector drawn from this acute angle.  Find $\tan \theta.$
+3o-mini: We begin with a right triangle in which one of the acute angles (call it ∠A = α) satisfies
+
+  tan(α/2) = 1/(∛2).
+
+From A we draw two segments:
+ • The median to the side opposite A.
+ • The internal angle bisector of angle A.
+
+Our goal is to find tan θ, where θ is the angle between these two rays (the median and the bisector) emanating from A.
+
+Step 1. Choose a Convenient Coordinate Setup
+
+A useful way to “fix” the triangle is to place it in the coordinate plane. One convenient choice is to let the right angle be at vertex B and place the triangle’s vertices as follows:
+ • Let A = (0, 0).
+ • Put B = (1, 0).
+ • Since angle B is 90° the side BC must be vertical through B; so let C = (1, t) for some positive t.
+With these coordinates, the side AB lies along the positive x‑axis, and the side AC goes from (0, 0) to (1, t).
+
+The measure of angle A (at the origin) is the angle between the vectors to B and to C. Since the ray AB from (0, 0) to (1, 0) is horizontal and the ray AC from (0, 0) to (1, t) makes an angle whose tangent is
+  tan α = t,
+we have
+  α = arctan(t).
+Thus the constant t is given by t = tan α.
+
+Step 2. Find the Directions of the Median and the Angle Bisector
+
+(a) The median from A goes to the midpoint of side BC.
+ The coordinates of B and C are B = (1, 0) and C = (1, t). Thus the midpoint M of BC is
+  M = ((1+1)/2, (0+t)/2) = (1, t/2).
+So the median is the ray from A = (0, 0) to M = (1, t/2). Its direction vector is (1, t/2), and its slope is
+  tan(ϕ) = (t/2)/1 = t/2.
+Thus the angle ϕ that the median makes with the x‑axis is
+  ϕ = arctan(t/2).
+
+(b) The angle bisector from A splits ∠A (which measures α) in half. Hence its direction makes an angle of α/2 with the positive x‑axis,
+so its direction vector is
+  (cos(α/2), sin(α/2)).
+
+Step 3. Compute the Angle Between the Two Rays
+
+Let θ be the angle (at A) between the median and the angle bisector. That is, if one ray has angle ϕ = arctan(t/2) relative to the x‑axis and the bisector makes an angle of α/2, then
+  θ = |arctan(t/2) − α/2|.
+We want tan θ. Using the tangent subtraction formula we have
+  tan(arctan(t/2) − α/2) = [ (t/2) − tan(α/2) ] / [1 + (t/2)·tan(α/2) ].
+
+Step 4. Express Everything in Terms of tan(α/2)
+
+Let x = tan(α/2). We are given that
+  x = 1/(∛2).
+
+Recall the double-angle formula for tangent:
+  tan α = (2 tan(α/2)) / (1 − tan²(α/2)) = (2x) / (1 − x²).
+Thus, t = tan α = (2x)/(1 − x²).
+
+Substitute t into our expression for tan θ:
+  tan θ = [ ( (t/2) − x ) ] / [ 1 + (t/2)·x ]
+       = [ ( ( (2x)/(2(1 − x²) ) − x ) ] / [ 1 + ( (2x)/(2(1 − x²) )·x ]
+       = [ ( x/(1 − x²) − x ) ] / [ 1 + (x²/(1 − x²)) ].
+
+Simplify the numerator:
+  x/(1 − x²) − x = [ x − x(1 − x²) ]/(1 − x²)
+       = [ x − x + x³ ]/(1 − x²) = x³/(1 − x²).
+
+Simplify the denominator:
+  1 + (x²/(1 − x²)) = (1 − x² + x²)/(1 − x²) = 1/(1 − x²).
+
+Thus,
+  tan θ = [ x³/(1 − x²) ] ÷ [1/(1 − x²)] = x³.
+
+Since x = 1/(∛2), then
+  tan θ = (1/(∛2))³ = 1/2.
+
+Step 5. Conclusion
+
+The tangent of the angle between the median and the angle bisector drawn from the acute angle is 1/2.
+
+Thus, the answer is 1/2.

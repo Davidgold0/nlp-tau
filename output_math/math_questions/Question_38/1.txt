@@ -1,0 +1,164 @@
+Question: Wanda is trying to locate the Fermat point $P$ of $\triangle ABC$, where $A$ is at the origin, $B$ is at $(8,-1)$, and $C$ is at $(5,4)$ (the Fermat point is the point such that the sum of its distances from the vertices of a triangle is minimized). She guesses that the point is at $P = (4,2)$, and computes the sum of the distances from $P$ to the vertices of $\triangle ABC$. If she obtains $m + n\sqrt{5}$, where $m$ and $n$ are integers, what is $m + n$?_x000D_
+_x000D_
+[asy]_x000D_
+string sp(pair P1, string P2){return "$" + P2 + "\,(" + string(P1.x) + "," + string(P1.y) + ")$";}_x000D_
+size(150); defaultpen(fontsize(10)); draw((-3,0)--(10,0),Arrows(4)); draw((0,-3)--(0,8),Arrows(4)); pair A=(0,0),B=(8,-1),C=(5,4),P=(4,2); draw(A--B--C--cycle, linewidth(0.7)); draw(A--P, dashed); draw(B--P, dashed); draw(C--P, dashed); label(sp(A,"A"),A,NW); label(sp(B,"B"),B,S); label(sp(C,"C"),C,N); label(sp(P,"P"),P,(-0.5,-2.8)); dot(A); dot(B); dot(C); dot(P);_x000D_
+[/asy]
+Teacher: Let's begin by outlining the steps to solve the problem:
+
+1. Identify the vertices of the triangle and the point P.
+2. Compute the distances from P = (4,2) to each of the vertices A = (0,0), B = (8,-1), and C = (5,4) using the distance formula.
+3. Write each distance in its simplest form.
+4. Add the distances to get an expression of the form m + n√5.
+5. Identify the integers m and n and compute m + n.
+
+Now, let's start with the first step in our calculation process: Compute the distance from P to A. Using the distance formula, what is the distance between P = (4,2) and A = (0,0)? Please show your work and just that step.
+Student: To compute the distance from point \( P = (4, 2) \) to point \( A = (0, 0) \), we can use the distance formula, which is given by:
+
+\[
+d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}
+\]
+
+Here, \( (x_1, y_1) \) are the coordinates of point \( A \) and \( (x_2, y_2) \) are the coordinates of point \( P \). Substituting the values:
+
+- \( A = (0, 0) \) means \( x_1 = 0 \) and \( y_1 = 0 \)
+- \( P = (4, 2) \) means \( x_2 = 4 \) and \( y_2 = 2 \)
+
+Now we can substitute these values into the distance formula:
+
+\[
+d = \sqrt{(4 - 0)^2 + (2 - 0)^2}
+\]
+\[
+d = \sqrt{4^2 + 2^2}
+\]
+\[
+d = \sqrt{16 + 4}
+\]
+\[
+d = \sqrt{20}
+\]
+\[
+d = \sqrt{4 \cdot 5} = 2\sqrt{5}
+\]
+
+So, the distance from \( P \) to \( A \) is \( 2\sqrt{5} \).
+Teacher: That's a great start! Your computation of the distance from P to A is correct.
+
+Now, let’s move on to the next step: compute the distance from point P = (4,2) to point B = (8,-1). Remember to use the distance formula again:
+
+  distance = √[(x₂ - x₁)² + (y₂ - y₁)²]
+
+Please show your work and just that step. What do you get for this distance?
+Student: To compute the distance from point \( P = (4, 2) \) to point \( B = (8, -1) \), we will again use the distance formula:
+
+\[
+d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}
+\]
+
+Here, \( (x_1, y_1) \) are the coordinates of point \( B \) and \( (x_2, y_2) \) are the coordinates of point \( P \). Substituting the values:
+
+- \( B = (8, -1) \) means \( x_1 = 8 \) and \( y_1 = -1 \)
+- \( P = (4, 2) \) means \( x_2 = 4 \) and \( y_2 = 2 \)
+
+Now we can substitute these values into the distance formula:
+
+\[
+d = \sqrt{(4 - 8)^2 + (2 - (-1))^2}
+\]
+\[
+d = \sqrt{(-4)^2 + (2 + 1)^2}
+\]
+\[
+d = \sqrt{16 + 3^2}
+\]
+\[
+d = \sqrt{16 + 9}
+\]
+\[
+d = \sqrt{25}
+\]
+\[
+d = 5
+\]
+
+So, the distance from \( P \) to \( B \) is \( 5 \).
+Teacher: Great work on finding the distance from P to B! Your calculation was clear and correct.
+
+Now, let's move on to the next step: compute the distance from point P = (4,2) to point C = (5,4). Can you apply the distance formula for these two points and show your work for this step?
+Student: To compute the distance from point \( P = (4, 2) \) to point \( C = (5, 4) \), we will once again use the distance formula:
+
+\[
+d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}
+\]
+
+Here, \( (x_1, y_1) \) are the coordinates of point \( C \) and \( (x_2, y_2) \) are the coordinates of point \( P \). Substituting the values:
+
+- \( C = (5, 4) \) means \( x_1 = 5 \) and \( y_1 = 4 \)
+- \( P = (4, 2) \) means \( x_2 = 4 \) and \( y_2 = 2 \)
+
+Now we can substitute these values into the distance formula:
+
+\[
+d = \sqrt{(4 - 5)^2 + (2 - 4)^2}
+\]
+\[
+d = \sqrt{(-1)^2 + (-2)^2}
+\]
+\[
+d = \sqrt{1 + 4}
+\]
+\[
+d = \sqrt{5}
+\]
+
+So, the distance from \( P \) to \( C \) is \( \sqrt{5} \).
+Teacher: Excellent work so far! You've found the three distances:
+• PA = 2√5  
+• PB = 5  
+• PC = √5  
+
+The next step is to add these distances together to form an expression of the form m + n√5. Please add these values and determine the integers m and n. What is the result, and what is m + n?
+Student: To find the total distance from point \( P \) to the vertices of triangle \( ABC \), we will add the three distances we calculated:
+
+1. Distance \( PA = 2\sqrt{5} \)
+2. Distance \( PB = 5 \)
+3. Distance \( PC = \sqrt{5} \)
+
+Now, we can add these distances together:
+
+\[
+\text{Total Distance} = PA + PB + PC = 2\sqrt{5} + 5 + \sqrt{5}
+\]
+
+To combine the terms involving \( \sqrt{5} \), we have:
+
+\[
+2\sqrt{5} + \sqrt{5} = (2 + 1)\sqrt{5} = 3\sqrt{5}
+\]
+
+Now, substituting this back into the total distance:
+
+\[
+\text{Total Distance} = 5 + 3\sqrt{5}
+\]
+
+This is in the form \( m + n\sqrt{5} \), where \( m = 5 \) and \( n = 3 \).
+
+Now, we can find \( m + n \):
+
+\[
+m + n = 5 + 3 = 8
+\]
+
+Thus, the final result is \( \boxed{8} \).
+Teacher: Great work! You've correctly computed each distance and combined them accurately.
+
+Let's briefly summarize:
+1. From P to A, you found 2√5.
+2. From P to B, you computed 5.
+3. From P to C, you got √5.
+4. Adding these gives 2√5 + 5 + √5 = 5 + 3√5. In this expression, m = 5 and n = 3, so m + n = 8.
+
+The final answer is:
+8$

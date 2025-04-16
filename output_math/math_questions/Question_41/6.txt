@@ -1,0 +1,20 @@
+Question: Nancy generates a two-digit integer by rolling a six-sided die twice. The result of her first roll is the tens digit, and the result of her second roll is the ones digit. What is the probability that the resulting integer is divisible by 8? Express your answer as a common fraction.
+3o-mini: When Nancy rolls two dice, the tens digit comes from the first roll and the ones digit comes from the second roll. Since each die has 6 faces, there are 6 × 6 = 36 possible outcomes.
+
+We need the two-digit number (formed as 10×(first roll) + (second roll)) to be divisible by 8.
+
+The multiples of 8 between 10 and 99 are: 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96. However, remember the tens digit must be one of 1, 2, 3, 4, 5, or 6, and the ones digit must be one of 1, 2, 3, 4, 5, or 6. This rules out numbers that contain 0, 7, 8, or 9.
+
+Checking the multiples:
+• 16 → Tens: 1, Ones: 6 → Valid
+• 24 → Tens: 2, Ones: 4 → Valid
+• 32 → Tens: 3, Ones: 2 → Valid
+• 40 → Ones digit is 0 → Not Valid
+• 48 → Ones digit is 8 → Not Valid
+• 56 → Tens: 5, Ones: 6 → Valid
+• 64 → Tens: 6, Ones: 4 → Valid
+• 72 → Tens digit is 7 → Not Valid
+
+Thus, there are 5 valid outcomes (16, 24, 32, 56, and 64) out of 36.
+
+The probability that the integer is divisible by 8 is therefore 5/36.

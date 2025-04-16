@@ -1,0 +1,57 @@
+Question: There exist constants $c_2,$ $c_1,$ and $c_0$ such that_x000D_
+\[x^3 + x^2 - 5 = (x - 3)^3 + c_2 (x - 3)^2 + c_1 (x - 3) + c_0.\]Find $c_2^2 + c_1^2 + c_0^2.$
+3o-mini: We begin with the equation
+
+  x³ + x² − 5 = (x − 3)³ + c₂ (x − 3)² + c₁ (x − 3) + c₀.
+
+Step 1. Expand (x − 3)³, (x − 3)², and (x − 3).
+
+  (x − 3)³ = x³ − 9x² + 27x − 27,
+  (x − 3)² = x² − 6x + 9,
+  (x − 3)   = x − 3.
+
+Step 2. Substitute these into the equation:
+
+  x³ + x² − 5 = [x³ − 9x² + 27x − 27] + c₂ (x² − 6x + 9) + c₁ (x − 3) + c₀.
+
+Step 3. Combine like terms on the right-hand side:
+
+  x³-coefficient:
+    1 (from x³ in (x − 3)³).
+
+  x²-coefficient:
+    −9 (from (x − 3)³) + c₂ (from c₂(x²))
+    = −9 + c₂.
+
+  x-coefficient:
+    27 (from (x − 3)³) − 6c₂ (from c₂(−6x)) + c₁ (from c₁ x)
+    = 27 − 6c₂ + c₁.
+
+  Constant term:
+    −27 (from (x − 3)³) + 9c₂ (from c₂ ⋅ 9) − 3c₁ (from c₁(−3)) + c₀
+    = −27 + 9c₂ − 3c₁ + c₀.
+
+Thus, the right-hand side becomes:
+
+  x³ + (−9 + c₂)x² + (27 − 6c₂ + c₁)x + (−27 + 9c₂ − 3c₁ + c₀).
+
+Step 4. Set coefficients equal to those on the left side:
+
+  x³: 1 = 1               (automatically satisfied)
+  x²: −9 + c₂ = 1           ⇒  c₂ = 10.
+  x: 27 − 6(10) + c₁ = 0    ⇒ 27 − 60 + c₁ = 0 ⇒ c₁ = 33.
+  Constant: −27 + 9(10) − 3(33) + c₀ = −5 
+    ⇒ −27 + 90 − 99 + c₀ = −5 
+    ⇒ −36 + c₀ = −5      ⇒ c₀ = 31.
+
+Step 5. Compute c₂² + c₁² + c₀²:
+
+  c₂² = 10² = 100,
+  c₁² = 33² = 1089,
+  c₀² = 31² = 961.
+
+Adding them together:
+
+  100 + 1089 + 961 = 2150.
+
+Thus, the final answer is 2150.

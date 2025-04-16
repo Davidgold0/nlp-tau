@@ -1,0 +1,164 @@
+Question: Wanda is trying to locate the Fermat point $P$ of $\triangle ABC$, where $A$ is at the origin, $B$ is at $(8,-1)$, and $C$ is at $(5,4)$ (the Fermat point is the point such that the sum of its distances from the vertices of a triangle is minimized). She guesses that the point is at $P = (4,2)$, and computes the sum of the distances from $P$ to the vertices of $\triangle ABC$. If she obtains $m + n\sqrt{5}$, where $m$ and $n$ are integers, what is $m + n$?_x000D_
+_x000D_
+[asy]_x000D_
+string sp(pair P1, string P2){return "$" + P2 + "\,(" + string(P1.x) + "," + string(P1.y) + ")$";}_x000D_
+size(150); defaultpen(fontsize(10)); draw((-3,0)--(10,0),Arrows(4)); draw((0,-3)--(0,8),Arrows(4)); pair A=(0,0),B=(8,-1),C=(5,4),P=(4,2); draw(A--B--C--cycle, linewidth(0.7)); draw(A--P, dashed); draw(B--P, dashed); draw(C--P, dashed); label(sp(A,"A"),A,NW); label(sp(B,"B"),B,S); label(sp(C,"C"),C,N); label(sp(P,"P"),P,(-0.5,-2.8)); dot(A); dot(B); dot(C); dot(P);_x000D_
+[/asy]
+Teacher: Let's start by outlining the steps needed to solve this problem:
+
+1. Use the distance formula to compute the distance from point P(4,2) to each vertex: A(0,0), B(8,–1), and C(5,4).
+2. Write each distance in its simplest radical form if necessary.
+3. Sum these three distances so that the result is expressed in the form m + n√5.
+4. Identify the integers m and n and then find m + n.
+
+For our first step, let's compute the distance from P(4,2) to A(0,0). Recall the distance formula: if you have two points (x₁, y₁) and (x₂, y₂), the distance is √[(x₂ – x₁)² + (y₂ – y₁)²].
+
+Could you work out the calculation for the distance PA using this formula?
+Student: Sure! To calculate the distance from point \( P(4,2) \) to point \( A(0,0) \), we will use the distance formula:
+
+\[
+d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}
+\]
+
+Here, \( P \) has coordinates \( (x_1, y_1) = (4, 2) \) and \( A \) has coordinates \( (x_2, y_2) = (0, 0) \).
+
+Substituting these values into the formula, we get:
+
+\[
+d_{PA} = \sqrt{(0 - 4)^2 + (0 - 2)^2}
+\]
+
+Calculating the squared differences:
+
+\[
+= \sqrt{(-4)^2 + (-2)^2} = \sqrt{16 + 4} = \sqrt{20}
+\]
+
+Now, we can simplify \( \sqrt{20} \):
+
+\[
+\sqrt{20} = \sqrt{4 \cdot 5} = 2\sqrt{5}
+\]
+
+So, the distance from \( P \) to \( A \) is \( 2\sqrt{5} \). 
+
+What should we do next?
+Teacher: Great work on finding PA = 2√5! 
+
+Now, for our next step, let's compute the distance from point P(4,2) to vertex B(8,–1). Remember the distance formula: for points (x₁, y₁) and (x₂, y₂), the distance is √[(x₂ – x₁)² + (y₂ – y₁)²].
+
+Could you work out the calculation for PB using this formula?
+Student: Sure! To calculate the distance from point \( P(4,2) \) to point \( B(8,-1) \), we will again use the distance formula:
+
+\[
+d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}
+\]
+
+For this case, \( P \) has coordinates \( (x_1, y_1) = (4, 2) \) and \( B \) has coordinates \( (x_2, y_2) = (8, -1) \).
+
+Substituting these values into the formula, we get:
+
+\[
+d_{PB} = \sqrt{(8 - 4)^2 + (-1 - 2)^2}
+\]
+
+Calculating the squared differences:
+
+\[
+= \sqrt{(4)^2 + (-3)^2} = \sqrt{16 + 9} = \sqrt{25}
+\]
+
+Now, simplifying \( \sqrt{25} \):
+
+\[
+\sqrt{25} = 5
+\]
+
+So, the distance from \( P \) to \( B \) is \( 5 \). 
+
+What should we do next?
+Teacher: Great job on finding PB = 5! Now, let's move on to the next step: computing the distance from point P(4,2) to point C(5,4).
+
+Using the distance formula, the distance PC is given by:
+
+  √[(5 - 4)² + (4 - 2)²].
+
+Could you work out the calculation for the distance PC?
+Student: Student: Sure! To calculate the distance from point \( P(4,2) \) to point \( C(5,4) \), we will use the distance formula again:
+
+\[
+d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}
+\]
+
+In this case, \( P \) has coordinates \( (x_1, y_1) = (4, 2) \) and \( C \) has coordinates \( (x_2, y_2) = (5, 4) \).
+
+Substituting these values into the formula, we get:
+
+\[
+d_{PC} = \sqrt{(5 - 4)^2 + (4 - 2)^2}
+\]
+
+Calculating the squared differences:
+
+\[
+= \sqrt{(1)^2 + (2)^2} = \sqrt{1 + 4} = \sqrt{5}
+\]
+
+So, the distance from \( P \) to \( C \) is \( \sqrt{5} \).
+
+Now that we have all three distances: 
+- \( PA = 2\sqrt{5} \)
+- \( PB = 5 \)
+- \( PC = \sqrt{5} \)
+
+What should we do next?
+Teacher: Great! Now that we have the distances:
+  PA = 2√5  
+  PB = 5  
+  PC = √5  
+
+Our next step is to add these distances together to get an expression in the form m + n√5. Could you add these three distances and then express the sum in that form? Please provide only the calculation for this step.
+Student: Sure! To find the total distance \( D \) from point \( P \) to the vertices \( A \), \( B \), and \( C \), we need to sum the distances we calculated:
+
+\[
+D = PA + PB + PC
+\]
+
+Substituting the values we found:
+
+\[
+D = 2\sqrt{5} + 5 + \sqrt{5}
+\]
+
+Now, we can combine the terms involving \( \sqrt{5} \):
+
+\[
+D = (2\sqrt{5} + \sqrt{5}) + 5 = 3\sqrt{5} + 5
+\]
+
+So, the total distance \( D \) can be expressed as:
+
+\[
+D = 5 + 3\sqrt{5}
+\]
+
+Now, we can identify \( m \) and \( n \) from the expression \( m + n\sqrt{5} \):
+- \( m = 5 \)
+- \( n = 3 \)
+
+Finally, we need to find \( m + n \):
+
+\[
+m + n = 5 + 3 = 8
+\]
+
+Would you like me to summarize everything?
+Teacher: Excellent work! To summarize:
+
+1. We calculated PA = 2√5 using the distance formula.
+2. Then, PB was found to be 5.
+3. Next, PC turned out to be √5.
+4. Adding them together, we get 2√5 + 5 + √5 = 5 + 3√5.
+5. This means m = 5 and n = 3, so m + n = 8.
+
+Final answer: 8$

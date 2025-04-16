@@ -1,0 +1,49 @@
+Question: $P$ is the midpoint of $\overline{BD}$. $AP = BP = 4$, $\overline{AP} \perp \overline{BD}$, $\overline{BD} \perp \overline{DC}$, $\overline{AB} \perp \overline{BC}$. In simple radical form, what is the perimeter of pentagon $ABCDP$? [asy]_x000D_
+size(150); defaultpen(linewidth(0.8)); import geometry;_x000D_
+pair A = origin, B = (4,4), C = (12,-4), D = (4,-4), P = (4,0);_x000D_
+draw(A--P--B--cycle);_x000D_
+draw(B--D--C--cycle);_x000D_
+draw(rightanglemark(A,B,C,15));_x000D_
+draw(rightanglemark(A,P,B,15));_x000D_
+draw(rightanglemark(B,D,C,15));_x000D_
+label("$A$",A,SW); label("$B$",B,N); label("$C$",C,SE); label("$D$",D,SW); label("$P$",P,E); label("$4$",A--P,S); label("$4$",B--P,E);_x000D_
+_x000D_
+[/asy]
+3o-mini: We are given the pentagon with vertices A, B, C, D, and P in that order, where the coordinates (from the diagram) are: 
+
+• A = (0, 0)  
+• B = (4, 4)  
+• C = (12, –4)  
+• D = (4, –4)  
+• P = (4, 0)
+
+To find the perimeter of pentagon ABCDP, we calculate the lengths of the sides (in order):
+
+1. Side AB:  
+Distance from A (0, 0) to B (4, 4) is  
+  AB = √[(4 – 0)² + (4 – 0)²] = √(16 + 16) = √32 = 4√2.
+
+2. Side BC:  
+Distance from B (4, 4) to C (12, –4) is  
+  BC = √[(12 – 4)² + (–4 – 4)²] = √(8² + (–8)²] = √(64 + 64) = √128 = 8√2.
+
+3. Side CD:  
+Distance from C (12, –4) to D (4, –4) is  
+  CD = √[(12 – 4)² + (–4 – (–4))²] = √(8² + 0²) = 8.
+
+4. Side DP:  
+Distance from D (4, –4) to P (4, 0) is  
+  DP = √[(4 – 4)² + (0 – (–4))²] = √(0² + 4²) = 4.
+
+5. Side PA:  
+Distance from P (4, 0) to A (0, 0) is  
+  PA = √[(4 – 0)² + (0 – 0)²] = √(4²) = 4.
+
+Now, add all these lengths to get the perimeter:
+
+Perimeter = AB + BC + CD + DP + PA  
+  = 4√2 + 8√2 + 8 + 4 + 4  
+  = (4√2 + 8√2) + (8 + 4 + 4)  
+  = 12√2 + 16.
+
+Thus, in simple radical form, the perimeter of pentagon ABCDP is 16 + 12√2.

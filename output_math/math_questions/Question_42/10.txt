@@ -1,0 +1,75 @@
+Question: In a right triangle, one of the acute angles $\alpha$ satisfies_x000D_
+\[\tan \frac{\alpha}{2} = \frac{1}{\sqrt[3]{2}}.\]Let $\theta$ be the angle between the median and the angle bisector drawn from this acute angle.  Find $\tan \theta.$
+3o-mini: We wish to find tan θ, where θ is the angle between the median and the angle bisector drawn from the vertex having the acute angle α of a right triangle, given
+
+  tan(α/2) = 1⁄∛2.
+
+A very clean answer will result if we choose a coordinate system so that many expressions simplify.
+
+Step 1. Choosing a Coordinate Setup
+
+Assume triangle ABC is right-angled at B, and let A be the vertex where ∠A = α. (Because the triangle is right, the other acute angle is determined too, but our work will focus on A.)
+
+Place A at the origin (0, 0). Choose the ray AB along the positive x‑axis. Then, let B be at (b, 0) for some positive number b. Since ∠B = 90°, the side BC must be vertical. Hence, we may take C to be (b, c) with c > 0.
+
+Now, side AC goes from A = (0, 0) to C = (b, c). Thus, the measure of angle A is the angle between the positive x‑axis and the ray to (b, c), so
+
+  tan α = c⁄b.
+
+Step 2. Finding the Directions of the Median and the Angle Bisector
+
+Both the median and the angle bisector are drawn from vertex A.
+
+• The median from A reaches the midpoint of side BC. Since B = (b, 0) and C = (b, c), the midpoint M is
+  M = (b, c⁄2).
+ The median from A to M has slope
+  m_med = (c/2 – 0)⁄(b – 0) = c⁄(2b) = (tan α)/2.
+
+• The angle bisector of ∠A divides the angle α into two equal parts. One side of ∠A is along the x‑axis. Hence, the bisector is the ray making an angle of α/2 with the positive x‑axis. Its slope is
+  m_bis = tan(α/2).
+
+Step 3. Finding the Angle Between the Median and the Angle Bisector
+
+Let φ be the angle that the median makes with the x‑axis. Since its slope is (tan α)/2,
+  φ = arctan((tan α)/2).
+And the angle bisector makes an angle of α/2 with the x‑axis.
+
+Thus, the angle between the median and the bisector is 
+  θ = | φ – (α/2) | = | arctan((tan α)/2) – (α/2) |.
+
+Since 0 < α < 90°, the absolute value isn’t needed (θ is positive). To find tan θ, we use the tangent subtraction formula:
+  tan(φ – (α/2)) = (tan φ – tan(α/2))⁄(1 + tan φ·tan(α/2)).
+
+But tan φ = (tan α)/2, so
+  tan θ = [ (tan α)/2 – tan(α/2) ]⁄[ 1 + ((tan α)/2)*tan(α/2) ].
+
+Step 4. Express tan α in Terms of tan(α/2)
+
+Use the double-angle formula for tangent:
+  tan α = (2 tan(α/2))⁄(1 – tan²(α/2)).
+
+Let t = tan(α/2); we are given t = 1⁄∛2. Then, 
+  tan α = (2t)/(1 – t²).
+
+Substitute this expression into tan θ:
+  tan θ = [ ( (2t)/(1 – t²) )⁄2 – t ]⁄[ 1 + ( (2t)/(1 – t²) * t/2 ) ]
+       = [ (t/(1 – t²) – t) ]⁄[ 1 + (t²/(1 – t²)) ].
+
+Simplify the numerator:
+  t/(1 – t²) – t = t [1/(1 – t²) – 1] = t [ (1 – (1 – t²))/(1 – t²) ] = t (t²/(1 – t²)) = t³/(1 – t²).
+
+Simplify the denominator:
+  1 + t²/(1 – t²) = ( (1 – t²) + t² )/(1 – t²) = 1/(1 – t²).
+
+So,
+  tan θ = (t³/(1 – t²))⁄(1/(1 – t²)) = t³.
+
+Step 5. Substitute the Given Value for t
+
+We have t = 1⁄∛2, so
+  t³ = (1⁄∛2)³ = 1⁄2.
+
+Thus, the desired value is
+  tan θ = 1/2.
+
+Final Answer: 1/2.

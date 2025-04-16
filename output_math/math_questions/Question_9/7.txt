@@ -1,0 +1,62 @@
+Question: A sequence $a_1,$ $a_2,$ $a_3,$ $\dots,$ is defined recursively by $a_1 = 1,$ $a_2 = 1,$ and for $k \ge 3,$_x000D_
+\[a_k = \frac{1}{3} a_{k - 1} + \frac{1}{4} a_{k - 2}.\]Evaluate $a_1 + a_2 + a_3 + \dotsb.$
+3o-mini: We are given the sequence defined by
+
+  a₁ = 1, a₂ = 1,  
+  and for k ≥ 3, aₖ = (1/3)aₖ₋₁ + (1/4)aₖ₋₂.
+
+We wish to evaluate the infinite sum S = a₁ + a₂ + a₃ + ⋯.
+
+Step 1. Write the sum and separate the first two terms:
+
+  S = a₁ + a₂ + ∑ₖ₌₃∞ aₖ  
+    = 1 + 1 + ∑ₖ₌₃∞ aₖ  
+    = 2 + ∑ₖ₌₃∞ aₖ.
+
+Step 2. Use the recurrence relation for k ≥ 3:
+
+  ∑ₖ₌₃∞ aₖ = ∑ₖ₌₃∞ [(1/3)aₖ₋₁ + (1/4)aₖ₋₂]. 
+
+This sum can be split as follows:
+
+  ∑ₖ₌₃∞ aₖ = (1/3) ∑ₖ₌₃∞ aₖ₋₁ + (1/4) ∑ₖ₌₃∞ aₖ₋₂.
+
+Notice that by a change of index:
+
+  ∑ₖ₌₃∞ aₖ₋₁ = ∑ⱼ₌₂∞ aⱼ = S – a₁ = S – 1,  
+  ∑ₖ₌₃∞ aₖ₋₂ = ∑ⱼ₌₁∞ aⱼ = S.
+
+Thus, we have:
+
+  ∑ₖ₌₃∞ aₖ = (1/3)(S – 1) + (1/4)S.
+
+Step 3. Substitute back into the sum S:
+
+  S = 2 + (1/3)(S – 1) + (1/4)S.
+
+To solve for S, combine like terms:
+
+Multiply out the right-hand side:
+
+  S = 2 + (1/3)S – 1/3 + (1/4)S  
+  S = [2 – 1/3] + [(1/3)S + (1/4)S]  
+  S = (6/3 – 1/3) + [(4/12 + 3/12)S]  
+  S = (5/3) + (7/12)S.
+
+Step 4. Isolate S by subtracting (7/12)S from both sides:
+
+  S – (7/12)S = 5/3.
+
+Express S on the left-hand side as a common factor:
+
+  (12/12 – 7/12)S = 5/3,  
+  (5/12)S = 5/3.
+
+Now, solve for S:
+
+  S = (5/3) ÷ (5/12)  
+  S = (5/3) × (12/5)  
+  S = 12/3  
+  S = 4.
+
+Thus, the sum of the infinite sequence is 4.

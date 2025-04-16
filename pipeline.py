@@ -3,7 +3,7 @@ from langchain.chat_models import init_chat_model
 import os
 from typing import List, Tuple
 
-os.environ["OPENAI_API_KEY"] = None # TODO add your key
+os.environ["OPENAI_API_KEY"] = # TODO add your key
 # Configure your language model (ensure you have your API key set up)
 llm_student = init_chat_model("gpt-4o-mini", model_provider="openai", temperature = 0.5)
 llm_teacher = init_chat_model("o3-mini", model_provider="openai")
@@ -85,7 +85,7 @@ def run_pipline(input_question: str) -> List[Tuple[str,str]]:
     history.append(("Teacher",f"{response_a.content.strip()}"))
 
     cnt = 0
-    while end_session(response_a.content) == False and cnt < 15: # TODO fix this to something smarter
+    while end_session(response_a.content) == False and cnt < 30: # TODO fix this to something smarter
         cnt += 1
         # student chain takes the latest response from the teacher and the updated history
         student_prompt = student_prompt_template.invoke({"history": format_history(history)})

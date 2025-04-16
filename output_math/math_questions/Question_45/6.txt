@@ -1,0 +1,54 @@
+Question: If $n$ is the smallest positive integer for which there exist positive real numbers $a$ and $b$ such that_x000D_
+\[(a + bi)^n = (a - bi)^n,\]compute $\frac{b}{a}.$
+3o-mini: We start by writing a + bi in polar form. Let
+
+  a + bi = r·e^(iθ),  with r = √(a² + b²) and θ = arctan(b/a).
+
+Then its complex conjugate is
+
+  a − bi = r·e^(−iθ).
+
+Raising these to the nth power, we have
+
+  (a + bi)ⁿ = rⁿ·e^(i nθ)
+  (a − bi)ⁿ = rⁿ·e^(−i nθ).
+
+For these two expressions to be equal we require
+
+  rⁿ·e^(i nθ) = rⁿ·e^(−i nθ).
+
+Since rⁿ ≠ 0, we can cancel rⁿ to obtain
+
+  e^(i nθ) = e^(−i nθ).
+
+Multiplying both sides by e^(i nθ) gives
+
+  e^(2i nθ) = 1.
+
+This equation is satisfied if and only if
+
+  2nθ = 2πk  for some integer k,
+or
+  nθ = πk.
+
+Since a and b are positive, the angle θ satisfies 0 < θ < π/2. To find the smallest positive integer n for which such a θ exists, we set k = 1 (the smallest positive integer) and thus get
+
+  θ = π/n.
+
+We need π/n to be less than π/2, which implies
+
+  π/n < π/2  ⇒  n > 2.
+
+The smallest positive integer greater than 2 is n = 3. Therefore, when n = 3,
+
+  θ = π/3.
+
+Since θ = arctan(b/a), we have
+
+  arctan(b/a) = π/3  ⇒  b/a = tan(π/3).
+
+But tan(π/3) = √3. Hence, the ratio is
+
+  b/a = √3.
+
+Thus, under the given conditions, the value of b/a is √3.

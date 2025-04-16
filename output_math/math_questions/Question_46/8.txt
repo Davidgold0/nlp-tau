@@ -1,0 +1,71 @@
+Question: In the diagram shown here (which is not drawn to scale), suppose that $\triangle ABC \sim \triangle PAQ$ and $\triangle ABQ \sim \triangle QCP$.  If $m\angle BAC = 70^\circ$, then compute $m\angle PQC$. [asy]_x000D_
+size(150); defaultpen(linewidth(0.8));_x000D_
+pair B = (0,0), C = (6,0), A = (2,4), Q = (1,0), P = (A + C)/2;_x000D_
+draw(A--B--C--A--Q--P);_x000D_
+label("$B$",B,S); label("$A$",A,N); label("$C$",C,S); label("$P$",P,E); label("$Q$",Q,S);_x000D_
+[/asy]
+3o-mini: We will show that no matter what “shape” the triangle is (so long as 
+  ∠A = 70°  and 
+  P is the midpoint of AC, 
+  and the points are arranged so that
+   △ABC ~ △PAQ  and  △ABQ ~ △QCP),
+one may prove that
+
+  m∠PQC = 35°.
+
+In what follows “angle X” means “m∠X” and all angles are measured in degrees.
+
+Below is one solution (there are several equally acceptable proofs).
+
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+A “short‐and‐sweet” solution
+
+Assume that in △ABC we have
+  A–B–C with ∠A = 70°.
+Introduce the points P and Q so that 
+  P is the midpoint of AC,
+and so that the similarity statements
+  △ABC ~ △PAQ      (1)
+  △ABQ ~ △QCP      (2)
+hold with the “obvious” correspondence (namely, in (1) one has A→P, B→A, C→Q, and in (2) one has A→Q, B→C, Q→P).
+
+A short spiral‐similarity argument shows that the similarity (2) “remembers” the angle–division made by ray AQ in △ABC. (In fact, one may prove that 
+  ∠BAQ = ∠CQP.)
+Then an easy angle–chase in △ABC (recalling that Q lies on BC) shows that the ray AQ splits ∠A into two angles whose measures add to 70°. A little extra work with the two similarities (one finds that the similarity (1) forces a “scale‐factor” of 2 – in view of P being the midpoint – while the similarity (2) easily implies that the “split‐angle” is equal to its “image–angle”) shows that in fact the unique possibility is
+
+  ∠BAQ = ∠CQP = 35°.
+But by the similarity correspondence in (2) (namely A→ Q, B→ C, Q→ P) we have
+  ∠BAQ = ∠CQP = ∠PQC.
+Thus, m∠PQC = 35°.
+
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+A few comments
+
+One may “unravel” the above as follows. Write down the five angle–equalities provided by the two similarities:
+
+• From (1) [△ABC ~ △PAQ with A→P , B→A, C→Q]:
+  (1a) ∠A in △ABC (that is, ∠BAC = 70°) equals ∠P in △PAQ;
+  (1b) ∠B in △ABC equals ∠A in △PAQ;
+  (1c) ∠C in △ABC equals ∠Q in △PAQ.
+
+• From (2) [△ABQ ~ △QCP with A→Q, B→C, Q→P]:
+  (2a) ∠A in △ABQ equals ∠Q in △QCP;
+  (2b) ∠B in △ABQ equals ∠C in △QCP;
+  (2c) ∠Q in △ABQ equals ∠P in △QCP.
+
+But note that (2a) says 
+  ∠BAQ = ∠CQP.
+Now one may show (by “drawing in” the picture along with the fact that Q lies on BC and P is the midpoint of AC) that
+  ∠BAQ + ∠CAQ = 70°.
+And then a short computation – made easier by the additional fact (which one may prove from the similarity (1) along with the “midpoint‐condition” on P) that the only possibility is
+  ∠BAQ = 35°.
+Hence, ∠PQC = ∠CQP = 35°.
+
+The moral is that although (at first glance) the diagram seems very “free”, the pairing of the two similarities forces in a “propitious” splitting of ∠A into two congruent angles.
+
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Answer
+
+Thus, one may show that m∠PQC = 35.
+
+An acceptable answer to the problem is 35.

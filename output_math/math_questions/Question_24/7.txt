@@ -1,0 +1,30 @@
+Question: There exist constants $c_2,$ $c_1,$ and $c_0$ such that_x000D_
+\[x^3 + x^2 - 5 = (x - 3)^3 + c_2 (x - 3)^2 + c_1 (x - 3) + c_0.\]Find $c_2^2 + c_1^2 + c_0^2.$
+3o-mini: We start by writing x in terms of (x - 3). Let y = x - 3, so that x = y + 3.
+
+Substitute into the given polynomial:
+  x³ + x² - 5 = (y + 3)³ + (y + 3)² - 5.
+
+Now expand each term:
+  (y + 3)³ = y³ + 3(3)y² + 3(3²)y + 3³ = y³ + 9y² + 27y + 27,
+  (y + 3)² = y² + 6y + 9.
+
+Thus,
+  x³ + x² - 5 = y³ + 9y² + 27y + 27 + y² + 6y + 9 - 5
+             = y³ + (9y² + y²) + (27y + 6y) + (27 + 9 - 5)
+             = y³ + 10y² + 33y + 31.
+
+The problem states that
+  x³ + x² - 5 = (x - 3)³ + c₂(x - 3)² + c₁(x - 3) + c₀,
+or equivalently, with y = x - 3,
+  y³ + 10y² + 33y + 31 = y³ + c₂y² + c₁y + c₀.
+
+By equating the coefficients from both sides, we obtain:
+  c₂ = 10,
+  c₁ = 33,
+  c₀ = 31.
+
+Finally, compute c₂² + c₁² + c₀²:
+  c₂² + c₁² + c₀² = 10² + 33² + 31² = 100 + 1089 + 961 = 2150.
+
+Thus, the answer is 2150.
