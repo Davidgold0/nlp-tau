@@ -21,16 +21,9 @@ def main():
     saved_history = load_history(history_file)
     
     exam_question = """
-\\begin{itemize}
-    \\item What is the data structure with the worst-case search time?
-    \\item A. A hash table with collision resolution by linked lists.
-    \\item B. Perfect Hash
-    \\item C. A max heap implemented by an array.
-    \\item D. answers A and B
-    \\item E. answers A and C
-    \\item F. answers A and B and C
-\\end{itemize}
+Let \[P(x) = (2x^4 - 26x^3 + ax^2 + bx + c)(5x^4 - 80x^3 + dx^2 + ex + f),\]where $a, b, c, d, e, f$ are real numbers. Suppose that the set of all complex roots of $P(x)$ is $\{1, 2, 3, 4, 5\}.$ Find $P(6).$
 """
+
     chess_question = """
 You are a very strong chess engine.
 
@@ -45,7 +38,7 @@ What is the best move for white? Answer in the format of UCI for a single best m
 "Because of redistricting, Liberty Middle School\'s enrollment increased to 598 students.
 This is an increase of $4\%$ over last year\'s enrollment. What was last year\'s enrollment?"
 """
-    current_history = run_pipline(chess_question)
+    current_history = run_pipline(exam_question)
 
     # Print the conversation history
     #print("\n--- Conversation History ---")
