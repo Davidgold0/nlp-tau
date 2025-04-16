@@ -1,7 +1,24 @@
 import os
+import asyncio
 import glob
 import pandas as pd
-from pipeline import run_pipline, format_history
+from pipeline import run_pipline, format_history, run_on_3o_mini
+
+
+async def async_create_responses(question: str, offset: int, n_runs: int, question_folder: str, model_func: object):
+    async def generate_and_save(run: int):
+        output_text = await asyncio.to_thread(model_func, question)
+        output_file_path = os.path.join(question_folder, f"{run}.txt")
+        formatted_output = await asyncio.to_thread(format_history, output_text)
+        await asyncio.to_thread(write_file, output_file_path, formatted_output)
+
+    def write_file(path, content):
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(content)
+
+    tasks = [generate_and_save(run) for run in range(offset, n_runs + offset)]
+    await asyncio.gather(*tasks)
+
 
 def main(input_folder, output_folder, n_runs=5):
     """
@@ -62,19 +79,17 @@ def main(input_folder, output_folder, n_runs=5):
             question_folder = os.path.join(excel_output_dir, f"Question_{question_index}")
             os.makedirs(question_folder, exist_ok=True)
 
-            for run in range(1, n_runs + 1):
-                output_text = run_pipline(question)
-                #output_text = question
-                output_file_path = os.path.join(question_folder, f"{run}.txt")
-                with open(output_file_path, "w", encoding="utf-8") as f:
-                    f.write(format_history(output_text))
-                     #f.write(output_text)
+            # get answers from Student-Teacher model
+            asyncio.run(async_create_responses(question, 1, n_runs, question_folder, run_pipline))
 
+            # get answers from gpt-3o-mini model
+            asyncio.run(async_create_responses(question, 6, n_runs, question_folder, run_on_3o_mini))
+            
             print(f"Processed Question {idx+1} from {file_name}")
 
 if __name__ == "__main__":
     # Configuration: adjust these variables as needed
-    INPUT_FOLDER = ".//datasets//runable_problems//hide"  # Directory where the Excel files are located
+    INPUT_FOLDER = ".//datasets//runable_problems"  # Directory where the Excel files are located
     OUTPUT_FOLDER = "output"            # Directory where the processed files will be saved
     N_RUNS = 5                          # Number of times to run the process for each question
 
