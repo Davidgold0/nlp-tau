@@ -3,8 +3,7 @@ from langchain.chat_models import init_chat_model
 import os
 from typing import List, Tuple
 
-os.environ["OPENAI_API_KEY"] = # TODO add your key
-# Configure your language model (ensure you have your API key set up)
+os.environ["OPENAI_API_KEY"] = None
 llm_student = init_chat_model("gpt-4o-mini", model_provider="openai", temperature = 0.5)
 llm_teacher = init_chat_model("o3-mini", model_provider="openai")
 

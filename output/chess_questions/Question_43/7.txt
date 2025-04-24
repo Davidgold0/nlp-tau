@@ -1,0 +1,10 @@
+Question: You are a very strong chess engine.
+
+The chess board is in the following state (FEN): '1r2r1k1/5pp1/p6Q/2p5/4p3/1P4P1/P1P2PP1/4R1K1 b - - 0 31'. 
+
+What is the best move for black? Respond with a single move in the following notation: [source square][destination square] (e.g., "f8f4").
+3o-mini: The key problem is that White threatens the mate Qxg7# (since the queen on h6 eyes the diagonal h6–g7–f8, with g7 only defended by the king’s proximity). Black must add a defender to g7. Although at first glance one might consider moving the king “forward” (i.e. to f8), note that f8 lies exactly on White’s h6–g7–f8 diagonal. Hence, 31…Kf8 would immediately put the king into check and is illegal.
+
+The only legal king moves that add a defender to g7 are to h8 or h7. In this delicate position the best defensive resource is to “tuck” the king into the corner. Thus Black’s best move is to move the king from g8 to h8 – now g7 is guarded and the immediate mate threat is parried.
+
+Answer: g8h8
