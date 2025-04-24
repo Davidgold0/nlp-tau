@@ -1,0 +1,24 @@
+Question: In B-trees with a minimum degree \( d \) (where each internal node has between \( d \) and \( 2d \) children), the amount of information stored in the leaves is smaller because there is no need to store child pointers. Assume that a disk block is large enough to hold a node at its maximum size and that each node is stored in a separate disk block.
+
+To take advantage of the free space in the disk block containing a leaf, we modify the definition of the tree and set that each leaf will contain between \( 2d-1 \) and \( 4d-1 \) elements, instead of between \( d-1 \) and \( 2d-1 \). It is given that the size of an element is equivalent to the size of a pointer, so such an enlarged leaf still fits in a block. As long as the tree has no more than \( 4d \) elements, the tree consists of a single enlarged leaf.
+
+This is called a B-tree with enlarged leaves. Briefly describe a top-down insertion algorithm (the algorithm does not modify the tree after the element is inserted into the appropriate leaf, only during the search) for a B-tree with enlarged leaves as described above.
+3o-mini: We can solve the problem by “pre-splitting” full nodes on the way down the tree so that when we reach the leaf, there is always room left for the new element. (This is the standard idea behind top‐down insertion in B‑trees.) In our case the only difference is that the leaves “store more” (between 2d – 1 and 4d – 1 keys) whereas the internal nodes continue to have between d and 2d children. One acceptable description of the algorithm is as follows:
+
+1. Begin at the root. (Remember that if the tree has at most 4d elements, the tree is just a single enlarged leaf.)
+  • If the root is full – that is, if it is an internal node with 2d children (hence 2d – 1 keys) or it is a leaf with 4d – 1 elements – then create a new root and split the full node. (In splitting an enlarged leaf holding 4d – 1 keys, you can divide it so that one of the new leaves gets 2d – 1 keys and the other gets 2d keys; both then satisfy the minimum of 2d – 1 keys.)
+
+2. Set the current node v to the root.
+
+3. Now do a downward search for the proper leaf in which to insert the new element x. As you travel from the root to a leaf do the following:
+  a. At each internal node v, use binary search on its keys to decide which child pointer to follow.
+  b. Before descending to the chosen child, inspect it:
+    • If the child is full – that is, if it is a leaf with 4d – 1 elements or an internal node that already has 2d children – then split that child. Splitting yields two nodes (each of which is guaranteed to have at least the minimum number of keys/pointers) and pushes one median key up into the current node v.
+    • Because a split in v may change the way keys are arranged, redo the search for the correct child that should now contain x.
+  c. Descend to the appropriate child (which will—by the previous pre‐splitting—be nonfull).
+
+4. When you finally reach a leaf v (which is an “enlarged” leaf and now is guaranteed to have fewer than 4d – 1 keys), simply insert the element x into the appropriate location within v (using a method such as binary search for the proper position, then shifting keys as needed).
+
+Notice that no splitting is performed “after” inserting into a leaf. Instead, the only modifications to the tree happen on the way down. Therefore, when x is finally inserted, the leaf is not full and no upward propagation of splits is needed.
+
+This procedure is very similar to standard top-down insertion in B‑trees; the only twist is that a “full” leaf in our tree is one that contains 4d – 1 keys (instead of 2d – 1, as in the standard B‑tree). As long as each node (and each leaf) fits in a disk block, and we pre‐split any full nodes outside the leaf, the insertion is performed correctly.

@@ -1,0 +1,68 @@
+Question: We build a hashing table of size \( m \) using the linear probing method. The keys of the elements inserted into the table are taken from the set \( \{0, 1, \dots, 2m-1\} \). We use the following hash function:
+\[
+h(k) = \left\lfloor \frac{k}{2} \right\rfloor.
+\]
+We insert the elements \( 1, 2, \dots, m \) into the table in increasing order. How much time does it take to insert all the elements into the table using the standard insertion algorithm? Provide an asymptotic bound.
+3o-mini: We want to analyze the total time (number of probes) needed to insert m keys into a hash table of size m when using linear probing with the hash function
+
+  h(k) = ⌊k/2⌋
+
+and when inserting the keys 1, 2, …, m (in that order). (The fact that the keys are chosen from a larger set {0,1,…,2m–1} is only used to define the hash function.)
+
+Let’s first see what h(k) does:
+
+• For an even key k = 2i, we have h(2i) = ⌊(2i)/2⌋ = i.
+• For an odd key k = 2i + 1, we have h(2i + 1) = ⌊(2i + 1)/2⌋ = i.
+
+Thus many keys will have the same home slot. For example, look at a few small keys:
+
+  k = 1: h(1) = ⌊1/2⌋ = 0  
+  k = 2: h(2) = ⌊2/2⌋ = 1  
+  k = 3: h(3) = ⌊3/2⌋ = 1  
+  k = 4: h(4) = ⌊4/2⌋ = 2  
+  k = 5: h(5) = ⌊5/2⌋ = 2  
+  k = 6: h(6) = ⌊6/2⌋ = 3
+
+Notice that keys 2 and 3 both hash to location 1, and keys 4 and 5 both hash to location 2.
+
+Now, let’s “simulate” the insertions (with linear probing meaning that if the home slot is occupied we try the next slot, then the next, and so on):
+
+1. Inserting key 1:  
+  h(1)=0. Slot 0 is empty, so place key 1.  
+  Cost: 1 probe.
+
+2. Inserting key 2:  
+  h(2)=1. Slot 1 is free, so place key 2.  
+  Cost: 1 probe.
+
+3. Inserting key 3:  
+  h(3)=1. Slot 1 is taken (by key 2), so check slot 2 which is free.  
+  Cost: 2 probes.
+
+4. Inserting key 4:  
+  h(4)=2. However, slot 2 is now occupied (by key 3), so we check slot 3.  
+  Cost: 2 probes.
+
+5. Inserting key 5:  
+  h(5)=2. We start at slot 2 (occupied), then slot 3 (occupied by key 4) and finally insert in slot 4.  
+  Cost: 3 probes.
+
+6. Inserting key 6:  
+  h(6)=3. Start at slot 3 (occupied), then slot 4 (occupied), and finally slot 5 is free.  
+  Cost: 3 probes.
+
+The pattern you see is that when two keys hash to the same slot (for example, keys 2 and 3, or keys 4 and 5), the second one suffers one extra probe. As more keys are inserted, they join “clusters” of adjacent occupied slots and later insertions must scan through longer runs of already filled slots. Thus, the probe cost per insertion grows with the length of the cluster that has built up.
+
+A more careful inspection shows that roughly for each “pair” (because keys k = 2i and 2i+1 have the same home position i), the first of the pair is inserted in one step (an empty home slot), but the second of the pair must probe one additional cell (and in fact if there is a chain already, the probe count increases). More precisely, if we work through the insertion ordering, the costs roughly come out as
+
+  1, 1, 2, 2, 3, 3, 4, 4, … 
+
+(with a few exceptions at the beginning or the very end if m is odd or even). For m keys, if you sum these costs you find that the total number of probes T is approximately
+
+  T ≈ 1 + 1 + 2 + 2 + 3 + 3 + … ≈ 2 (1 + 2 +  … + (m/2))  
+      ≈ 2 · (m/2)·(m/2 + 1)/2  
+      ≈ Θ(m²).
+
+Thus the overall time to insert all m keys (using the standard linear probing insertion algorithm without any fancy rehashing) is Θ(m²) in the worst-case scenario.
+
+Answer: Inserting the keys in order takes Θ(m²) time.

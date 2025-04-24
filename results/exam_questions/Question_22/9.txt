@@ -1,0 +1,101 @@
+Question: Given an ordered set \( S \), we define the degree of an element in the set as its position in a sorted array of the elements (all elements have different values). Throughout the question, \( h \) represents the number of elements currently in the requested data structure.
+
+\textbf{(A)} Describe a data structure that supports the following operations:
+\begin{itemize}
+  \item \texttt{Init()} – initialize the structure in \( O(1) \) time.
+  \item \texttt{Insert(x)} – insert the element \( x \) into \( S \) in \( O(\log n) \) time.
+  \item \texttt{Delete(x)} – delete the element \( x \) from \( S \) in \( O(\log n) \) time.
+  \item \texttt{Min()} – return the element with the minimum degree (smallest value) in \( O(1) \) time.
+  \item \texttt{Max()} – return the element with the maximum degree (largest value) in \( O(1) \) time.
+  \item \texttt{AVG()} – return the element with the minimum degree whose value is greater than or equal to the average of the elements in the structure in \( O(1) \) time.
+\end{itemize}
+3o-mini: We will show that it is possible to “pay extra work” during Insert and Delete (which are allowed O(log n) time) so that the three queries—Min, Max, and AVG—can be answered in O(1) time.
+
+Below is one acceptable answer.
+
+──────────────────────────────
+Overview
+
+We maintain the set S in an augmented balanced binary search tree (for example, an AVL tree or a red–black tree) where the nodes are kept in sorted order by value. In addition to the usual BST fields, each node is augmented with:
+  • The subtree’s size (the number of nodes below including itself).
+  • The subtree’s sum (the sum of the values in its subtree).
+This augmentation allows us to compute, for any node, how many elements (and what total sum) lie in its left (or right) subtree. (It’s a standard augmentation used for order‐statistics and range queries.)
+
+Globally we also maintain:
+  • h (the number of elements currently in S).
+  • total (the total sum of all the elements in S).
+  • A pointer minPtr to the node having the minimum value.
+  • A pointer maxPtr to the node having the maximum value.
+  • A pointer avgPtr to the “average‐node” defined as follows:
+    Let A = total/h be the average value of the set.
+    Then avgPtr points to the node with the smallest value that is ≥ A.
+
+The operations are implemented as follows.
+
+──────────────────────────────
+Operations
+
+1. Init()
+
+  • Allocate an (empty) balanced BST and initialize h ← 0 and total ← 0.
+  • Set all three pointers (minPtr, maxPtr, avgPtr) to null.
+   
+Time: O(1)
+
+2. Insert(x)
+
+  • Insert x as a new node into the BST (this takes O(log h) time since the BST is balanced).
+  • Update the augmented information (subtree sizes and sums) along the search/insertion path.  
+  • Increase h by 1 and add x to total.
+  • Update minPtr and maxPtr. (This is easy since:
+    – if x is less than the current minimum then minPtr ← the new node.
+    – if x is greater than the current maximum then maxPtr ← the new node.)
+  • Recompute the average value A = total/h.
+  • Update avgPtr by performing a “lower_bound” search in the BST (i.e. find the smallest node whose value is ≥ A).  
+   Since the BST is balanced, this can take O(log h) time. (Remember, we are allowed O(log n) on inserts.)
+  
+Time: O(log h) overall
+
+3. Delete(x)
+
+  • Search for x in the BST and delete its node (this takes O(log h) time).
+  • Update the augmented information for the affected nodes.
+  • Decrease h by 1 and subtract x from total.
+  • Update minPtr and maxPtr (if x was the minimum or maximum, we can update the pointer in O(log h) time or by using parent pointers in the tree).
+  • If h > 0 then recompute A = total/h, and update avgPtr by performing a lower_bound search in the BST to find the smallest element ≥ A.
+   (Again, this takes O(log h) time.)
+  • (If h becomes 0, set the pointers appropriately (null).)
+  
+Time: O(log h) overall
+
+4. Min()
+
+  Simply return the value pointed to by minPtr.
+  
+Time: O(1)
+
+5. Max()
+
+  Simply return the value pointed to by maxPtr.
+  
+Time: O(1)
+
+6. AVG()
+
+  Simply return the value contained in the node pointed to by avgPtr.
+  
+Time: O(1)
+
+──────────────────────────────
+Discussion
+
+Because all the “costly” work (updating the avgPtr) is taken care of during Insert and Delete and does not affect the query times, we obtain the desired time bounds. In practice, one may use any balanced BST that supports augmentation (such as an AVL tree or a red–black tree).
+
+Thus, the answer is:
+
+We maintain S in an augmented balanced binary search tree that stores for every node the size and the sum of its subtree. We also maintain global pointers to the minimum element (minPtr), the maximum element (maxPtr), and the “average‐node” (avgPtr) defined as the smallest node whose value is at least total/h (the average). On every insertion and deletion we update the global sum (total) and count (h) and we update minPtr, maxPtr, and by doing a BST “lower_bound” search for total/h we update avgPtr. The operations are then implemented with the following running times:
+ - Init: O(1)
+ - Insert, Delete: O(log h)
+ - Min, Max, AVG: O(1)
+
+This data structure meets the requirements given in the problem.

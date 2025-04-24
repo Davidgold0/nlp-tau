@@ -1,0 +1,17 @@
+Question: \textbf{In the following section, the time and space complexity of initialization is \(O(1)\), and the space complexity at any given moment is \(O\) of the number of elements in the data structure. Describe how a matrix of size \(m \times m\) can be represented, supporting the operations of insertion at position \((i,j)\), reading from position \((i,j)\), and deletion from position \((i,j)\), in \(O(\log m)\) worst-case time for each operation.}
+3o-mini: One clean solution is to represent the matrix in a “sparse” manner using a balanced binary search tree (BST) whose keys are the pairs (i, j). In the following we describe how this works and why it meets the requirements.
+
+1. Initialization is O(1) in time and uses constant space if you simply create an empty tree (a null pointer, for example).
+
+2. In this BST, each node stores a key consisting of two coordinates (i, j) along with the element value for that position. (You might also store additional information if needed, such as subtree sizes for order-statistics, if desired.) The tree is maintained in balanced order (for example, using a red–black tree, AVL tree, treap, etc.).
+
+3. To compare two nodes you may use lexicographic ordering. For example, define (i₁, j₁) to be less than (i₂, j₂) if i₁ < i₂ or (i₁ = i₂ and j₁ < j₂). Since there are at most m² possible entries, the height of the BST in the worst-case will be O(log(m²)) = O(log m).
+
+4. Operations:  
+  a. Insertion at (i, j): Create a new node for position (i, j) and insert it into the BST in O(log m) worst-case time. (If the tree already contained an entry for (i, j), you might update the value or handle it appropriately.)  
+  b. Reading from (i, j): Search the BST for the key (i, j). If found, return the stored value; if not, return the default value. The BST search takes O(log m) worst-case time.  
+  c. Deletion from (i, j): Search for and remove the node with key (i, j) from the BST. Again, deletion in a balanced BST takes O(log m) worst-case time.
+
+5. Space complexity: Since the data structure only stores nodes for positions that actually have an element (that is, only the “nonzero” or “explicit” entries), and the tree’s size is exactly the number of such elements, the space used at any given moment is O(the number of elements in the matrix).
+
+Thus, by simply representing the m×m matrix as a balanced BST keyed on the coordinate pair (i, j), you immediately obtain O(log m) worst-case time for each of insertion, reading, and deletion, with O(1) initialization time and optimal space usage.

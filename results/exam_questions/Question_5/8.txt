@@ -1,0 +1,47 @@
+Question: Describe an algorithm that solves the following problem:  
+Given a set \( S \) of \( n \) numbers, the algorithm builds a data structure in \( O(n) \) worst-case time that supports only the \( \text{find} \) operation, such that:  
+The worst-case time for \( \text{find} \) is \( O(n) \), but for at least \( \frac{n}{\log n} \) of the elements, the running time of \( \text{find} \) is \( O(\log n) \).  
+Note that the structure is not dynamic, meaning it does not need to support insert or delete operations.
+3o-mini: We will show that it is possible to “pre‐process” the n values in S in O(n) worst‐case time so that a find(x) query always takes O(n) worst‐case time but, for at least n/ log n of the elements in S, the work done is only O(log n).
+
+One acceptable solution is to “mark” a carefully chosen subset R ⊆ S of about n/ log n elements and to store R in sorted order (so that binary search can be used on R), while “falling back” to a full scan of S if x is not one of these marked elements. (Any answer that achieves the same asymptotic bounds is acceptable.)
+
+Below is one way to describe the algorithm.
+
+──────────────────────────────
+Step 1. Pre‐processing (Building the data structure in O(n) worst‐case time):
+
+a) (Choosing R) In one pass over S (which is given as an unsorted array or list) choose a subset R of size ⎣n/ log n⎦. (For example, you can decide “every log n–th element” will be in R. Note that it does not matter which elements you choose so long as R ⊆ S and |R| ≥ n/ log n; the requirement is that if the searched element happens to lie in R, then the search is fast. In many applications one might choose the “popular” or “important” keys for R; here we give a simple algorithmic solution.)
+
+b) (Sorting R) Put the chosen elements into an array and sort that array using any comparison–based sorting method. (Notice that the size of R is n/ log n so even if you use a comparison sort the running time is O((n/ log n)· log(n/ log n)) = O(n); you may assume that log(n/ log n) = O(log n) but since the number of items is only n/ log n the product is O(n).)
+
+c) (Storing S) In addition, keep S stored “as is” (for example, in an unsorted array) so that if a query does not belong to R you can use a fallback “linear search” of S (which takes O(n) worst-case time).
+
+Thus the resulting data structure consists of:
+  • A sorted array R (of size n/ log n)
+  • The unsorted array S (of n numbers)
+
+The overall build time is O(n) (you do one scan to select R, O(n/ log n·log(n/ log n)) time to sort R, and simply keep S as given).
+
+──────────────────────────────
+Step 2. Query Algorithm (find(x)):
+
+When a query x is given, do the following:
+
+1. Binary search the sorted array R for x.
+   • If x is found in R then return it. The binary search takes O(log n) worst–case time.
+2. Otherwise, x is not one of the “marked” elements. In that case, simply scan S (the unsorted list) looking for x; this takes O(n) time worst–case.
+
+──────────────────────────────
+Correctness and Running Time
+
+• Worst–case running time: Every find(x) call does a binary search (O(log n)) plus, in the worst case, a linear scan (O(n)). Thus, worst–case is O(n).
+
+• Fast queries: For any x that is one of the ~n/ log n elements in R the binary search will succeed and x will be returned in O(log n) time. Hence, for at least n/ log n of the elements in S, find(x) runs in O(log n) time.
+
+──────────────────────────────
+Remarks
+
+It is not necessary (in a static structure) to support fast search for every possible key; here we are permitted a “slow path” (scanning S) for those keys that are not members of R. In many practical situations one might mark the “frequent” or “important” keys to put them in R, but the above algorithm shows that even with an arbitrary subset R of size n/ log n the desired worst-case bounds can be guaranteed.
+
+Any answer that gives a procedure equivalent to the one above is correct.

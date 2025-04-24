@@ -1,0 +1,40 @@
+Question: Let \( U = \{0, 1, \dots, u\} \). Assume that each element of \( U \) can be represented by a single word. Given a subset \( D \subseteq U \) of size \( n \), describe the most efficient probabilistic algorithm that constructs a function \( h: U \to \{0, 1, \dots, 100n\} \) which is injective on \( D \) (i.e., for all \( x, y \in D \), we have \( h(x) \neq h(y) \)). The memory required to represent the function \( h \) should be \( O(n) \). Computing \( h(x) \), given \( x \in D \), should take \( O(1) \) time in the worst case.
+3o-mini: We can obtain an efficient solution by “perfect hashing” using a 2‐universal family. One acceptable answer is as follows.
+
+Assume we are given the universe U = {0, 1, …, u} and a subset D ⊆ U of size n. We want to create a function h : U → {0, 1, …, 100n} that is guaranteed to be injective on D, to be stored in O(n) memory, and such that h(x) can be computed in O(1) worst‐case time.
+
+Step 1. Choose a prime
+  Select any prime p such that p > u. (In many applications a precomputed table of primes or a fast primality test will suffice to obtain such a p.)
+
+Step 2. Pick random parameters
+  Randomly choose an integer a from {1, 2, …, p–1} and an integer b from {0, 1, …, p–1}. These two numbers will be the only “parameters” stored for the hash function. (This is O(1) space and overall O(n) memory when combined with the data needed to represent D.)
+
+Step 3. Define the hash function
+  Define h : U → {0, 1, …, 100n} by
+    h(x) = ((a · x + b) mod p) mod (100n).
+
+Thanks to standard results about 2‐universal hash families, for any two distinct x, y ∈ U the probability (over the random choice of a and b) that h(x)=h(y) is at most 1/(100n). Thus, for any fixed D the probability that h is injective on D is at least
+  (100n·(100n – 1) · … · (100n – n + 1)) / (100n)ⁿ,
+which is a positive constant (bounded away from 0) even for large n.
+
+Step 4. Verification (and repetition if necessary)
+  Compute h(x) for every x ∈ D. You can use a temporary array of size 100n (or a hash table) to check for duplicate values. If you find a collision – that is, if h(x) = h(y) for some x ≠ y in D – then simply choose a new pair (a, b) and try again. (The expected number of iterations is constant because the probability of having no collision is a positive constant.)
+
+Step 5. Final Properties
+  When the process terminates you have:
+  • A function h represented by the three numbers p, a, and b (which takes O(1) memory, with overall memory O(n) when allowing for the temporary array during construction).
+  • For every x ∈ D, h(x) can be evaluated in O(1) time (the operations modulo p and modulo 100n are constant‐time arithmetic operations).
+  • The restriction of h to D is injective.
+
+Summary
+
+The most efficient probabilistic algorithm is:
+
+1. Choose a prime p > u.
+2. Pick random a ∈ {1, …, p – 1} and b ∈ {0, …, p – 1}.
+3. Define h(x) = ((a·x + b) mod p) mod (100n).
+4. Verify that h is injective on D (using an auxiliary array of size O(n)); if collisions occur, repeat from step 2.
+
+The expected number of repetitions is constant, so the overall preprocessing time is O(n) on average. The space needed is O(n), and each evaluation of h(x) takes O(1) worst-case time.
+
+This completes the description of an efficient probabilistic algorithm for constructing the required function h.

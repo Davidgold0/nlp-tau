@@ -1,0 +1,39 @@
+Question: Given \( n \) segments on a line (each segment is defined by its start and end points). For simplicity, assume that all \( 2n \) points are distinct. A segment is called "central" if there are at least \( n/4 \) segments that start before it (i.e., their starting point is to the left of its starting point) and there are at least \( n/4 \) segments that end after it (i.e., their ending point is to the right of its ending point). Propose an algorithm that returns the number of central segments, with the best possible worst-case running time.
+3o-mini: We can solve this problem in linear time by reducing it to a couple of "order‐statistics" (selection) problems. The idea is that a segment [a, b] is “central” if and only if
+
+  • There are at least n/4 segments with starting point less than a, and
+  • There are at least n/4 segments with ending point greater than b.
+
+Because all 2n endpoints are distinct, we can “rank” the endpoints. More precisely:
+
+• Sort (or select) the start points by value. Then the number of segments with starting point less than a given segment’s start a is exactly the rank of a minus one. So the condition “at least n/4 segments start before a” means that the starting point of the segment must be at least the (n/4 + 1)st smallest start.
+
+• Similarly, sort (or select) the end points by value (in increasing order). For a given segment ending at b at rank r (where r=1 means the smallest end), the number of segments that end after b is n – r. Thus, to have at least n/4 segments with ending point greater than b we must have n – r ≥ n/4, which is equivalent to r ≤ 3n/4.
+
+Thus, if we let
+
+  A = the (n/4 + 1)st smallest starting point, and
+  B = the (3n/4)th smallest ending point,
+
+then a segment [a, b] is "central" if and only if
+
+  a ≥ A  and  b ≤ B.
+
+Here is an outline of an algorithm that achieves the best worst‐case running time:
+
+1. Create an array S containing all the start points and an array E containing all the end points of the segments.
+
+2. Use a linear‐time selection algorithm (such as the “median of medians”) to find A, the (n/4 + 1)st smallest element of S.
+
+3. Similarly, use a linear‐time selection algorithm to find B, the (3n/4)th smallest element of E.
+
+4. Initialize a counter count := 0.
+
+5. For each segment [a, b] in the input:
+  a. If a ≥ A and b ≤ B then increment count.
+
+6. Return count.
+
+Because each selection takes O(n) worst-case time and the final loop takes O(n) time, the overall worst-case running time is O(n).
+
+This algorithm is optimal in the sense that if you use comparison-based methods, you cannot do better than linear time in the worst case.

@@ -1,0 +1,66 @@
+Question: **Data Structure Description:**
+
+Describe a data structure that maintains a set of points in the plane, where each point \( p_i \) is represented as a pair of numbers \( (x_i, y_i) \). The data structure should support the following operations:
+
+- \( \text{insert}(x, y) \), \( \text{delete}(x, y) \), \( \text{find}(x, y) \) in the worst-case time complexity of \( O(\log n) \).
+- \( \text{CountPointsAtDistance}(d_1, d_2) \), which performs the following operation: Given two numbers \( d_1 \) and \( d_2 \), the function returns the number of points in the structure whose distance from the origin is greater than \( d_1 \) and smaller than \( d_2 \). Recall that the distance of a point \( (x, y) \) from the origin is \( \sqrt{x^2 + y^2} \).
+
+The \( \text{CountPointsAtDistance}(d_1, d_2) \) operation should be executed with the lowest possible time complexity.
+3o-mini: We can solve the problem by “reordering” the points according to their distance from the origin. One acceptable solution is to store the points in an augmented balanced binary search tree (such as a red–black tree, AVL tree, or any self‐balancing BST) that is keyed by the square of the distance from the origin. (Note: We can use the squared distance d² = x² + y² instead of the actual distance √(x² + y²) since the square root is a monotonic function, and this avoids extra cost and floating–point issues.)
+
+Here’s an outline of the data structure and how it supports the required operations:
+
+──────────────────────────────
+Representation of a Point:
+──────────────────────────────
+Each point is given as (x, y). For the purpose of ordering within the tree, we do the following:
+ • Compute its key as d² = x² + y².
+ • Because more than one point can have the same distance from the origin, you can break ties lexicographically by (x, y). Thus, each point becomes a “composite key”: (d², x, y).
+
+──────────────────────────────
+The Tree and Its Augmentation:
+──────────────────────────────
+1. Use a self-balancing BST where each node contains:
+  – The key (d², x, y)
+  – A pointer to the left and right child.
+  – A “subtree size” field (the number of nodes in the subtree rooted at that node). This is the augmentation that will help us perform order–statistics (i.e. rank queries) quickly.
+  – (Optionally, any other fields needed by the specific tree implementation.)
+
+2. With this augmentation, you can compute how many nodes (points) have a key smaller than a given value in O(log n) time by “walking” the tree and using the stored subtree sizes.
+
+──────────────────────────────
+Operations:
+──────────────────────────────
+• insert(x, y):
+ – Compute d² = x² + y².
+ – Insert the composite key (d², x, y) into the BST. During insertion update the subtree sizes in the nodes encountered.
+ – Time complexity: O(log n).
+
+• delete(x, y):
+ – Compute d² = x² + y².
+ – Find and remove the node with key (d², x, y) from the BST, updating subtree sizes as needed.
+ – Time complexity: O(log n).
+
+• find(x, y):
+ – Compute d² = x² + y².
+ – Search for the node (d², x, y) in the BST.
+ – Time complexity: O(log n).
+
+• CountPointsAtDistance(d1, d2):
+ – Given two numbers d1 and d2, we are to count points where the (actual) distance from the origin is greater than d1 and less than d2.
+ – Instead of comparing the distances, compare the squares. This means we need to count the points with d² in the open interval (d1², d2²).
+ – To do this, perform two “rank” queries:
+  • Let rank(d) be the number of nodes with key (d², …) less than or equal to d.
+  • Compute count1 = Number of points with key ≤ d1².
+  • Compute count2 = Number of points with key < d2².
+ – Then the answer is count2 – count1.
+ – Each rank query is done in O(log n) time so overall this operation is O(log n).
+
+──────────────────────────────
+Conclusion:
+──────────────────────────────
+Using an augmented balanced BST keyed on (x² + y²) (with tie-breaking on (x,y)), we meet all the requirements:
+ – Insert, delete, and find each take O(log n) time in the worst-case.
+ – The CountPointsAtDistance(d1, d2) operation can be implemented with two rank queries and thus also runs in O(log n) time.
+
+This data structure and method provide an efficient solution to maintaining a dynamic set of points in the plane with fast range count queries based on their distance from the origin.

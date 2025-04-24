@@ -1,0 +1,29 @@
+Question: Describe an implementation of the DeleteMin operation in a heap (Heap) as we discussed in class, which performs \( O(\log(n)^{0.5}) \) comparisons in the worst-case scenario, or prove that such an implementation is impossible.
+3o-mini: Below is one acceptable answer. In our class we examined heaps that maintain the usual (complete) binary‐tree structure together with the heap–order property. One might hope to “beat” the obvious O(log n) comparisons needed for a DeleteMin (which “bubbles down” a replacement from the last position) by doing some extra precomputation and “organizing” the comparisons so that fewer are needed when deleting the minimum. In fact, one natural idea is to “group” the nodes into blocks of size about √(log n) and to keep a “tournament” (that is, a mini–heap) on each block so that the candidate for the minimum in that block may be determined with only O(√(log n)) comparisons, and then to keep a second tournament among the block–winners (there are only about (log n)/√(log n) = √(log n) such groups) so that one may find the overall minimum with roughly √(log n) comparisons.
+
+For example, one can try to “layer” the data structure as follows:
+
+1. Partition the nodes of the heap into groups of size b = ⌊√(log n)⌋ (or of height b in the tree). In each such group (or “block”) we maintain extra information (say, in the form of a small tournament tree) so that the minimum in that block can be known with b – 1 comparisons.
+
+2. Keep a secondary structure (again a tournament tree) on the b – block winners. Since there are O(log n/b) = O(√(log n)) such groups, it takes O(√(log n)) comparisons to find the overall minimum.
+
+3. When DeleteMin is called one first uses the secondary tournament tree to identify the block in which the minimum lies (using O(√(log n)) comparisons) and then “fixes” the tournament in that block (again using O(√(log n)) comparisons). (The work required to rebalance the complete–tree structure can be done by pointer moves which do not count as comparisons.)
+
+In this way the number of key–to–key comparisons performed in DeleteMin is only O(√(log n)) in the worst case.
+
+However, one must be very careful. In our standard “heap” model (that is, if one insists that the priority‐queue is represented as a single complete tree whose only extra information is the usual “heap–order” property) one can prove that any procedure that “sifts down” an element must, in the worst case, “check” nearly every level. (After all, a complete binary tree has height Ω(log n) and if one does one comparison per level the cost is Ω(log n).) In other words, without having extra auxiliary information stored in the nodes it is impossible to beat O(log n) comparisons per delete‐min.
+
+Thus, one acceptable answer is as follows:
+
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Answer:
+
+One can implement DeleteMin in O(√(log n)) comparisons if one is allowed to “decorate” the heap with extra tournament–tree structure. For example, one may partition the nodes into groups of size roughly √(log n) and, for each group, precompute (and store) its local minimum (using a tournament tree in the group). Then the overall minimum is found by comparing the O(√(log n)) group–minima; this requires O(√(log n)) comparisons. When the DeleteMin occurs, one removes the overall minimum, then “fixes” the tournament in the group from which that minimum came (again costing O(√(log n)) comparisons), and finally reinserts a replacement so that the complete–heap structure is maintained (by moving pointers but not doing extra key–comparisons). In total, DeleteMin uses only O(√(log n)) comparisons in the worst case.
+
+It is important to note that if one insists on using the standard heap (complete binary tree storing only key information and satisfying the heap–order property) then an argument along the lines of “you must compare along almost every level of the tree” shows that one cannot beat Ω(log n) comparisons. In other words, an O(√(log n))–comparison DeleteMin is possible only if one is allowed to store extra “tournament” (or similar) information in the nodes. (Many of the known worst‐case efficient priority‐queues – such as Brodal’s – use extra information in each node in order to “shortcut” the comparisons during delete–min.)
+
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+So, if one views the “heap” as merely the usual binary heap then it is impossible to get worst–case O(√(log n)) comparisons. But if one enlarges the data structure somewhat (by “decorating” it with tournament–tree information on groups of nodes) then one may indeed implement DeleteMin with only O(√(log n)) comparisons in the worst case.
+
+Any answer explaining one of these two viewpoints (either by describing the two–tier structure or by proving that in the standard heap model the lower bound is Ω(log n)) is acceptable.

@@ -1,0 +1,55 @@
+Question: Given an array of $h$ integers between $0$ and $2^n$.
+It is given that each number in the array is a multiple of the upper bound value of $2^N$, divided by $N^3$. Propose an algorithm to sort the array.
+3o-mini: We can take advantage of the fact that every number in the array is not arbitrary but rather a multiple of
+
+  K = 2^n / n³.
+
+Thus, every entry in the array is of the form
+
+  x = q · K
+
+for some integer q. Notice that since x is between 0 and 2^n, then
+
+  0 ≤ q · K ≤ 2^n ⟹ 0 ≤ q ≤ n³.
+
+That is, there are at most n³ + 1 distinct values (from 0 to n³), even if h (the number of elements in the array) is very large.
+
+One efficient way to sort the array is to use a counting sort (or bucket sort). Here’s how you can do it:
+
+1. Compute K = 2^n / n³.
+2. For each element x in the array, compute q = x / K. (Since x is a multiple of K, this division gives an integer.)
+3. Create a count array C of size (n³ + 1) initialized to zero.
+4. For each computed q, increment C[q].
+5. Finally, traverse the count array in order (from 0 to n³) and output each value q in sorted order by printing q · K the number of times indicated by C[q].
+
+Because the count array is only of size O(n³), and you process h elements once to count and then O(n³) time to output the sorted array, the total time is
+
+  O(h + n³).
+
+This is especially efficient when h is large compared to n³. Moreover, note that by “compressing” the numbers into the q values, you are effectively turning the sorting problem into one that can be handled in linear time relative to the range of distinct keys.
+
+Below is some pseudocode that captures the idea:
+
+------------------------------------------------------------
+function sortArray(A, h, n):
+    K = 2^n / n^3
+    // Create and initialize the count array
+    let C be an array of integers of size n^3 + 1, initialized to 0
+
+    // Count each q value
+    for i = 0 to h - 1 do:
+        q = A[i] / K
+        C[q] = C[q] + 1
+
+    // Output the sorted array
+    index = 0
+    for q = 0 to n^3 do:
+        while C[q] > 0 do:
+            A[index] = q * K
+            index = index + 1
+            C[q] = C[q] - 1
+------------------------------------------------------------
+
+This counting sort runs in O(h + n³) time and uses O(n³) auxiliary space.
+
+Thus, by taking advantage of the structure in the input (each number being a multiple of 2^n/n³), we reduce the sorting problem to one with a very small range of keys and can sort the array very efficiently using counting sort.

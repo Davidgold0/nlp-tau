@@ -1,0 +1,32 @@
+Question: Describe a data structure that supports the following operations (where \( n \) is the number of keys currently in the data structure, and it can be assumed that all the keys are distinct):
+
+\begin{itemize}
+    \item \texttt{Insert(a)} – Adds the key \( a \) to the data structure. The operation should be performed in \( O(\log n) \) time.
+    \item \texttt{Delete(a)} – Deletes the key \( a \). The operation should be performed in \( O(\log n) \) time.
+    \item \texttt{Search(a)} – Returns the key \( a \) if it exists, otherwise returns null. The operation should be performed in \( O(\log n) \) time.
+    \item \texttt{Sum(a)} – Returns the sum of all the keys smaller than \( a \). It can be assumed that \( a \) exists in the data structure. The operation should be performed in \( O(\log n) \) time.
+\end{itemize}
+3o-mini: One solution is to implement an augmented balanced binary search tree (BST). For instance, you can take any self-balancing BST (such as a red–black tree, AVL tree, or treap) and enhance each node by storing an extra field that contains the sum of all the keys in the subtree rooted at that node. Let’s describe how each operation works:
+
+1. Insert(a):
+   • Insert the new key a just as you would into a normal balanced BST (using rotations and other adjustments as necessary to retain the balancing property). 
+   • As you traverse back up (or during the re-balancing process), update the augmented “subtree sum” field in every node that was affected by the insertion. This update takes O(1) time per node along the insertion path, and the height of the tree is O(log n).
+
+2. Delete(a):
+   • Find and delete the key a using the standard BST deletion procedure (again with rebalancing if needed).
+   • As you adjust the tree (or after the deletion operation has been completed), update the subtree sum values for all nodes along the modified path. The number of updates is O(log n), each taking O(1) time.
+
+3. Search(a):
+   • Use standard BST search to locate the key a. Since the tree is balanced, this takes O(log n) time.
+
+4. Sum(a):
+   • Since we assume that key a exists in the tree, perform a modified search for a. During the search, keep an accumulator (say, total) initialized to 0.
+   • At each node, compare a with the node’s key:
+     ◦ If a is less than the current node’s key, move to the left child.
+     ◦ If a is greater than the current node’s key, add the current node’s key and the entire sum stored in its left child (if it exists) to total, then move to the right child.
+     ◦ When you finally reach the node with key a, add the sum of its left subtree (if any) to total. This gives the sum of all keys that are smaller than a.
+   • Because you follow a single path from the root to the key a, the running time is O(log n).
+
+The key to achieving these bounds is that every operation (insertion, deletion, search) performs O(log n) work, and the maintenance of the extra sum field in each node only incurs constant overhead per node on the affected path.
+
+Thus, by using an augmented self-balancing BST where every node keeps track of the sum of its subtree, you efficiently support Insert, Delete, Search, and Sum operations all in O(log n) time.

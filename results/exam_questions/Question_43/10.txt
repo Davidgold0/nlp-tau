@@ -1,0 +1,18 @@
+Question: \textbf{We will implement a binary counter with $n$ bits. The counter is initialized to the value $0 \ldots 00$. The Inc operation advances the counter, meaning it increases its value by 1 as follows. The operation sequentially searches for the rightmost 0, turns it into a 1, and converts all 1's to its right into 0's. If the counter's state is $1 \ldots 11$, then advancing it will change its state to $00 \ldots 0$. For example, if $n=5$ and the counter state is currently $00111$, then after the Inc operation the counter state will be $01000$. After another Inc operation, the counter state will be $01001$. The cost of an operation is defined as the number of bits whose value is changed by the operation. For instance, the cost of advancing the counter in the example from $00111$ to $01000$ is 4, as 4 bits changed their value. The answers to the following sections need to be precise, not asymptotic in terms of $O(.)$. We will define a Double-Inc operation that calls for two consecutive Inc operations. What is the cost of the Double-Inc operation in the worst case? Explain.}
+3o-mini: We claim that in the worst case a Double-Inc (i.e. two Inc operations in a row) will flip n+1 bits in total.
+
+To explain, recall that an Inc operation works as follows on an n‑bit counter:
+1. It scans the bits from right (LSB) to left.
+2. It flips every 1 it encounters into a 0 until it finds a 0.
+3. It then flips that 0 to a 1 and stops.
+4. (When the counter is all 1’s, the Inc sets every bit to 0; that is, it “wrap‐around”.)
+
+Thus, for a given Inc, if the counter has a run of r trailing 1’s (with r between 0 and n–1) then the cost (number of bit flips) of that Inc is r+1 (because r ones are flipped to 0 and then one 0 becomes 1). In the special case when the counter is 11…1 the operation flips all n bits (cost = n).
+
+Now consider composing two Inc’s. There are two ways in which you can “spend” the flips:
+• In one extreme, the first Inc might be “expensive” and flip many bits while the second is “cheap.” For example, if the counter is initially 0 1…1 (i.e. a 0 followed by (n–1) ones), then the first Inc finds r = n–1 trailing ones. It flips all (n–1) ones to 0 and then flips that 0 to a 1, for a cost of n. But notice that the resulting number is 1 0…0 (a 1 followed by all 0’s) so that the next Inc will see no trailing 1’s and will change only one 0 to a 1 (cost = 1). The total cost is n + 1.
+• In the other extreme, the first Inc might do almost nothing while the second “ripples” many bits. For example, if the counter is such that its least‐significant bit is 0 (so no trailing ones – r = 0), then the first Inc will simply flip that bit from 0 to 1 (cost = 1). But now the counter might be in a state like ……1 and—in a well–chosen case—this puts it one increment away from “rippling” a long run of ones. For instance, if initially the counter was …1 1 0, then after the first Inc it becomes …1 1 1, and the next Inc (with the counter now being all ones at the appropriate positions) will flip all n bits (cost = n). Again, the total cost is 1 + n = n + 1.
+
+Thus, no matter which scenario you “pick”, the worst-case total number of bits flipped over two consecutive Inc’s is exactly n+1. 
+
+So, the worst-case cost of a Double-Inc operation is n+1 bit flips.

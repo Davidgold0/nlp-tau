@@ -1,0 +1,47 @@
+Question: \text{Given an array containing } n \text{ elements. The number of distinct elements is } k \, (k \leq n). \\
+\text{d. Assume the elements are integers between } 1 \text{ and } n^4. \text{ Propose a deterministic algorithm to sort the array.}
+3o-mini: We can solve the problem in deterministic O(n) time by observing that even though the array has n elements, there are at most k distinct elements (with k ≤ n) and each element is in the range 1 to n⁴. One natural idea is to use a method that first “compresses” the array by keeping track of the distinct numbers along with their counts, then sorts the distinct numbers, and finally “expands” the sorted order to the full array. Alternatively, we can take advantage of the fact that the keys are integers in a small range (n⁴) and use a deterministic radix sort.
+
+Here are two approaches:
+
+──────────────────────────────
+Approach 1. Using a BST on Distinct Elements
+
+1. Initialize an empty balanced binary search tree (BST).
+
+2. For each element a in the array:
+  a. Search for a in the BST.
+  b. If found, increment a frequency counter stored with that node.
+  c. If not found, insert a new node with key a and set its frequency (or count) to 1.
+
+  Since there are at most k distinct elements, each BST operation takes O(log k) time. Processing all n elements takes O(n log k) time.
+
+3. Perform an in-order traversal of the BST. For each node (which represents a distinct element) output the key a repeated as many times as its frequency counter indicates.
+
+The overall running time is O(n log k) which in the worst-case (k = n) is O(n log n) but can be much faster if k ≪ n.
+
+──────────────────────────────
+Approach 2. Deterministic Radix Sort
+
+Since each element is an integer between 1 and n⁴, the number of bits needed is O(log(n⁴)) = O(log n). In particular, if we choose a radix (base) of n (or any convenient base that makes the number of digits constant), then any element has at most 4 digits in that base. We can then proceed as follows:
+
+1. For d = 1 to 4 (or however many passes are needed), do a stable counting sort on the dth digit of each number (starting with the least significant digit).
+
+2. Each pass takes O(n + R) time where R is the size of the radix. Since we can choose R = O(n) (or even a constant if desired), each pass is O(n) time.
+
+3. After 4 passes we obtain the sorted order. The overall running time is O(4·n) = O(n).
+
+This approach is entirely deterministic.
+
+──────────────────────────────
+Conclusion
+
+Both methods are acceptable answers. The BST method uses the fact that there are only k distinct keys, while the radix sort method takes advantage of the fact that the keys lie in a small polynomial range (n⁴). Therefore, one acceptable answer is:
+
+  “Sort the array using radix sort (with a base chosen so that the number of digits is constant—in this case, at most 4) to obtain a deterministic O(n) algorithm.”
+
+Alternatively, one could write:
+
+  “Insert each element into a balanced BST (tracking frequencies) and then perform an in‐order traversal to emit the sorted order. This runs in O(n log k) time.”
+
+Either answer is deterministic and uses the restrictions on the input to get an efficient sort.

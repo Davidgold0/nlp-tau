@@ -1,0 +1,21 @@
+Question: Given a min-heap, with no duplicate keys.
+Each node \( x \) has an additional field \( s \), which is initialized to \( \text{nil} \). We want the field \( s \) of each node \( x \) to contain a pointer to the successor of \( x \). Assume that access to the heap elements is available (i.e., the heap is not a black box). The heap structure itself should not be changed. Propose an algorithm that achieves this, with the best possible overall worst-case time complexity, given that the keys are integers in the range from 1 to \( 2n \).
+3o-mini: We can solve the problem in O(n) worst‐case time by taking advantage of the fact that the keys are integers in the range 1 to 2n (and are unique), which means we can use an auxiliary array for “counting‐sort”–style ordering. Note that we are not changing the heap structure at all; we are merely “threading” the nodes together in sorted order via their s pointer.
+
+Here is one way to do it:
+
+1. Allocate an array A[1...2n] and initialize all entries to nil.
+2. Traverse the heap (which contains n nodes) and for each node x with key k, store a pointer to x in A[k].
+3. Initialize a variable prev ← nil.
+4. Iterate k from 1 to 2n:
+  a. If A[k] is not nil then:
+    i. If prev is not nil then set prev.s ← A[k] (i.e., link the previous node in sorted order to the current one).
+    ii. Set prev ← A[k].
+5. When the loop ends, every node x in the heap will have its s field pointing to the node with the next larger key (or remaining nil if x is the largest).
+
+The running time is:
+• O(n) to scan over the heap and fill A.
+• O(2n) = O(n) to scan through the array A.
+Thus, the overall worst‐case time complexity is O(n).
+
+This algorithm meets the requirements and has the best possible worst‐case time complexity given the key restrictions.

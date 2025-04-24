@@ -1,0 +1,52 @@
+Question: A pair of values in an array are called consecutive if they are different and, after sorting, they appear in adjacent positions in the array.  
+
+Given an array of natural numbers of size \( n \), propose an algorithm (with the best worst-case complexity) that checks whether there exists a pair of consecutive values whose total occurrences together are at least \( k \)  
+(that is, the number of times a certain value appears plus the number of times its consecutive value appears is at least \( k \)).
+3o-mini: We can solve the problem in O(n log n) worst‐case time. One natural approach is to sort the array and then “compress” it into blocks of the same number so that we can easily get the frequency for each distinct value. Once we have the sorted list of unique values and their frequencies, we only need to check the adjacent blocks (which by definition are “consecutive” values as given in the problem) to see if the sum of their frequencies is at least k.
+
+Below is an outline of one such algorithm:
+
+1. Sort the array in increasing order. This takes O(n log n) time.
+
+2. Traverse the sorted array to compute a frequency list for each distinct element. For example, if the sorted array is
+  a = [a₁, a₂, …, aₙ],
+ you can group together equal numbers. If the array has m distinct values (with m ≤ n), you will get pairs like:
+  ( v₁, f(v₁) ), ( v₂, f(v₂) ), …, ( vₘ, f(vₘ) ).
+
+3. Since the distinct values are in sorted order, the pairs (vᵢ, f(vᵢ)) and (vᵢ₊₁, f(vᵢ₊₁)) are the ones that are considered “consecutive” (because they appear as neighbors in sorted order and are obviously different).
+
+4. For each i from 1 to m–1, check if
+  f(vᵢ) + f(vᵢ₊₁) ≥ k.
+ If for some adjacent pair this inequality holds, then a pair of consecutive values whose total occurrences is at least k exists.
+
+5. If no pair meets the requirement, return that no such pair exists.
+
+Below is some pseudocode to illustrate the idea:
+
+------------------------------------------------------
+Algorithm CheckConsecutivePair(a[1..n], k):
+  1. Sort the array a in non-decreasing order.
+  2. Initialize an empty list L.
+  3. Let i = 1.
+  4. While i ≤ n do:
+    count = 1
+    While i + 1 ≤ n and a[i] == a[i + 1]:
+      count = count + 1
+      i = i + 1
+    Append (a[i], count) to L.
+    i = i + 1
+  5. For j = 1 to length(L) – 1 do:
+    If L[j].count + L[j+1].count ≥ k then:
+      Return True
+  6. Return False
+------------------------------------------------------
+
+Complexity Analysis:
+
+• Sorting the array: O(n log n) worst-case.
+• The single pass to “compress” the sorted array: O(n).
+• The check over adjacent pairs: O(n) in the worst-case (since the number of distinct values m is at most n).
+
+Thus, the overall worst‐case running time is O(n log n).
+
+This approach achieves the best worst‐case complexity given the problem setup.

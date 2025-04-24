@@ -1,0 +1,21 @@
+Question: \textbf{We will implement a binary counter with $n$ bits. The counter is initialized to the value $0 \ldots 00$. The Inc operation advances the counter, meaning it increases its value by 1 as follows. The operation sequentially searches for the rightmost 0, turns it into a 1, and converts all 1's to its right into 0's. If the counter's state is $1 \ldots 11$, then advancing it will change its state to $00 \ldots 0$. For example, if $n=5$ and the counter state is currently $00111$, then after the Inc operation the counter state will be $01000$. After another Inc operation, the counter state will be $01001$. The cost of an operation is defined as the number of bits whose value is changed by the operation. For instance, the cost of advancing the counter in the example from $00111$ to $01000$ is 4, as 4 bits changed their value. The answers to the following sections need to be precise, not asymptotic in terms of $O(.)$. We will define a Double-Inc operation that calls for two consecutive Inc operations. What is the cost of the Double-Inc operation in the worst case? Explain.}
+3o-mini: We want to know the maximum number of bits that might be flipped over two consecutive Inc operations on an n‐bit binary counter.
+
+Remember that for a single Inc operation:
+• The algorithm finds the rightmost 0.
+• It flips that 0 to a 1.
+• All bits to the right (which must be 1’s) are set to 0.
+• (If the counter is all ones, then the operation resets the counter to all zeros.)
+
+Thus, a single Inc operation changes (flips) 1 bit for the rightmost 0 plus as many 1’s as are trailing at the end. In the worst-case for a single Inc, the counter is all ones (e.g. 111…1). Then, there is no 0 to the right, and the operation flips all n bits to 0. That operation costs n bit flips.
+
+Now consider the Double-Inc operation (two consecutive Inc operations).
+
+One worst-case scenario is when the counter starts at 111…1. Then:
+ – The first Inc sees all ones, so it flips all n bits (from 1 to 0). Cost = n.
+ – The counter is now 000…0. The second Inc only needs to change the rightmost 0 into a 1 (since there are no trailing ones). Cost = 1.
+Thus, the total cost for the Double-Inc operation in this case is n + 1 bit flips.
+
+It is not possible to get a higher cost for the second Inc operation because the only way to have a worst-case Inc (n bit flips) is to start with a counter of all ones—which forces the result to be all zeros—making the next Inc cheap.
+
+Therefore, the worst-case cost of a Double-Inc operation is exactly n + 1 bit flips.

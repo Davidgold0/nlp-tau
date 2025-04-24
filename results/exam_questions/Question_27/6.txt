@@ -1,0 +1,38 @@
+Question: Given an array of $h$ integers between $0$ and $2^n$.
+It is given that each number in the array is a multiple of the upper bound value of $2^N$, divided by $N^3$. Propose an algorithm to sort the array.
+3o-mini: We can take advantage of the fact that although the input numbers lie in a huge interval—from 0 up to 2ⁿ—they are very “sparse” in the sense that each number is a multiple of
+
+  delta = (2ⁿ)/(n³).
+
+That is, every element x in the array can be written as
+
+  x = k · delta   for some integer k with 0 ≤ k ≤ n³.
+
+Thus there are at most n³ + 1 unique values that can appear in the array. When h (the number of integers) is large compared to n³, the range of different keys is actually very small relative to h. This immediately suggests using a non-comparison sort that takes advantage of the “small universe” of keys. One good choice is counting sort (or bucket sort).
+
+Here is how you can design the algorithm:
+
+1. Determine the “step” size:
+  delta = 2ⁿ / n³
+
+2. Create a counting array (or bucket array) Count[0 … n³] initialized to 0.
+
+3. For each element x in the array:
+  a. Compute its corresponding index:
+    k = x / delta          (since x is guaranteed to be an exact multiple, the division yields an integer)
+  b. Increment Count[k] by 1.
+
+4. (Optional) Transform the Count array into a prefix sum array if you want to put the elements in a new array in sorted order (this is how counting sort is normally implemented).
+
+5. Reconstruct the sorted array by, for k from 0 to n³:
+  a. Output the number k · delta exactly Count[k] times.
+
+Time complexity:
+
+ • Counting the frequencies takes O(h) time.
+ • The Count array has size n³ + 1, so processing the buckets takes O(n³) time.
+ • Therefore, the overall time is O(h + n³).
+
+This algorithm is highly efficient if h is large relative to n³ (for example if n is relatively small compared to h), as it “cuts through” the need to compare every pair of numbers. It leverages the special structure of the input.
+
+Thus, the answer is to use counting sort by mapping each integer x to its corresponding index k = x/(2ⁿ/n³) and then reconstructing the sorted list from the counts.

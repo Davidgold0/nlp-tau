@@ -1,0 +1,89 @@
+Question: Given an ordered set \( S \), we define the degree of an element in the set as its position in a sorted array of the elements (all elements have different values). Throughout the question, \( h \) represents the number of elements currently in the requested data structure.
+
+\textbf{(A)} Describe a data structure that supports the following operations:
+\begin{itemize}
+  \item \texttt{Init()} – initialize the structure in \( O(1) \) time.
+  \item \texttt{Insert(x)} – insert the element \( x \) into \( S \) in \( O(\log n) \) time.
+  \item \texttt{Delete(x)} – delete the element \( x \) from \( S \) in \( O(\log n) \) time.
+  \item \texttt{Min()} – return the element with the minimum degree (smallest value) in \( O(1) \) time.
+  \item \texttt{Max()} – return the element with the maximum degree (largest value) in \( O(1) \) time.
+  \item \texttt{AVG()} – return the element with the minimum degree whose value is greater than or equal to the average of the elements in the structure in \( O(1) \) time.
+\end{itemize}
+3o-mini: One acceptable solution is to use a balanced binary search tree (such as a red–black tree or AVL tree) augmented with some extra information, plus a few global variables. (Any balanced BST that supports logarithmic insertions and deletions is fine.)
+
+Here is one way to do it:
+
+───────────────────────────── 
+Data Structure Components
+───────────────────────────── 
+1. A balanced BST that stores all the elements in sorted order (the “ordered set”). Each node stores an element x (all keys are distinct).
+
+2. For each node (or at least for the whole tree) you can also maintain subtree metadata (this isn’t strictly necessary for our operations, but it is common for order‐statistic trees). In our case, though, we require the following global variables:
+  a. Total sum of all keys (say, global variable TotalSum).
+  b. Count of elements in the tree (say, global variable Count).
+
+3. Also, we maintain independent pointers (or fields) to:
+  a. The node with the minimum key (MinPtr).
+  b. The node with the maximum key (MaxPtr).
+  c. The “average candidate” (AvgPtr) – that is, the node with the minimum key that is greater than or equal to the average value of all elements.
+    • Note: The “average” here is defined as (TotalSum/Count). (Since the keys are numbers, this makes sense.)
+
+───────────────────────────── 
+Operations
+───────────────────────────── 
+
+• Init():
+ – Allocate/initialize an empty BST.
+ – Set TotalSum ← 0 and Count ← 0.
+ – Set MinPtr, MaxPtr, and AvgPtr to null.
+ This takes O(1) time.
+
+• Insert(x):
+ – Insert the new element x into the BST. (This takes O(log n) time.)
+ – Update TotalSum ← TotalSum + x and Count ← Count + 1.
+ – If x is smaller than the current minimum (or if the tree was empty), update MinPtr.
+ – If x is larger than the current maximum (or if the tree was empty), update MaxPtr.
+ – Now recompute the average = TotalSum/Count. Use the BST to “lower_bound” (or search for the smallest element that is ≥ the average). This search is done in O(log n) time.
+ – Store the result in AvgPtr.
+ Thus, the overall cost is O(log n).
+
+• Delete(x):
+ – Remove the element x from the BST (O(log n) time).
+ – Update TotalSum ← TotalSum – x and Count ← Count – 1.
+ – If x is at MinPtr or MaxPtr, update these pointers to the new minimum or maximum; this update can be done in O(1) time if your BST structure also keeps pointers for the minimum and maximum.
+ – Recompute the average = TotalSum/Count.
+ – Again, search for the first element in the BST that is ≥ this average (using lower_bound) and update AvgPtr. (O(log n) time.)
+ So the deletion is O(log n).
+
+• Min():
+ – Return the element pointed to by MinPtr.
+ – This is O(1).
+
+• Max():
+ – Return the element pointed to by MaxPtr.
+ – This is O(1).
+
+• AVG():
+ – Return the element pointed to by AvgPtr.
+ – Since AvgPtr is maintained during each update, this takes O(1) time.
+
+───────────────────────────── 
+Discussion
+───────────────────────────── 
+The key idea is to “pay” for the O(log n) lower_bound search during insertions and deletions; that is, when the tree is modified, you update the pointer to the lower_bound of the current average. Then when a user calls AVG(), you simply return the already‐computed value in O(1) time.
+
+Note that one must update both the running sum and count on each insert or delete in O(1) time, and the BST’s own update takes O(log n) time. The extra lower_bound search to reset AvgPtr is also O(log n), which is within our allowed bounds.
+
+───────────────────────────── 
+Conclusion
+───────────────────────────── 
+A correct answer is: Use an augmented balanced BST that:
+ • Maintains global variables TotalSum and Count.
+ • Keeps pointers to the minimum and maximum elements.
+ • Computes and stores AvgPtr = lower_bound(TotalSum/Count) during each update.
+Thus, all operations can be supported in the time bounds given.
+
+This data structure meets all the requirements:
+ – Init in O(1) time;
+ – Insert and Delete in O(log n) time;
+ – Min(), Max(), and AVG() in O(1) time.

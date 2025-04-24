@@ -1,0 +1,66 @@
+Question: Given \(n\) segments on the line (i.e., the input is \(n\) pairs \((x, y)\) of start and end points), a segment is called "central" if there are at least \(n/4\) segments starting before it (its start point is to the left of its start point) and at least \(n/4\) segments ending after it (its end point is to the right of its end point). Propose an algorithm that returns the number of central segments, with the best possible Worst Case running time, and analyze its running time.
+3o-mini: We can solve the problem in O(n) worst‐case time using linear‐time selection. Recall that for a segment to be “central” (of the n given segments), it must satisfy two conditions:
+
+ • At least n/4 segments have their start points to the left of its start.
+ • At least n/4 segments have their end points to the right of its end.
+
+One natural idea is to sort the segments by their start points and by their end points. However, sorting takes O(n log n) time. We can do better by “selecting” appropriate threshold values in linear time.
+
+Let’s explain the idea step by step.
+
+───────────────────────────── 
+Step 1. Define the “rank‐conditions” in terms of order statistics.
+
+Assume for simplicity that all start and end points are distinct.
+
+• Sort the segments by their start points conceptually. The condition “at least n/4 segments start before s” is equivalent to saying that the segment s is not among the first ⎣n/4⎦ segments in this sorted order. In other words, if we label the segments 1,2, …,n in increasing order by their start coordinate, then s is central only if its rank r₁ (according to start points) satisfies
+
+  r₁ ≥ n/4 + 1.
+
+Let m₁ be the (n/4 + 1)th smallest start coordinate. Then any segment with start coordinate at least m₁ satisfies the first condition.
+
+• Similarly, sort the segments by their end points (in increasing order). For a given segment s with rank r₂ in this order, the number of segments that end after s is n – r₂. The condition “at least n/4 segments end after s” becomes
+
+  n – r₂ ≥ n/4  ⟹  r₂ ≤ 3n/4.
+
+Let m₂ be the (3n/4)th smallest end coordinate. Then any segment whose end coordinate is at most m₂ satisfies the second condition.
+
+───────────────────────────── 
+Step 2. Use the Linear-Time Selection Algorithm
+
+Instead of fully sorting, we can use the linear‐time “selection” algorithm (such as the Median-of-Medians algorithm) to find the thresholds:
+
+ 1. Compute m₁ = Select({start points}, n/4 + 1)            (O(n) worst‐case)
+ 2. Compute m₂ = Select({end points}, 3n/4)             (O(n) worst‐case)
+
+───────────────────────────── 
+Step 3. Count the Central Segments
+
+Then, for each segment s = (x, y), test whether:
+
+  x ≥ m₁  and  y ≤ m₂.
+
+If both conditions hold, then s is “central” (by our argument above).
+
+Thus the algorithm is:
+
+ Algorithm CountCentralSegments(segments S):
+  1. Let n = |S|.
+  2. m₁ ← Select({x : (x,y) ∈ S}, n/4 + 1) 
+  3. m₂ ← Select({y : (x,y) ∈ S}, 3n/4)
+  4. count ← 0
+  5. For each segment (x,y) in S do
+    if x ≥ m₁ and y ≤ m₂ then count ← count + 1
+  6. Return count
+
+───────────────────────────── 
+Step 4. Running Time Analysis
+
+• Each selection (step 2 and 3) takes O(n) worst-case time.
+• The iteration (step 5) takes O(n).
+• Thus the overall worst-case running time is O(n).
+
+───────────────────────────── 
+Conclusion
+
+We have designed an algorithm that finds the number of “central” segments in O(n) worst-case time by using linear-time selection to compute the threshold values and a single pass to count the segments that satisfy the required conditions.

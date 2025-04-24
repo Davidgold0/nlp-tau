@@ -1,0 +1,17 @@
+Question: Given \( n \) pairs of keys \( (a_1, b_1), (a_2, b_2), \dots, (a_n, b_n) \), where each key \( a_i \) and each key \( b_j \) (for \( 1 \leq i,j \leq n \)) are integers in the range \([1, 10n]\), describe a data structure that can be built in Worst-case time \( O(n) \) (given \( n \) key pairs) and supports the following operation in Worst-case time \( O(1) \):
+
+\texttt{SearchAll(a)} – returns a list of all key pairs for which \( a \) is the left key.
+3o-mini: We can solve the problem by taking advantage of the fact that every left key a is an integer lying within the range [1, 10n]. This allows us to use a direct-address table (i.e. an array) to store the pairs. Here’s the approach:
+
+1. Allocate an array T of size 10n + 1 (so that indices 1 through 10n can be used directly). Each entry T[a] will eventually hold a list (or any convenient container) of all key pairs (a, b) with left key equal to a. The cost for allocation is O(n) since the array size is O(n).
+
+2. For each of the n given key pairs (a, b), do the following:
+   • Append the pair (a, b) to the list stored at T[a].
+
+   Since there are n pairs, this step takes O(n) time in total.
+
+3. To support the operation SearchAll(a), simply return the list stored in T[a]. This lookup takes O(1) worst-case time.
+
+Thus, the data structure is built in O(n) worst-case time and supports the query in O(1) worst-case time.
+
+Note: The direct-addressing approach works here because the universe of left keys, {1, 2, …, 10n}, is only a constant factor larger than n, so the space required is still O(n).

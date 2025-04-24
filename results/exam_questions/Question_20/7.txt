@@ -1,0 +1,42 @@
+Question: Describe a data structure whose elements are pairs of keys \( (a, b) \) that supports the following operations (where \( n \) is the number of key pairs currently in the data structure, and it can be assumed that all the key pairs are distinct):
+
+\begin{itemize}
+    \item \texttt{Insert(a, b)} – Adds the key pair \( (a, b) \) to the data structure. The operation should be performed in \( O(\log n) \) time.
+    \item \texttt{Delete(a, b)} – Deletes the key pair \( (a, b) \). The operation should be performed in \( O(\log n) \) time.
+    \item \texttt{Search(a, b)} – Returns the key pair \( (a, b) \) if it exists, otherwise returns null. The operation should be performed in \( O(\log n) \) time.
+    \item \texttt{successor(a, b)} – Returns \( (a, b^*) \) where \( b^* \) is defined as follows: let \( b_1, b_2, b_3, \dots, b_m \) be all the keys such that the pair \( (a, b_i) \) exists in the data structure (for \( 1 \leq i \leq m \)) and is sorted in ascending order. Then, \( b^* \) is the key to the right of \( b \) in the sorted list. If there is no key to the right of \( b \) in the sorted list, return null. The operation should be performed in \( O(\log n) \) time.
+\end{itemize}
+3o-mini: One acceptable answer is to use a balanced binary search tree (such as a red–black tree or an AVL tree) that stores the pairs (a, b) in lexicographic order—that is, we say (a, b) < (c, d) if either a < c or (a = c and b < d). With this ordering the operations can be implemented as follows:
+
+1. Insert(a, b)
+  • Insert the pair (a, b) into the BST using standard BST insertion.
+  • Since the tree is balanced, this takes O(log n) time.
+
+2. Delete(a, b)
+  • Find the node corresponding to (a, b) in the BST (again using O(log n) search) and delete it using the usual deletion procedure.
+  • The balancing guarantees O(log n) time for deletion.
+
+3. Search(a, b)
+  • Perform a standard BST search to locate (a, b) in O(log n) time.
+  • Return the key pair if found, otherwise return null.
+
+4. successor(a, b)
+  • First, use the BST search procedure to locate the node corresponding to (a, b).
+  • Then compute its in‐order successor—that is, the next node in the in–order (sorted) sequence.
+  • However, the key detail is that we want the “successor” only among those pairs that share the same a value. So after finding the in–order successor, check if its “a” component is equal to a.
+    – If yes, then its b value is the next b in the sorted order for key a.
+    – If no (or if (a, b) was the largest pair with that a), return null.
+  • Since both the BST search and finding the successor in a BST take O(log n) time, the overall operation is O(log n).
+
+An alternative—but equivalent—design is to use a two–level data structure:
+ • The first level is a balanced BST (or hash table if you wish, though using a BST keeps the worst–case guarantees) keyed by a.
+ • Each node (for a given key a) stores a secondary balanced BST that holds all values b such that the pair (a, b) is in the overall data structure.
+ • Then:
+  – Insert(a, b): Search for the BST associated with a (in O(log n) time, since there are at most n distinct a’s), and insert b into it (O(log k), where k is the number of b’s for that a, and k ≤ n, so overall O(log n)).
+  – Delete(a, b) and Search(a, b) follow similarly.
+  – For successor(a, b): Locate the BST for a and in it find the successor of b, which takes O(log n) time.
+This design, while slightly more involved, achieves the same time bounds.
+
+Either design meets the specifications: all operations run in O(log n) time and the successor(a, b) operation returns (a, b*) where b* is defined to be the next larger key among pairs that have the same a value.
+
+Thus, the described data structure is a balanced BST (or a tree‐of–trees) keyed lexicographically by (a, b).

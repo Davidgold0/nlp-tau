@@ -1,0 +1,36 @@
+Question: Describe an implementation of the DeleteMin operation in a heap (Heap) as we discussed in class, which performs \( O(\log(n)^{0.5}) \) comparisons in the worst-case scenario, or prove that such an implementation is impossible.
+3o-mini: We will show that no “heap‐style” implementation of DeleteMin can always use only O(√(log n)) key comparisons in the worst case. In other words, one may prove that any heap that supports DeleteMin (in the usual “comparison‐based” sense) must sometimes perform Ω(log n) comparisons, so an O(√(log n)) worst‐case bound is impossible.
+
+Below is one way to explain the reasoning.
+
+──────────────────────────────
+Outline of the “Impossible” Result
+
+Suppose, for the sake of contradiction, that we had a heap implementation (with the usual heap–order invariant) in which the DeleteMin operation performed only O(√(log n)) key comparisons in the worst case. (Recall that for a binary heap the standard implementation of DeleteMin simply “bubbles down” the last element, doing roughly one or two comparisons per level; since the height is O(log n), we get O(log n) comparisons. One might hope that with a clever data structure one could beat that, for example to O(√(log n)).)
+
+Now, recall that one common way to obtain a sorted sequence is to build a heap from n items and then call DeleteMin repeatedly (this is the idea behind heapsort). There is a well‐known fact that a heap can be built with O(n) key comparisons (by “heapifying” the array, using a bottom–up procedure). Then if we perform n DeleteMin operations to extract the items in sorted order, the total number of comparisons made by these DeleteMin’s would be
+
+  n · O(√(log n)) = O(n · √(log n)).
+
+But it is a fundamental fact from the theory of comparison–sorting that any algorithm that sorts n items (in the worst case) must perform Ω(n log n) comparisons. (In fact, the decision–tree model shows that the worst–case number of comparisons is lower–bounded by log2(n!).)
+
+Since O(n · √(log n)) is asymptotically smaller than Ω(n log n), our hypothetical implementation would yield a heap–sort that uses o(n log n) comparisons in the worst case. (More precisely, since √(log n) grows slower than log n, for large n we would have n√(log n) = o(n log n).) This contradicts the well–known lower bound for comparison–based sorting.
+
+──────────────────────────────
+More Detailed Explanation
+
+Let n be the number of keys in the heap. In any heap that maintains the heap–order property (that every node is not greater than its children) the “tournament” nature of the comparisons is such that the minimum element (at the root) has “defeated” at least one candidate along each level of the heap. For a complete tree the height is Ω(log n) so one can show (by an adversary argument or decision–tree lower bound argument) that in order to “recover” the new minimum after deletion one must in the worst case compare at least a constant fraction of those defeated (or “loser”) elements. In the standard tournament tree the well–known tight bound for finding the second–smallest element (which essentially is what must be done when recomputing the new minimum) is Ω(log n) comparisons.
+
+Thus if one could “magically” restructure the heap so that DeleteMin always did only O(√(log n)) comparisons then by performing a full sort (which is just n DeleteMin’s together with an O(n) building step) we would beat the known comparison–sorting lower bound. This contradiction shows that no comparison–based heap that supports the usual heap–order invariant can have worst–case DeleteMin cost of only O(√(log n)) comparisons.
+
+──────────────────────────────
+Conclusion
+
+There is no way (within the standard comparison–based heap model, where the only information available is the relative order of keys) to implement DeleteMin so that it always uses only O(√(log n)) comparisons in the worst case. In other words, any such heap must sometimes perform Ω(log n) key comparisons when deleting the minimum.
+
+Thus, an implementation of DeleteMin that performs only O(√(log n)) comparisons in the worst case is impossible.
+
+──────────────────────────────
+Final Answer
+
+It is impossible to “beat” the Ω(log n) worst‐case lower bound on comparisons in a heap–style DeleteMin. (A heap with O(√(log n)) worst–case comparisons per DeleteMin would lead to a heap sort using O(n√(log n)) comparisons overall – contradicting the Ω(n log n) lower bound for comparison sorting.)

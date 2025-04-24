@@ -1,0 +1,35 @@
+Question: Given a directed graph defined by a set of \( n \) nodes and \( m \) edges, where each edge is an ordered pair of nodes. The outgoing edges from each node are stored in a singly linked list.
+
+Each node \( v \) is represented by an object that supports the following operations:
+- \( \text{edges}(v) \): Returns the list of edges outgoing from node \( v \).
+We assume the graph has \( n \) nodes, each identified by an integer between 1 and \( n \). The operation \( \text{id}(v) \) returns the integer identifier of node \( v \).
+The entire graph is represented by an array of size \( n \), where the element \( \text{id}(v) \) points to the object representing node \( v \).
+
+On the edge list \( L \) (outgoing from a specific node), the following operations can be performed:
+- \( \text{first}(L) \): Returns the first edge in the list.
+- \( \text{delete-first}(L) \): Removes the first edge from the list.
+- \( \text{insert-first}(L, e) \): Inserts an edge object \( e \) at the beginning of the edge list \( L \).
+- \( \text{length}(L) \): Returns the length of the list \( L \).
+
+Each edge \( e = (v, w) \) is represented by an object that supports the following operations:
+- \( \text{next}(e) \): Returns the next edge in the outgoing edge list from \( v \).
+- \( \text{delete-after}(e) \): Removes the edge after \( e \) in the outgoing edge list from \( v \).
+- \( \text{source}(e) \): Returns the source node \( v \) from which \( e \) originates.
+- \( \text{target}(e) \): Returns the target node \( w \) to which \( e \) points.
+
+These are the only operations that can be performed on the objects representing the graph.
+
+For algorithm analysis, let \( d(v) \) denote the number of outgoing edges from node \( v \).
+
+\textbf{(A)} Given two nodes \( v \) and \( w \), describe the most efficient algorithm you can to check if there is an edge from \( v \) to \( w \). What is the running time of the algorithm?
+3o-mini: To check if there is an edge from node v to node w, you can use the following algorithm:
+
+1. Obtain the list L of outgoing edges from node v by calling edges(v).
+2. Set a pointer (or variable) e to the first edge in L using first(L).
+3. While e is not null:
+   a. Check if target(e) equals w.
+   b. If yes, return True (the edge from v to w exists).
+   c. Otherwise, move to the next edge in the list using next(e).
+4. If you exit the loop without finding an edge to w, return False.
+
+The running time of this algorithm is O(d(v)), where d(v) is the number of outgoing edges from node v. In the worst-case, you must examine every edge in the list.

@@ -1,0 +1,49 @@
+Question: A pair of values in an array are called consecutive if they are different and, after sorting, they appear in adjacent positions in the array.  
+
+Given an array of natural numbers of size \( n \), propose an algorithm (with the best worst-case complexity) that checks whether there exists a pair of consecutive values whose total occurrences together are at least \( k \)  
+(that is, the number of times a certain value appears plus the number of times its consecutive value appears is at least \( k \)).
+3o-mini: We can solve the problem in O(n log n) worst‐case time (or, if the domain of numbers is small, even in O(n) time) by following these steps:
+
+Step 1. (Count Frequencies)  
+Traverse the array once and build a frequency table (using, for example, a hash table or dictionary) that maps each distinct number to its number of occurrences. This step takes O(n) time.
+
+Step 2. (Sort the Distinct Values)  
+Extract the distinct keys (the numbers) from the frequency table and sort them in increasing order. Let m be the number of distinct values; note that in the worst case m = O(n), so sorting takes O(n log n) worst-case time.  
+• Note: Although “consecutive values” might sound like “adjacent integers”, the problem defines them as follows: “A pair of values in an array are called consecutive if they are different and, after sorting, they appear in adjacent positions in the array.” Thus if your sorted distinct numbers are, say, [3, 7, 20], then (3,7) and (7,20) are consecutive pairs (even though 3 and 7 are not one apart).
+
+Step 3. (Check the Frequency Sum)  
+Loop through the sorted list, and for each pair of adjacent numbers, add up their frequencies from the frequency table. If for any pair the sum is at least k, then you have found a valid pair and you can return “yes” (or true). Otherwise, after checking all adjacent pairs, you return “no” (false).
+
+Pseudo-code for the algorithm:
+
+---------------------------------------------------------
+function existsConsecutivePair(A, k):
+    // Step 1: Count frequencies
+    create an empty dictionary freq
+    for each element x in A:
+         if x is in freq:
+             freq[x] = freq[x] + 1
+         else:
+             freq[x] = 1
+
+    // Step 2: Sort the distinct values
+    distinctVals = list of all keys in freq
+    sort(distinctVals)  // worst-case O(m log m), m ≤ n
+
+    // Step 3: Check each pair of consecutive values
+    for i from 0 to length(distinctVals) - 2:
+         if freq[distinctVals[i]] + freq[distinctVals[i+1]] >= k:
+             return True
+
+    return False
+---------------------------------------------------------
+
+Time Complexity Explanation:
+• Counting frequencies takes O(n) time.
+• Sorting m distinct values takes O(m log m). In the worst-case, m = O(n), so this is O(n log n).
+• Scanning through the sorted values takes O(m) = O(n).
+Thus, the overall worst-case complexity is O(n log n).
+
+If the natural numbers in the array are known to be bounded by a constant or by a number that is O(n) (so that a counting sort or a similar O(n) sorting method can be used), then the entire algorithm can run in O(n) worst-case time.
+
+This algorithm is optimal in the sense that you cannot avoid reading the n items and, in the worst-case (with arbitrary natural numbers) sorting the m distinct keys takes O(n log n).

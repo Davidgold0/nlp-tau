@@ -1,0 +1,45 @@
+Question: Given two AVL trees of size \( n \) each, is it possible to merge them in \( O(\sqrt{n}) \) time? Prove using an algorithm or a contradiction.
+3o-mini: We will show that if all the elements of one tree are smaller than those of the other, then the two AVL trees of size n can be “joined” to form one AVL tree in O(log n) time—which is, of course, within O(√n).
+
+Before giving the algorithm and its analysis, note that O(log n) ⊆ O(√n) (since for large n, log(n) grows much more slowly than √n). Thus, if you can merge in O(log n) time, then you have certainly merged in O(√n) time.
+
+Below is one standard “join” algorithm for AVL trees and a sketch of its proof. (The same ideas appear in many textbooks on balanced BSTs.)
+
+──────────────────────────────
+Assumptions
+
+We assume the following:
+1. Two AVL trees A and B, each of size n.
+2. All keys in A are less than all keys in B.
+3. Let h(A)=h₁ and h(B)=h₂ denote the heights of A and B, respectively.
+
+──────────────────────────────
+Algorithm (Join)
+
+1. If |h₁ − h₂| ≤ 1 then
+  • Create a new node X whose left child is A and whose right child is B. (You can choose a “dummy” key for X if needed or restructure slightly so that the key ordering is preserved.) Then update the height of X.
+  • Return this new tree.
+2. Otherwise, assume without loss of generality that h₁ > h₂.
+  • Start at the root of A and follow its right‐spine (i.e. keep going to the right child) until you reach a node v such that the height of v’s right child is ≤ h₂. In other words, you pick the highest point in A where the “gap” between the height of A and h₂ is small.
+  • Let T=v.right. Replace v.right with the tree obtained by “joining” T and B using the same routine:
+   new_subtree = join(T, B)
+  • Set v.right = new_subtree, update the height of v and rebalance v if necessary.
+  • Go back up along the search path fixing up heights and rebalancing.
+  • Return the (possibly new) root.
+
+A similar procedure is followed if h₂ > h₁ (by “walking” down the left spine of B until the proper place is found).
+
+──────────────────────────────
+Proof of Running Time
+
+Notice that the cost of the merge is dominated by the descent down the spine of the taller tree until we find a node v where the height of the subtree has become roughly h₂. The length of the right spine from the root of an AVL tree is O(h) where h = O(log n) by the AVL height-balancing property. In the worst case the algorithm does O(|h₁ − h₂|) steps. And since both trees are balanced, h₁ and h₂ are O(log n). Therefore, the worst-case running time is O(log n). And obviously, O(log n) ⊆ O(√n).
+
+──────────────────────────────
+Conclusion
+
+Thus, under the assumption that the AVL trees have a “separated” key range (i.e. every key in A is less than every key in B), they can be merged in O(log n) time. Since log n is asymptotically less than √n, the merge is also in O(√n) time.
+
+──────────────────────────────
+Final Answer
+
+Yes, it is possible to merge two AVL trees of size n each in O(√n) time (in fact, one can do it in O(log n) time using the join algorithm described above).

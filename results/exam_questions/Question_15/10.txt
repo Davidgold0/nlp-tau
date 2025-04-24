@@ -1,0 +1,10 @@
+Question: We insert a set of elements \( X_1 \) of size \( n_1 \) into a hashing table of size \( m \) using the chaining method with the hashing function \( h \). All the linked lists formed in this table had a length of at most \( k_1 \). We then insert a second set of elements \( X_2 \) of size \( n_2 \) into another hashing table of size \( m \), also using the chaining method with the same hashing function \( h \). The linked lists formed in this table had a length of at most \( k_2 \). Finally, we insert all the elements of \( X_1 \) and \( X_2 \), in some order, into a third hashing table of size \( m \), again using the chaining method and the same hashing function \( h \). Provide a non-asymptotic bound, as tight as possible, on the number of keys that will be examined during a search operation (whether successful or unsuccessful) in the third hashing table.
+3o-mini: We note that in the first table, every bucket (i.e. every linked list) has at most k₁ keys from X₁, and in the second table every bucket has at most k₂ keys from X₂. Now, when we insert all the elements from X₁ ∪ X₂ into a third table (using the same hash function h), the keys landing in any given bucket come from the union of the X₁‐keys and the X₂‐keys that were originally placed there. Consequently, no bucket in the third table can have more than k₁ + k₂ keys.
+
+Consider a search operation (whether the key is present or not). With chaining the search in a particular bucket involves scanning all the keys in the linked list for that bucket (or until the key is found, in the successful case). In the worst case the searched key is either absent or is the last key in the list. Hence, in the worst case the search must examine every key in that bucket.
+
+Since we have just argued that any bucket may contain at most k₁ + k₂ keys, the number of keys that must be examined during a search (successful or unsuccessful) is at most
+
+  k₁ + k₂.
+
+This is a tight non‐asymptotic bound under the conditions stated.

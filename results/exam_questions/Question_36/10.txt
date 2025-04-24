@@ -1,0 +1,24 @@
+Question: We define a zig-zag array, for which there exist some indices \( n \leq j \leq i \leq 1 \) such that all elements in the array between 1 and \( i \) are in increasing order, all elements between \( i \) and \( j \) are in decreasing order, and all elements between \( j \) and \( n \) are in increasing order. We call \( i \) the peak element and \( j \) the valley element. 
+
+Provide upper and lower bounds for the problem: Input: Array. Output: Returns TRUE if the array is a zig-zag array.
+3o-mini: We can show that any algorithm that verifies whether a given array is a zig‐zag array must in the worst case inspect every element of the array. In other words, the problem requires Θ(n) time.
+
+To explain briefly, recall the definition of a zig‐zag array here:
+• There are indices i and j with 1 ≤ i ≤ j ≤ n such that:
+ – The subarray from index 1 up to i (inclusive) is in strictly increasing order.
+ – The subarray from i to j (inclusive) is in strictly decreasing order.
+ – The subarray from j to n (inclusive) is in strictly increasing order.
+
+Imagine an algorithm that verifies these properties:
+1. It must scan from the beginning of the array to determine the first phase of increasing order (up to the peak at index i). In the worst case, you might have to check nearly all elements.
+2. Once the peak (i) is detected, the algorithm then must verify that the elements until a valley (j) are strictly decreasing.
+3. Finally, it scans from j to n to check for strictly increasing order again.
+
+Even if we can combine some of these checks into a single pass, in the worst-case scenario every element is examined at least once.
+
+Thus, the upper bound is O(n), since you can complete these checks in linear time. Simultaneously, since you must examine every element at least once in the worst case, an algorithm can’t do better than Ω(n).
+
+In summary, the problem has:
+ • An upper bound of O(n)
+ • A lower bound of Ω(n)
+So, the best possible time complexity for this problem is Θ(n).

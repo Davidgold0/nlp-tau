@@ -1,0 +1,25 @@
+Question: **Data Structure Description:**
+
+Describe a data structure that maintains a set of points in the plane, where each point \( p_i \) is represented as a pair of numbers \( (x_i, y_i) \). The data structure should support the following operations:
+
+- \( \text{insert}(x, y) \), \( \text{delete}(x, y) \), \( \text{find}(x, y) \) in the worst-case time complexity of \( O(\log n) \).
+- \( \text{CountPointsAtDistance}(d_1, d_2) \), which performs the following operation: Given two numbers \( d_1 \) and \( d_2 \), the function returns the number of points in the structure whose distance from the origin is greater than \( d_1 \) and smaller than \( d_2 \). Recall that the distance of a point \( (x, y) \) from the origin is \( \sqrt{x^2 + y^2} \).
+
+The \( \text{CountPointsAtDistance}(d_1, d_2) \) operation should be executed with the lowest possible time complexity.
+3o-mini: One clean solution is to keep the points in a balanced binary search tree (for example, a red–black tree or AVL tree) that is augmented with subtree size information—often called an order‐statistic tree. The key in the tree will be the point’s distance from the origin (or, more conveniently, its square, so that we can avoid computing square roots). (In the case of duplicate distances, you can break ties by using the x and y coordinates.) This structure allows you to do the following:
+
+1. insert(x, y): First compute d² = x² + y² for the new point (x, y) and then insert the point into your tree using d² as the key (with tie‐breaking using x and y). Balanced trees guarantee that this insertion takes O(log n) worst-case time. The tree augmentation (i.e. updating subtree sizes) also takes O(log n).
+
+2. delete(x, y): Similarly, to delete the point, you first locate it in the tree by its key (again, computing d² = x² + y²) and then performing the deletion in the balanced BST. Again, deletion takes O(log n) time and the subtree sizes are updated along the way.
+
+3. find(x, y): By storing the points keyed on (d², x, y), you can locate the point (x, y) in O(log n) worst-case time.
+
+4. CountPointsAtDistance(d₁, d₂): To count the number of points whose Euclidean distance lies strictly between d₁ and d₂, you can use the tree to count how many points have key between d₁² and d₂². In an order‐statistic tree you can implement “rank” queries (i.e. count the number of elements with key less than a given value) in O(log n) time. Let Rank(t) be the number of nodes with key less than t. Then the answer is:
+  Rank(d₂²) – Rank(d₁²)
+This uses the fact that the tree stores the sizes of all subtrees, so the rank is available in O(log n) time.
+
+This data structure meets the requirements:
+ • insert, delete, find operations each run in O(log n) worst-case time.
+ • CountPointsAtDistance(d₁, d₂) also runs in O(log n) time (since it is essentially two rank queries and a subtraction).
+
+Thus, by using a balanced BST augmented to support order‐statistics (range counting by key value) and by keying on the squared distance from the origin (with additional tie-breaking by (x, y) if necessary), you achieve the desired behavior and time complexity.

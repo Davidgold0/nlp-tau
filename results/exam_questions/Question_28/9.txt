@@ -1,0 +1,29 @@
+Question: A data structure is required that supports the following operations on elements containing two fields: \texttt{id} and \texttt{amount}. At any given time, the number of elements in the structure does not exceed $N$.
+
+\begin{enumerate}
+    \item \texttt{Add(i,x)}: Increases the value of the \texttt{amount} field of the element (the only one) with \texttt{id} = $i$, by $x$ if it exists. Otherwise, if no such element exists, it adds an element with \texttt{id} = $i$, \texttt{amount} = $x$ (no pointer is given to the element).
+    \item \texttt{whoIsMax()}: Returns the \texttt{id} for which the \texttt{amount} field is maximal (if more than one exists, returns one of them).
+    \item \texttt{Reduce(i,y)}: Decreases the \texttt{amount} of the element with \texttt{id} = $i$ by $y$ (no pointer is given to the element).
+\end{enumerate}
+
+Assume that all \texttt{id}s are in the range $[1, 3n]$.
+
+Describe a deterministic data structure that supports operations 1 and 2 in $O(1)$ time in the worst case (there is no need to implement operation 3).
+3o-mini: We can achieve O(1) worst‐case time for Add and whoIsMax by storing the elements in an array (indexed by id) and by keeping an extra “max pointer” that always points to an element with the highest current amount.
+
+Assume that we have an array A[1…3N] (since the id’s lie in the range [1,3N]). The entry A[i] will be either null (if no element with id = i is present) or contain a pointer to the element with that id. (The number of elements in our structure is always at most N.)
+
+We also maintain a variable maxElement that points to an element known to have the currently largest amount. (If there’s a tie, it doesn’t matter which one is kept.) The operations are then implemented as follows:
+
+1. Add(i, x):
+  a. Check A[i]. If A[i] is not null, then an element with id = i already exists. Increase its amount by x.
+  b. If A[i] is null, then create a new element with id = i and amount = x, and store its pointer in A[i].
+  c. In either case, compare the updated element’s amount with that of maxElement (if maxElement exists). If maxElement is null (i.e. no elements were present before) or if the updated amount is greater than or equal to maxElement’s amount, then set maxElement to point to the element with id = i.
+  d. Since all these steps (accessing an array index and doing a constant–time comparison) take constant time, the Add operation is O(1).
+
+2. whoIsMax():
+  Simply return maxElement.id (or return a pointer to maxElement). This is an O(1) operation.
+
+Notice that we are not required to implement the Reduce operation in this design, so we do not worry about the case when the maximum amount might be reduced. (If we had to support that, we would need a more sophisticated structure such as a heap or a double–linked list combined with auxiliary pointers, which might not give O(1) worst-case performance for all operations.) 
+
+Thus, by using an array for direct (O(1)) access by id and a global max pointer that we update on each Add, we obtain a deterministic data structure that supports the Add and whoIsMax operations in O(1) worst-case time.

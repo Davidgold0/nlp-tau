@@ -1,0 +1,68 @@
+Question: **Data Structure Description:**
+
+Describe a data structure that maintains a set of points in the plane, where each point \( p_i \) is represented as a pair of numbers \( (x_i, y_i) \). The data structure should support the following operations:
+
+- \( \text{insert}(x, y) \), \( \text{delete}(x, y) \), \( \text{find}(x, y) \) in the worst-case time complexity of \( O(\log n) \).
+- \( \text{CountPointsAtDistance}(d_1, d_2) \), which performs the following operation: Given two numbers \( d_1 \) and \( d_2 \), the function returns the number of points in the structure whose distance from the origin is greater than \( d_1 \) and smaller than \( d_2 \). Recall that the distance of a point \( (x, y) \) from the origin is \( \sqrt{x^2 + y^2} \).
+
+The \( \text{CountPointsAtDistance}(d_1, d_2) \) operation should be executed with the lowest possible time complexity.
+3o-mini: One efficient design is to maintain the points in a balanced binary search tree (BST) augmented with subtree size information. The idea is to “index” the points by their distance from the origin (or, even better, by their squared distance, to avoid computing square roots). Below is one way to design such a data structure.
+
+──────────────────────────────
+Data Structure Components
+
+1. Tree Node Structure:
+  • Each node represents a point (x, y).
+  • Key: store the value D = x² + y² (i.e. the squared Euclidean distance). Using D permits all comparisons without dealing with the square root.
+  • Additional fields: 
+    – The point itself (x, y).
+    – A pointer to the left child and the right child.
+    – A parent pointer (optional, depending on the balanced BST implementation).
+    – A subtree size (the number of nodes in the subtree rooted at this node). This is used for efficient rank queries.
+    – (Optionally) if duplicate distances are possible, then either store all points with the same squared distance as a secondary data structure (such as a linked list or a secondary BST keyed on x and y), or extend the key to be a pair (D, some tie-breaker) so that each point is uniquely identified.
+
+2. Tree Type:
+  • Use any balanced BST (like an AVL tree, Red-Black tree, or Treap) so that all operations—insert, delete, and find—take O(log n) worst-case time.
+  • The BST is ordered by the key D. When comparing two nodes, simply compare their D values (or (D, tie-breaker) pairs) so that the tree remains balanced.
+
+──────────────────────────────
+Operation Implementations
+
+1. insert(x, y):
+  • Compute D = x² + y².
+  • Insert a new node into the BST based on the key D.
+  • During the insertion, update the subtree sizes on the path from the new node to the root.
+  • Time Complexity: O(log n).
+
+2. delete(x, y):
+  • Find the node corresponding to the point (x, y). Since we are hashing upon D = x² + y², if the tree contains duplicates with the same D (but different (x, y) coordinates), a secondary comparison (or separate lookup in the secondary data structure) is necessary.
+  • Remove the node from the BST using standard deletion procedures (possibly using the in-order successor or predecessor).
+  • Update the subtree sizes accordingly during the deletion.
+  • Time Complexity: O(log n).
+
+3. find(x, y):
+  • Similarly, compute D = x² + y² and then perform a standard BST search using the key D.
+  • If there’s a possibility of duplicates with the same D, then further check for the exact matching of (x, y).
+  • Time Complexity: O(log n).
+
+4. CountPointsAtDistance(d1, d2):
+  • We want to count points whose Euclidean distance is in the interval (d1, d2), i.e. those satisfying:
+     d1 < √(x² + y²) < d2.
+  • Squaring these inequalities (noting that distances and d1, d2 are nonnegative) gives:
+     d1² < x² + y² < d2².
+  • Since each node’s key is D = x² + y², we need to count the number of nodes with key in (d1², d2²). This can be efficiently accomplished with the augmented subtree sizes by performing two “rank” queries:
+    – rank(d2²) returns the number of nodes with key < d2².
+    – rank(d1²) returns the number of nodes with key < d1².
+  • The answer is then:
+     Count = rank(d2²) − rank(d1²).
+  • Each rank query can be performed in O(log n) time by traversing the BST from the root and using the subtree size fields.
+  • Thus, CountPointsAtDistance runs in O(log n) time.
+
+──────────────────────────────
+Summary
+
+By employing a balanced BST augmented with subtree sizes and indexing points by their squared distance from the origin, we achieve:
+  • O(log n) worst-case time for insert, delete, and find.
+  • O(log n) time for CountPointsAtDistance (by using rank queries on the keys d1² and d2²).
+
+This data structure efficiently supports all required operations while avoiding expensive computations (like square roots) during comparisons, thereby offering a clean and performant solution for managing 2D points based on their distance from the origin.

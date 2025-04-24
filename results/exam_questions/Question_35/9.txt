@@ -1,0 +1,43 @@
+Question: Let \( U = \{0, 1, \dots, u\} \). Assume that each element of \( U \) can be represented by a single word. Given a subset \( D \subseteq U \) of size \( n \), describe the most efficient probabilistic algorithm that constructs a function \( h: U \to \{0, 1, \dots, 100n\} \) which is injective on \( D \) (i.e., for all \( x, y \in D \), we have \( h(x) \neq h(y) \)). The memory required to represent the function \( h \) should be \( O(n) \). Computing \( h(x) \), given \( x \in D \), should take \( O(1) \) time in the worst case.
+3o-mini: We will show that you can “hash” the set D perfectly (i.e. with no collisions) by choosing a random function from a universal family until you get one that is injective on D. One acceptable answer is to use a random linear map modulo a prime. (There are many variations that achieve the same bounds.)
+
+Here is one way to do it:
+
+1. Choose a prime number p with p > u (so that every element of U is represented correctly as an integer mod p).
+
+2. Let M = 100n. (The range of h will be {0, 1, …, M}.) Notice that by taking M to be proportional to n (with a large enough constant, here 100) one can ensure that a randomly chosen function from a 2‐universal family will be injective on D with constant probability.
+
+3. Consider the family of functions h₍ₐ,ᵦ₎ : U → {0,1,…,M} defined by
+
+  h₍ₐ,ᵦ₎(x) = ((a · x + b) mod p) mod M
+
+ where a ∈ {1, 2, …, p − 1} and b ∈ {0, 1, …, p − 1} are integers chosen uniformly at random.
+
+This family is “2‑universal” (meaning that for x ≠ y, the probability that h₍ₐ,ᵦ₎(x) = h₍ₐ,ᵦ₎(y) is at most 1/M). (You can see this by standard arguments about linear maps in ℤₚ.)
+
+4. The algorithm is as follows:
+
+ a. Repeat:
+  i. Pick a and b uniformly at random from the ranges specified.
+  ii. For each x ∈ D compute h(x)=((a·x+b) mod p) mod M and check whether any two keys collide.
+ b. Until no collision is found (i.e. until h is injective on D).
+
+Since for each pair (x,y) (with x ≠ y) the collision probability is at most 1/M and there are at most n(n−1)/2 pairs, by choosing M = 100n the probability that any collision occurs is at most (n(n−1))/(2·100n) < 1/2 (for sufficiently large n). Hence, the expected number of iterations of the “repeat” loop is at most 2. (In particular, this is a Las Vegas algorithm that always produces a correct answer with expected constant number of iterations.)
+
+5. Storage and evaluation:
+
+ • To represent h it suffices to store the chosen constants a, b (and the prime p and M, but these are either chosen once or are known from the parameters of the problem). Thus the total storage is O(1) words, which is certainly O(n).
+
+ • To compute h(x) for any x ∈ D, you simply perform two modular multiplications (or one multiplication and two mod operations). Assuming word–level arithmetic, this takes O(1) worst–case time.
+
+Thus, the overall algorithm is “efficient” in that:
+ – The expected time to construct a function h that is injective on D is O(n) (since you have to check all n elements per trial, but only expect constantly many trials).
+ – The representation of h uses O(n) memory (in fact, O(1) words are needed to store a and b – plus, if you need an explicit table for the values of h on D, that is n words).
+ – Evaluation h(x) takes O(1) worst–case time.
+
+This is “the most efficient probabilistic algorithm” (or one example of one) because:
+ – It uses a 2–universal family to get the collision probability low enough.
+ – It relies on simple arithmetic which is O(1) time per query.
+ – And it uses only O(n) space overall.
+
+Any answer that gives a construction equivalent in spirit to the above is acceptable.

@@ -1,0 +1,33 @@
+Question: Given an array of $h$ integers between $0$ and $2^n$.
+It is given that each number in the array is a multiple of the upper bound value of $2^N$, divided by $N^3$. Propose an algorithm to sort the array.
+3o-mini: We can take advantage of the following observation: although the numbers may lie anywhere between 0 and 2^N, there are only O(N³) possible values in the array. This is because it is given that each number is a multiple of
+
+  M = (2^N) / N³.
+
+In other words, every element in the array has the form
+
+  a = k · M   (for some integer k with 0 ≤ k ≤ N³).
+
+Thus, rather than dealing with the entire range [0, 2^N] (which is huge) we are really only dealing with at most N³ + 1 distinct numbers.
+
+A very efficient way of sorting numbers when the universe of values is small is to use counting sort or, equivalently, a bucket sort where each bucket corresponds to one of the possible multiples.
+
+Here is the outline of the algorithm:
+
+1. Compute the granularity M = (2^N) / N³.
+
+2. Allocate an auxiliary array (or “count” array) count[0...N³] and initialize all entries to zero. (Each index i will correspond to the value i · M.)
+
+3. Scan through the input array of h integers (each of the form k · M). For each integer a, compute:
+
+  k = a / M
+
+   and then increment count[k] by 1.
+
+4. Finally, iterate over the count array in order (from 0 to N³). For each index k, output count[k] copies of the number k · M into the sorted array.
+
+Because you are performing O(h) work to count the numbers and then O(N³) work to output them in order, the overall running time of the algorithm is O(h + N³).
+
+Using this method, you get a very efficient sort by exploiting the fact that the numbers are spaced by M and there are at most O(N³) distinct multiples in the set.
+
+This is the proposed algorithm to sort the array.

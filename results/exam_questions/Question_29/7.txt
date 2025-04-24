@@ -1,0 +1,8 @@
+Question: Is it possible to implement an AVL tree such that the worst-case time complexity of the insert operation is \( O(1) \) and the delete operation takes \( O(n) \), where \( n \) is the number of elements in the tree?
+3o-mini: An AVL tree is defined to be a self‐balancing binary search tree that maintains its invariants (in particular, the height-balancing condition) after every insertion or deletion. This maintenance forces each insert and delete operation to perform the necessary height updates and possibly a cascade of rotations along the path from the insertion/deletion point back to the root. In the worst case, both these operations take O(log n) time.
+
+If one were to “speed‐up” the insertion to O(1) worst‐case time by, say, postponing the rebalancing work until a deletion occurs, then between deletions the tree might accumulate many imbalances and lose its AVL “balanced” property. In that case the tree is no longer an AVL tree (by definition) even if you eventually pay a heavy cost (O(n)) at deletion time to restore the balance.
+
+Thus, it isn’t possible to have an AVL tree—by definition one that always maintains its balance property—with worst‐case insertion taking O(1) time while deletion takes O(n) time. Any “cheat” in the insertion procedure that avoids the O(log n) cost will break the AVL invariant, and then you won’t have an AVL tree.
+
+In summary, the AVL guarantees force both insertions and deletions to take O(log n) worst-case time, and you cannot trade one for constant time without sacrificing the AVL property.

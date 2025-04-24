@@ -1,0 +1,16 @@
+Question: Given \( n \) distinct and sorted keys, describe an efficient data structure that maintains these keys (assume the structure is already built, so the cost of building it is not important) and supports the operation \( \text{find\_delete(key)} \), which receives a key and returns false if the key is not in the structure. If the key is in the structure, the operation returns true and removes it from the structure.  
+
+Required cost: \( O(\log n) \) for the \( \text{find\_delete(key)} \) operation.
+3o-mini: One simple solution is to store the keys in a balanced binary search tree (BST) such as a red-black tree, AVL tree, or even a skip list. These structures maintain the keys in sorted order and allow both searching and deletion in O(log n) time.
+
+Here's how it works:
+
+1. When find_delete(key) is called, you perform a search for the given key. Since the tree is balanced, the search takes O(log n) time.
+
+2. If the key is found, you then delete it from the tree. The deletion operation in these trees is also O(log n), as it might require traversing the tree and performing some tree rotations or rebalancing.
+
+3. If the key is not found, the function simply returns false.
+
+Since both the search and deletion operations cost O(log n) in a balanced BST, the overall cost of the find_delete(key) operation is O(log n).
+
+Given that the structure is already built, you have an efficient data structure ready for supporting these operations.
