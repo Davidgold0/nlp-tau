@@ -1,52 +1,53 @@
 Question: A pair of values in an array are called consecutive if they are different and, after sorting, they appear in adjacent positions in the array.  
 
-Given an array of natural numbers of size \( n \), propose an algorithm (with the best worst-case complexity) that checks whether there exists a pair of consecutive values whose total occurrences together are at least \( k \)  
-(that is, the number of times a certain value appears plus the number of times its consecutive value appears is at least \( k \)).
-3o-mini: We can solve the problem in O(n log n) worst‐case time. One natural approach is to sort the array and then “compress” it into blocks of the same number so that we can easily get the frequency for each distinct value. Once we have the sorted list of unique values and their frequencies, we only need to check the adjacent blocks (which by definition are “consecutive” values as given in the problem) to see if the sum of their frequencies is at least k.
+Given an array of natural numbers of size \( n \), propose an algorithm (with the best worst-case complexity) that checks whether there exists a pair of consecutive values whose total occurrences together are at least \( \left\lceil \frac{n}{2} \right\rceil \) 
+(that is, the number of times a certain value appears plus the number of times its consecutive value appears is at least \( \left\lceil \frac{n}{2} \right\rceil \).
+3o-mini: We can solve the problem in two main steps:
 
-Below is an outline of one such algorithm:
+1. Build a frequency table for the array.
+2. Examine each pair of "consecutive" values (in the sense defined below) using the frequency table.
 
-1. Sort the array in increasing order. This takes O(n log n) time.
+Recall that the problem defines two values as consecutive if they are different and, after sorting the array, they appear in adjacent positions. (Note that they are not necessarily numerically consecutive; for example, if the distinct values in the array are {1, 5, 9}, then 1 and 5 are “consecutive” in this sense because no other distinct value lies in between them, even though 1 and 5 are not consecutive integers.)
 
-2. Traverse the sorted array to compute a frequency list for each distinct element. For example, if the sorted array is
-  a = [a₁, a₂, …, aₙ],
- you can group together equal numbers. If the array has m distinct values (with m ≤ n), you will get pairs like:
-  ( v₁, f(v₁) ), ( v₂, f(v₂) ), …, ( vₘ, f(vₘ) ).
+One acceptable algorithm is as follows:
 
-3. Since the distinct values are in sorted order, the pairs (vᵢ, f(vᵢ)) and (vᵢ₊₁, f(vᵢ₊₁)) are the ones that are considered “consecutive” (because they appear as neighbors in sorted order and are obviously different).
+─────────────────────────────  
+Algorithm CHECK-CONSECUTIVE-PAIR(A, n):
 
-4. For each i from 1 to m–1, check if
-  f(vᵢ) + f(vᵢ₊₁) ≥ k.
- If for some adjacent pair this inequality holds, then a pair of consecutive values whose total occurrences is at least k exists.
+1. Create an empty dictionary (or hash table) H.
 
-5. If no pair meets the requirement, return that no such pair exists.
+2. For each element x in array A:
+  H[x] = H.get(x, 0) + 1  
+         // This builds the frequency table in O(n) worst-case
 
-Below is some pseudocode to illustrate the idea:
+3. Let L be the list of keys in H.  
+         // These are the distinct values in the array
 
-------------------------------------------------------
-Algorithm CheckConsecutivePair(a[1..n], k):
-  1. Sort the array a in non-decreasing order.
-  2. Initialize an empty list L.
-  3. Let i = 1.
-  4. While i ≤ n do:
-    count = 1
-    While i + 1 ≤ n and a[i] == a[i + 1]:
-      count = count + 1
-      i = i + 1
-    Append (a[i], count) to L.
-    i = i + 1
-  5. For j = 1 to length(L) – 1 do:
-    If L[j].count + L[j+1].count ≥ k then:
-      Return True
-  6. Return False
-------------------------------------------------------
+4. Sort L in increasing order.  
+         // If there are k distinct values, this step takes O(k log k). In the worst case k = n, so O(n log n).
 
-Complexity Analysis:
+5. Let required = ceil(n / 2).
 
-• Sorting the array: O(n log n) worst-case.
-• The single pass to “compress” the sorted array: O(n).
-• The check over adjacent pairs: O(n) in the worst-case (since the number of distinct values m is at most n).
+6. For i = 0 to length(L) – 2 do:
+  a. If H[L[i]] + H[L[i+1]] ≥ required then
+   return “Yes, there is a pair (L[i], L[i+1]) whose total frequency is at least ceil(n/2).”
 
-Thus, the overall worst‐case running time is O(n log n).
+7. If no such pair is found, return “No.”
 
-This approach achieves the best worst‐case complexity given the problem setup.
+─────────────────────────────  
+
+Time Complexity Discussion:
+• Building the frequency table is O(n).
+• Sorting the list of distinct keys is O(k log k), where k ≤ n, so in the worst-case it is O(n log n).
+• The final scan is O(k), i.e. O(n) in the worst-case.
+Thus, the overall worst-case complexity is O(n log n).  
+(Note: If the input numbers come from a small range, one might use counting sort to reduce the sorting step to O(n) time.)
+
+This algorithm meets the requirement (with the best worst‐case complexity we can achieve in general) because it does not do more work than necessary and takes O(n log n) worst-case time.
+
+─────────────────────────────  
+Additional Comments:
+An alternative approach might involve using a hash table to check for “neighbors” in O(1) time per lookup, but because “consecutive” here means “adjacent in the sorted order of distinct keys” (and not numerically consecutive by one), you still must extract and sort the distinct keys in order to know which ones are adjacent.
+
+─────────────────────────────  
+Thus, the proposed algorithm is correct and has the best worst-case complexity of O(n log n) (or O(n) if additional assumptions on the input range allow counting sort).

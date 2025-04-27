@@ -1,33 +1,55 @@
-Question: Given an array of $h$ integers between $0$ and $2^n$.
+Question: Given an array of $n$ integers between $0$ and $2^n$.
 It is given that each number in the array is a multiple of the upper bound value of $2^N$, divided by $N^3$. Propose an algorithm to sort the array.
-3o-mini: We can take advantage of the following observation: although the numbers may lie anywhere between 0 and 2^N, there are only O(N³) possible values in the array. This is because it is given that each number is a multiple of
+3o-mini: We can take advantage of the extra structure in the input. Recall that we have an array A of n integers where
 
-  M = (2^N) / N³.
+  • each integer x satisfies 0 ≤ x ≤ 2ⁿ,
+  • and each x is a multiple of (2ⁿ)/(n³).
 
-In other words, every element in the array has the form
+In other words, every x in A can be written in the form
 
-  a = k · M   (for some integer k with 0 ≤ k ≤ N³).
+  x = k · (2ⁿ)/(n³)
 
-Thus, rather than dealing with the entire range [0, 2^N] (which is huge) we are really only dealing with at most N³ + 1 distinct numbers.
+for some integer k. What values can k take? Since x ≤ 2ⁿ we get
 
-A very efficient way of sorting numbers when the universe of values is small is to use counting sort or, equivalently, a bucket sort where each bucket corresponds to one of the possible multiples.
+  k · (2ⁿ)/(n³) ≤ 2ⁿ ⟹ k ≤ n³.
 
-Here is the outline of the algorithm:
+Thus, k is an integer in the set {0, 1, 2, …, n³}.
 
-1. Compute the granularity M = (2^N) / N³.
+Once you recognize that every array element is “scaled” by the same value (let’s call it L, where L = 2ⁿ/n³), you can “normalize” every number by computing
 
-2. Allocate an auxiliary array (or “count” array) count[0...N³] and initialize all entries to zero. (Each index i will correspond to the value i · M.)
+  k = x / L.
 
-3. Scan through the input array of h integers (each of the form k · M). For each integer a, compute:
+Then the problem reduces to sorting n integers k where each k lies between 0 and n³. Notice that although there may be up to n³ + 1 distinct values, there are only n numbers to sort.
 
-  k = a / M
+There are at least two natural approaches to sorting these numbers efficiently:
 
-   and then increment count[k] by 1.
+───────────────────────────────────────────── 
+Approach 1. Counting Sort
 
-4. Finally, iterate over the count array in order (from 0 to N³). For each index k, output count[k] copies of the number k · M into the sorted array.
+Since the normalized values k are integers in a known range [0, n³] you could use counting sort. In the classic counting sort the runtime would be on the order of O(n + range), which in this case is O(n + n³). (If n is very large then n³ may be too big to allocate an array of size n³; however, if you have the memory available then counting sort is acceptable.)
 
-Because you are performing O(h) work to count the numbers and then O(N³) work to output them in order, the overall running time of the algorithm is O(h + N³).
+───────────────────────────────────────────── 
+Approach 2. Radix Sort with a Suitable Base
 
-Using this method, you get a very efficient sort by exploiting the fact that the numbers are spaced by M and there are at most O(N³) distinct multiples in the set.
+Notice that even though k can be as large as n³, its “size” in terms of digits is small. In fact, when written in base n the number k requires only
 
-This is the proposed algorithm to sort the array.
+  ⌊logₙ(n³)⌋ + 1 = 3 + 1 = 4      (or at most 4 digits, and in many cases 3 digits if you treat the leading digit 0 as not needing a pass)
+  
+digits. (For example, if n = 10 then numbers up to 1000 have 4 digits; if n is larger the constant factor remains small.) 
+
+So you can use a radix sort that processes one digit at a time. For instance, if you use base n then you just need constant (about 3 or 4) passes over the array. Each pass takes O(n) time, so overall the sorting takes O(n) time.
+
+───────────────────────────────────────────── 
+Outline of the Radix Sort Algorithm
+
+1. Let L = 2ⁿ/n³.
+2. For each number x in A, compute k = x / L.
+3. Write k in base n (this will have at most 4 digits).
+4. Use least-significant-digit (LSD) radix sort, processing one digit at a time.
+5. After sorting the k’s, recover the sorted order of the original numbers (since the mapping x = kL is one‐to‐one).
+
+───────────────────────────────────────────── 
+
+This algorithm takes linear time (with a small fixed constant number of passes) and uses only O(n) extra space. It crucially relies on the fact that the input numbers are all multiples of L = 2ⁿ/n³, which means their “relevant” values (the multiplier k) lie in a small range in terms of number of digits.
+
+Thus, one acceptable algorithm is to “normalize” the array elements by dividing by (2ⁿ/n³) (obtaining integers in the range [0, n³]), then sort these integers with a radix sort (in constant many passes using base n), and finally reconstruct the sorted order for the original numbers. This yields an overall running time of Θ(n).

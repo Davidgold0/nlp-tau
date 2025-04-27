@@ -1,48 +1,82 @@
 Question: A pair of values in an array are called consecutive if they are different and, after sorting, they appear in adjacent positions in the array.  
 
-Given an array of natural numbers of size \( n \), propose an algorithm (with the best worst-case complexity) that checks whether there exists a pair of consecutive values whose total occurrences together are at least \( k \)  
-(that is, the number of times a certain value appears plus the number of times its consecutive value appears is at least \( k \)).
-3o-mini: We can solve the problem by first “compressing” the array into its distinct numbers together with their frequencies and then checking, in sorted order, if any two adjacent distinct numbers have a combined frequency of at least k.
+Given an array of natural numbers of size \( n \), propose an algorithm (with the best worst-case complexity) that checks whether there exists a pair of consecutive values whose total occurrences together are at least \( \left\lceil \frac{n}{2} \right\rceil \) 
+(that is, the number of times a certain value appears plus the number of times its consecutive value appears is at least \( \left\lceil \frac{n}{2} \right\rceil \).
+3o-mini: We can solve the problem in two main phases. First, we “count” the occurrences of each number, and then we check the sorted list of distinct keys (obtained from the frequency dictionary) to see if any two adjacent keys (which by the definition are “consecutive” values) have a combined frequency of at least ⎡n/2⎤.
 
-Step 1. Build a frequency table.
-• Traverse the array once and use a hash table (or dictionary) to count how many times each natural number appears.
-• This step takes O(n) time.
+Below is a step‐by‐step description of an algorithm that does this, along with a discussion of its worst‐case complexity.
 
-Step 2. Obtain the distinct values in sorted order.
-• Extract the keys (distinct natural numbers) from the frequency table.
-• Sort these keys in increasing order. Let the sorted array be D.
-• Since there are m distinct values (with m ≤ n), sorting takes O(m log m) worst-case. (If extra assumptions are available on the range of numbers, you might be able to use counting sort to achieve linear time, but in general O(m log m) is optimal.)
+──────────────────────────────
+Step 1. Build a Frequency Table
 
-Step 3. Check consecutive pairs.
-• Now, by definition, a “pair of consecutive values” is a pair (a, b) where a and b are distinct, and b immediately follows a in the sorted order.
-• Loop over each adjacent pair in D, and check if the total occurrences (i.e. frequency of D[i] plus frequency of D[i+1]) is at least k.
-• If you find any such pair, return True.
-• If no such pair is found, return False.
-• This step takes O(m) time.
+• Initialize an empty dictionary (or hash table) called freq.
+• For each element a in the array A of size n, do:
+  freq[a] = freq.get(a, 0) + 1
 
-Pseudocode:
+This step counts how many times each number appears. Since each access and insertion in the hash table is O(1) on average, the entire step runs in O(n) time.
 
----------------------------------------------------------------
-Algorithm ConsecutivePairCheck(A, k):
-  1. Let freq be an empty hash table.
-  2. For each number x in A:
-    if x is not in freq:
-      freq[x] = 1
-    else:
-      freq[x] = freq[x] + 1
+──────────────────────────────
+Step 2. Get Sorted List of Distinct Numbers
 
-  3. Let D be the list of keys in freq.
-  4. Sort D in increasing order.
-  5. For i from 0 to length(D) - 2 do:
-    if (freq[D[i]] + freq[D[i+1]] ≥ k) then:
-      return True
-  6. Return False
----------------------------------------------------------------
+• Extract the list of keys from freq into an array L.
+• Sort L by the numeric values.
 
-Time Complexity:
-• Step 1: O(n)
-• Step 2: O(m log m) with m ≤ n. In the worst-case m = n, so this step is O(n log n).
-• Step 3: O(m) which is O(n) in the worst-case.
-Thus, the overall worst-case complexity is O(n log n).
+Now, remember that two numbers are “consecutive” (by the problem’s definition) if in sorted order they appear next to each other (even if they aren’t consecutive integers in the arithmetic sense). Thus, iterating over adjacent numbers in L is exactly what we need. Sorting L takes O(d log d) time where d is the number of distinct numbers. In the worst case d = n, so this step is O(n log n).
 
-This algorithm is optimal in the worst-case scenario unless additional properties of the input (like a bounded range for the natural numbers) allow a linear-time sorting process.
+──────────────────────────────
+Step 3. Check Each Pair of Adjacent Keys
+
+• Let T = ⎡n/2⎤.
+• For i from 0 to len(L) – 2, do:
+  – Let x = L[i] and y = L[i+1].
+  – Compute total = freq[x] + freq[y].
+  – If total ≥ T, then report that a valid pair exists (and you can return the pair or just “yes”).
+• If no such pair is found after the loop, report that no valid pair exists.
+
+Since the loop goes over at most all distinct keys (which is O(n) in the worst-case), this step runs in O(n).
+
+──────────────────────────────
+Overall Complexity
+
+• Frequency Table: O(n)
+• Sorting: O(n log n) worst case (if no bound on the natural numbers is assumed)
+• Checking pairs: O(n)
+
+Thus, the worst-case time complexity is O(n log n). (Note: If the natural numbers come from a bounded range, you can use counting sort or radix sort to bring this to O(n).)
+
+──────────────────────────────
+Pseudocode
+
+Below is a pseudocode version of the algorithm:
+
+ function hasConsecutivePair(A, n):
+  T = ceil(n / 2)
+  freq = new empty dictionary
+  for i = 0 to n - 1:
+   freq[A[i]] = freq.get(A[i], 0) + 1
+  
+  L = list of keys in freq
+  sort(L)         // O(d log d), worst-case O(n log n)
+  
+  for i = 0 to len(L) - 2:
+   x = L[i]
+   y = L[i+1]
+   if (freq[x] + freq[y] ≥ T):
+    return true     // A valid pair exists
+  
+  return false
+
+──────────────────────────────
+Discussion
+
+This algorithm is optimal in the sense that you must read all n numbers at least once (O(n)) and any method that obtains the sorted order of distinct values will take at least O(d log d). Without additional assumptions about the range of the natural numbers, O(n log n) is the best worst-case time you can achieve. If the numbers are bounded by a constant (or by O(n)), then you can use a linear sorting method to achieve an overall time complexity of O(n).
+
+──────────────────────────────
+Conclusion
+
+The proposed algorithm:
+1. Uses a hash table to count frequencies in O(n) time.
+2. Sorts the distinct keys and checks each adjacent pair in O(n log n) worst-case time.
+3. Returns true if any adjacent (i.e., “consecutive”) pair has a total occurrence count of at least ⎡n/2⎤; otherwise, it returns false.
+
+This meets the requirements and has the best worst-case complexity under the general assumption that no bounds are placed on the numbers.

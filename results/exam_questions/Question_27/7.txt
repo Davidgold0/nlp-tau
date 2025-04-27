@@ -1,55 +1,52 @@
-Question: Given an array of $h$ integers between $0$ and $2^n$.
+Question: Given an array of $n$ integers between $0$ and $2^n$.
 It is given that each number in the array is a multiple of the upper bound value of $2^N$, divided by $N^3$. Propose an algorithm to sort the array.
-3o-mini: We can take advantage of the fact that every number in the array is not arbitrary but rather a multiple of
+3o-mini: We can exploit the extra structure in the numbers to beat the usual O(n log n) lower bound for comparison‐based sorting. In our case the n numbers are in the range [0, 2ⁿ] but each one is a multiple of
 
-  K = 2^n / n³.
+  T = 2ⁿ⁄n³.
 
-Thus, every entry in the array is of the form
+That is, every number A[i] in our array can be written as
 
-  x = q · K
+  A[i] = rᵢ · T      (for some integer rᵢ).
 
-for some integer q. Notice that since x is between 0 and 2^n, then
+Notice that since the maximum possible number is 2ⁿ, we have
 
-  0 ≤ q · K ≤ 2^n ⟹ 0 ≤ q ≤ n³.
+  rᵢ ≤ 2ⁿ / T = 2ⁿ ⁄ (2ⁿ/n³) = n³.
 
-That is, there are at most n³ + 1 distinct values (from 0 to n³), even if h (the number of elements in the array) is very large.
+Thus all values rᵢ lie in the range [0, n³] even though the original numbers lie in [0, 2ⁿ]. (Often n³ is much smaller than 2ⁿ.) In other words, although the actual numbers may be huge, their “multiplier” rᵢ is from a relatively small universe (only about n³ distinct possibilities).
 
-One efficient way to sort the array is to use a counting sort (or bucket sort). Here’s how you can do it:
+The idea now is simple: instead of sorting the huge numbers directly, we compute for each number its “multiplier” rᵢ (i.e. rᵢ = A[i]/T) and then sort the array by these numbers. Since rᵢ takes on only integers in [0, n³], we can sort the array using a non‐comparison based sort such as counting sort or radix sort in linear (or near–linear) time.
 
-1. Compute K = 2^n / n³.
-2. For each element x in the array, compute q = x / K. (Since x is a multiple of K, this division gives an integer.)
-3. Create a count array C of size (n³ + 1) initialized to zero.
-4. For each computed q, increment C[q].
-5. Finally, traverse the count array in order (from 0 to n³) and output each value q in sorted order by printing q · K the number of times indicated by C[q].
+A high–level description of one acceptable algorithm is as follows:
 
-Because the count array is only of size O(n³), and you process h elements once to count and then O(n³) time to output the sorted array, the total time is
+────────────────────────────────────────
+Step 1. Compute the “step size”
+  T ← 2ⁿ/n³
 
-  O(h + n³).
+Step 2. For each i from 1 to n, compute the “index”
+  r[i] ← A[i] / T
+    (Notice that since A[i] is a multiple of T, this division is exact.)
 
-This is especially efficient when h is large compared to n³. Moreover, note that by “compressing” the numbers into the q values, you are effectively turning the sorting problem into one that can be handled in linear time relative to the range of distinct keys.
+Step 3. Sort the array based on the r[·] values.
+  • Since each r[i] is an integer in [0, n³] and there are only n numbers,
+    you can use counting sort or radix sort.
+  • For instance, if you use radix sort with a base on the order of n (or choose
+    the number of passes based on logₙ(n³) = 3), then the sorting takes O(n) time.
 
-Below is some pseudocode that captures the idea:
+Step 4. Output the array sorted according to the sorted order of r[i] (which is the same as the numerical order of A[i]).
 
-------------------------------------------------------------
-function sortArray(A, h, n):
-    K = 2^n / n^3
-    // Create and initialize the count array
-    let C be an array of integers of size n^3 + 1, initialized to 0
+────────────────────────────────────────
 
-    // Count each q value
-    for i = 0 to h - 1 do:
-        q = A[i] / K
-        C[q] = C[q] + 1
+Because there are only O(n) numbers, and the r[i] values have only O(log (n³)) = O(log n) bits, you can sort in O(n) time using radix sort. (A counting sort approach would be O(n + n³) in the worst case, which may not be acceptable unless n is small relative to n³; however, using radix sort with O(log n) passes yields O(n) time.) 
 
-    // Output the sorted array
-    index = 0
-    for q = 0 to n^3 do:
-        while C[q] > 0 do:
-            A[index] = q * K
-            index = index + 1
-            C[q] = C[q] - 1
-------------------------------------------------------------
+Thus, by taking advantage of the fact that each number is a multiple of 2ⁿ/n³, we can “compress” the sorting problem down to one on numbers in {0, 1, 2, …, n³} and then sort in linear time.
 
-This counting sort runs in O(h + n³) time and uses O(n³) auxiliary space.
+────────────────────────────────────────
+Summary:
 
-Thus, by taking advantage of the structure in the input (each number being a multiple of 2^n/n³), we reduce the sorting problem to one with a very small range of keys and can sort the array very efficiently using counting sort.
+1. Compute T = 2ⁿ/n³.
+2. For each number A[i], compute r[i] = A[i] / T.
+3. Sort the n values r[i] using radix sort (or bucket sort) in O(n) time.
+4. Use the sorted order to output the sorted array A.
+────────────────────────────────────────
+
+This is one acceptable answer (and algorithm) for the problem.
