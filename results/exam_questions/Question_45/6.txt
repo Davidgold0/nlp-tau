@@ -1,0 +1,33 @@
+Question: \text{Given an array containing } n \text{ elements. The number of distinct elements is } k \, (k \leq n). \\
+\text{d. Assume the elements are integers between } 1 \text{ and } n^4. \text{ Propose a deterministic algorithm to sort the array.}
+3o-mini: We can take advantage of the fact that the numbers lie in the range 1 to n⁴. One acceptable, deterministic solution is to use radix sort.
+
+Here’s how you can do it:
+
+1. Notice that every integer in the array has at most 4 logₙ(n) = 4 digits when written in base n (since n⁴ in base n has 4 digits). In other words, every number can be expressed as a 4‐digit number in base n.
+
+2. Use an LSD (least-significant digit) radix sort. For each of the 4 digits (starting from the least-significant):
+
+  a. Use counting sort to sort the array with respect to that digit.  
+  b. Since counting sort runs in O(n + b) time where b is the base and here b = n, each pass takes O(n + n) = O(n) time.
+
+3. Since there are only 4 passes (one for each digit) the total runtime is O(4n) = O(n).
+
+This is a deterministic algorithm because both radix sort and counting sort are deterministic. 
+
+An alternative method that takes advantage of the fact there are only k ≤ n distinct elements is to:
+ • Make one pass through the array and build a balanced binary search tree (or any other ordered dictionary) where the keys are the distinct elements and each key is augmented with a count of its occurrences.
+ • This insertion step takes O(n log k) worst-case time.
+ • Then do an in-order traversal of the tree, writing each element out as many times as it appears.
+
+If k is much smaller than n, this algorithm could be efficient in practice, though in the worst-case (k = n) the time becomes O(n log n).
+
+Either method is acceptable depending upon whether you wish to use the properties of the numeric range (radix sort gives O(n) worst-case) or the fact that there are few distinct elements (balanced BST gives O(n log k)).
+
+Thus, one good answer is:
+
+ • Represent each number in base n (4 digits maximum).  
+ • Use 4 passes of counting sort (a deterministic, stable sort) starting with the least significant digit.  
+ • The overall worst-case time is O(n).
+
+This completes the deterministic algorithm to sort the array.

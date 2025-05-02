@@ -1,0 +1,32 @@
+Question: \begin{quote}
+In the following section, the initialization time and space complexity is O(1), and the space complexity at any given moment is O of the number of elements in the data structure. Describe how a vector of length m can be represented to support insertion at position i, reading from position i, and deletion at position i in O(\log m) worst-case time for each operation.
+\end{quote}
+3o-mini: One elegant solution is to represent the vector as a balanced binary search tree (BST) in which each node corresponds to an element (or, to improve constants, to a block of consecutive elements) and, crucially, each node stores the size of its subtree. This extra information allows the tree to support “order‐statistics” queries, which means you can quickly find the i th element.
+
+Here’s an outline of how the data structure works:
+
+1. Initialization and Space Complexity:
+   • The data structure uses O(m) space overall (m is the number of elements stored at any given moment).
+   • Initialization can be done in O(1) time by simply creating an empty tree.
+
+2. Reading from Position i:
+   • Start at the root. At each node, compare i with the size of the left subtree.
+   • If i is less than the size of the left subtree, move into the left child.
+   • If i equals the size of the left subtree, then the current node holds the i th element.
+   • Otherwise, subtract the left subtree’s size plus one (for the current node) from i and move into the right subtree.
+   • Because the tree is balanced, this search takes O(log m) time.
+
+3. Insertion at Position i:
+   • Again, use the subtree-size information to locate the appropriate position in the tree where the new element should be inserted.
+   • After insertion, update the size fields during the recursion (or as you backtrack).
+   • To keep the tree balanced, use a self-balancing BST (such as an AVL tree or a red-black tree).
+   • Each insertion then takes O(log m) worst-case time.
+
+4. Deletion at Position i:
+   • Locate the i th element as in the search algorithm.
+   • Remove the corresponding node using the standard BST deletion procedure.
+   • Update the subtree sizes during deletion.
+   • Rebalance the tree if necessary.
+   • This deletion procedure also takes O(log m) worst-case time.
+
+Thus, by using a balanced BST that is augmented with subtree size information (sometimes called an order statistic tree), you can achieve O(log m) worst-case time per operation for reading, inserting, and deleting any element in the vector.

@@ -1,0 +1,48 @@
+Question: The deterministic "select" algorithm, which we studied in class, works as follows:
+a. The array is divided into groups of size 5
+b. Sort each group
+c. Choose a pivot as the median of the medians (recursively)
+d. Perform "partition" with the chosen pivot
+e. Recursively apply the algorithm on the relevant part.
+
+Assume that instead of groups of size 5, we take groups of size 3. 
+In this question, we will deal with the running time of the new algorithm with groups of size 3.
+What is the cost of step b? 
+Cost:
+Explanation:
+Teacher: Let's start by breaking down the problem. We need to analyze step b, which involves sorting each group when the array is divided into groups of 3. Think about these points:
+
+1. How many groups of 3 do you have in an array of size n?
+2. What is the cost to sort one group of 3 elements?
+3. How do you combine these costs to find the total cost for sorting all groups?
+
+Please calculate the number of groups and explain the sorting cost for one group. What do you think the overall cost for step b is?
+Student: Sure, let's break down the problem step by step as you suggested.
+
+1. **Number of Groups**: If we have an array of size \( n \) and we divide it into groups of size 3, the number of groups we would have is \( \lceil \frac{n}{3} \rceil \). This is because if \( n \) is not divisible by 3, the last group may contain fewer than 3 elements.
+
+2. **Cost to Sort One Group**: The cost to sort a group of 3 elements can be considered as a constant time operation, specifically \( O(1) \), because sorting a fixed number of elements (in this case, 3) does not depend on \( n \). For small groups like this, we can use a simple sorting algorithm like insertion sort, which is efficient for small sizes.
+
+3. **Total Cost for Sorting All Groups**: Since we have \( \lceil \frac{n}{3} \rceil \) groups and each group takes \( O(1) \) time to sort, the total cost for sorting all groups would be:
+   \[
+   O\left(\lceil \frac{n}{3} \rceil\right) \cdot O(1) = O\left(\frac{n}{3}\right) = O(n)
+   \]
+
+So, the overall cost for step b, which is sorting all groups of size 3, is \( O(n) \).
+
+**Cost**: \( O(n) \)
+
+**Explanation**: We determined that the number of groups formed by dividing an array of size \( n \) into groups of 3 is \( \lceil \frac{n}{3} \rceil \). Each group can be sorted in constant time, leading to a total sorting cost of \( O(n) \) for all groups combined. 
+
+Does this analysis align with your expectations?
+Teacher: Your analysis looks excellent so far! Let’s review your reasoning together:
+
+1. You correctly noted that dividing an array of size n into groups of 3 produces about ⎡n/3⎤ groups.  
+2. You observed that sorting a fixed-size group of 3 elements takes constant time (O(1)).  
+3. Multiplying the constant time per group by the number of groups (⎡n/3⎤) indeed leads to an overall cost of O(n) for step b.
+
+Everything is spot on. Now that we’ve thoroughly discussed the calculation for step b, can you state the final cost for step b? Please provide your final answer following the format of simply writing the answer followed immediately by a $—nothing else.
+Student: O(n) $
+Teacher: Great job working through the steps! You've correctly determined that dividing the array into groups of 3 gives around ⎡n/3⎤ groups, each of which takes constant time to sort. Multiplying these together leads to an overall cost of O(n) for step b. 
+
+O(n)$

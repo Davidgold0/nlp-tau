@@ -1,0 +1,79 @@
+Question: Given an ordered set \( S \), we define the degree of an element in the set as its position in a sorted array of the elements (all elements have different values). Throughout the question, \( h \) represents the number of elements currently in the requested data structure.
+
+\textbf{(A)} Describe a data structure that supports the following operations:
+\begin{itemize}
+  \item \texttt{Init()} – initialize the structure in \( O(1) \) time.
+  \item \texttt{Insert(x)} – insert the element \( x \) into \( S \) in \( O(\log n) \) time.
+  \item \texttt{Delete(x)} – delete the element \( x \) from \( S \) in \( O(\log n) \) time.
+  \item \texttt{Min()} – return the element with the minimum degree (smallest value) in \( O(1) \) time.
+  \item \texttt{Max()} – return the element with the maximum degree (largest value) in \( O(1) \) time.
+  \item \texttt{AVG()} – return the element with the minimum degree whose value is greater than or equal to the average of the elements in the structure in \( O(1) \) time.
+\end{itemize}
+3o-mini: We can solve the problem by “pre‐computing” the answer for the AVG query during every update so that when the user calls AVG() the answer is already available in O(1) time. One acceptable solution uses an augmented balanced binary search tree (BST). Here is one way to do it:
+
+───────────────────────────── 
+Step 1. Data Structure Choice
+
+• Use a balanced BST (for example, an AVL tree or a red–black tree) that stores the elements of S in sorted order (by value). This gives you standard O(log n) insertion and deletion.
+
+• Augment each node of the tree with two extra pieces of information:
+  – size: the number of nodes in the node’s subtree.
+  – sum: the sum of the values in the node’s subtree.
+
+• In addition, maintain three global variables:
+  – total_sum: the total sum of all elements in S.
+  – h: the number of elements currently in S (this is just the size of the tree).
+  – avgCandidate: a pointer (or reference) to the element with the minimum degree (i.e. the leftmost among those eligible) whose value is ≥ (total_sum/h), the average.
+
+• Also, you can keep explicit pointers to the minimum and maximum elements in S (or simply update these during insertions/deletions), so that Min() and Max() can be answered in O(1) time.
+───────────────────────────── 
+Step 2. Operations
+
+● Init():
+  – Initialize an empty BST.
+  – Set h and total_sum to 0.
+  – Set avgCandidate, min pointer, and max pointer to NULL.
+  – Time: O(1).
+
+● Insert(x):
+  – Insert x into the BST in O(log n) time.
+  – As you insert, update the “size” and “sum” attributes of each node on the search path.
+  – Update total_sum ← total_sum + x and h ← h + 1.
+  – If x is smaller than the current minimum, update the min pointer. If x is larger than the current maximum, update the max pointer.
+  – Finally, update avgCandidate. How does one do that? Compute the average value A = total_sum/h (in O(1) time). Then, using the BST, perform a binary search for the smallest element with value ≥ A. (This search ordinarily costs O(log n) time; however, since our overall insertion is allowed to be O(log n) time, we can include this step within Insert().)
+  – Time: O(log n).
+
+● Delete(x):
+  – Delete x from the BST in O(log n) time (using the standard deletion routine).
+  – Update the “size” and “sum” attributes on the deletion path.
+  – Update total_sum ← total_sum – x and h ← h – 1.
+  – Update the min and max pointers if necessary.
+  – Recompute avgCandidate exactly as in Insert(): compute A = total_sum/h and then search in the BST for the smallest element with value ≥ A.
+  – Time: O(log n).
+
+● Min():
+  – Return the element pointed to by min. (Since we maintained a pointer, this is in O(1) time.)
+
+● Max():
+  – Return the element pointed to by max. (Again, O(1) time.)
+
+● AVG():
+  – Return avgCandidate. (O(1) time.)
+───────────────────────────── 
+Why the AVG() query is O(1):
+
+Even though the binary search for the avgCandidate takes O(log n) time when an update occurs, this cost is “paid” during the insert or delete operation. Thus, by storing the result in a global pointer (or variable), the AVG() query can simply return the pre‐computed answer in O(1) time.
+───────────────────────────── 
+Comments
+
+This design meets the required time bounds:
+ – Init() is O(1).
+ – Insert(x) is O(log n) (including the time to update avgCandidate).
+ – Delete(x) is O(log n) (including the time to update avgCandidate).
+ – Min(), Max(), and AVG() are all O(1).
+
+An alternative design might use a self-adjusting tree or a skip list augmented with extra fields, but the general idea is the same: use an ordered data structure with augmentation to maintain the global sum and update a pointer to the element with the minimum degree that is at least the average.
+───────────────────────────── 
+Final Answer Summary
+
+We maintain a balanced BST augmented with subtree sizes and sums together with global pointers to the min and max elements and a pointer (avgCandidate) to the smallest element with value ≥ (total_sum/h). Insertion and deletion update the tree, update total_sum and h, and recompute avgCandidate in O(log n) time, while Min(), Max(), and AVG() just return the stored pointers in O(1) time. This meets the given requirements.

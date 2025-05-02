@@ -1,0 +1,53 @@
+Question: A pair of values in an array are called consecutive if they are different and, after sorting, they appear in adjacent positions in the array.  
+
+Given an array of natural numbers of size \( n \), propose an algorithm (with the best worst-case complexity) that checks whether there exists a pair of consecutive values whose total occurrences together are at least \( \left\lceil \frac{n}{2} \right\rceil \) 
+(that is, the number of times a certain value appears plus the number of times its consecutive value appears is at least \( \left\lceil \frac{n}{2} \right\rceil \).
+3o-mini: We can solve the problem in O(n log n) worst‐case time. One acceptable approach is to “compress” the array into distinct elements with their frequency counts and then check adjacent pairs in the sorted order. (In the case where the range of natural numbers is known to be small, one could use counting sort to achieve O(n) time, but without that assumption O(n log n) is optimal in the worst case.)
+
+Below is one way to design the algorithm:
+
+Step 1. Build a frequency table.
+ • Traverse the array (size n) and count how many times each distinct number occurs.
+ • You can use a hash table (or dictionary) or a balanced binary search tree. A hash table typically gives average-case O(n) time, but for a worst-case guarantee a balanced BST gives O(n log n).
+
+Step 2. Extract and sort the unique keys.
+ • Let U be the set of unique numbers. Sort these values in increasing order. Suppose there are u such values (with u ≤ n). This will take O(u log u) time, which is O(n log n) in the worst case.
+
+Step 3. Check consecutive pairs.
+ • Now, iterate through the sorted list of unique numbers. For each adjacent pair, let the numbers be x and y (with x ≠ y, as required by the “different” condition) and let their frequencies be count(x) and count(y).
+ • Compute sum = count(x) + count(y). If sum is at least ⎡n/2⎤, then we have found a pair of “consecutive” values (consecutive in the sorted order) whose total occurrences together is at least ⎡n/2⎤.
+ • Terminate and return “yes” as soon as such a pair is found.
+ • If no adjacent pair meets the condition after scanning through all adjacent pairs, return “no.”
+
+Pseudocode:
+
+  function hasDominantConsecutivePair(A):
+   n = length(A)
+   threshold = ceil(n / 2)
+   // Step 1: Build frequency table.
+   freq = new Dictionary()   // or use a BST for worst-case O(n log n)
+   for each number x in A:
+    if x is in freq:
+     freq[x] = freq[x] + 1
+    else:
+     freq[x] = 1
+
+   // Step 2: Extract and sort unique keys.
+   uniqueNums = list of keys in freq
+   sort(uniqueNums)   // O(u log u)
+
+   // Step 3: Check consecutive pairs.
+   for i = 0 to length(uniqueNums) - 2:
+    x = uniqueNums[i]
+    y = uniqueNums[i+1]   // They are consecutive in the sorted order.
+    if freq[x] + freq[y] >= threshold:
+     return True
+   return False
+
+Analysis:
+ • Building the frequency table takes O(n) time.
+ • Sorting the unique numbers takes O(u log u) ≤ O(n log n) time.
+ • The final scan through the sorted keys takes O(u) time.
+ Thus, the overall worst‐case complexity is O(n log n).
+
+This algorithm meets the requirements and is optimal under general assumptions about the input numbers.

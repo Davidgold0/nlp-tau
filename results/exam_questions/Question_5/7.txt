@@ -1,0 +1,46 @@
+Question: Describe an algorithm that solves the following problem:  
+Given a set \( S \) of \( n \) numbers, the algorithm builds a data structure in \( O(n) \) worst-case time that supports only the \( \text{find} \) operation, such that:  
+The worst-case time for \( \text{find} \) is \( O(n) \), but for at least \( \frac{n}{\log n} \) of the elements, the running time of \( \text{find} \) is \( O(\log n) \).  
+Note that the structure is not dynamic, meaning it does not need to support insert or delete operations.
+3o-mini: We will describe one acceptable solution that “cheats” a little by indexing only a subset of S. In our solution we select about n/log n elements of S and build a fast lookup structure (a balanced binary search tree, or equivalently, a sorted array) for those elements; then the find operation first checks the fast structure (in O(log n) worst‐case time) and, if that fails, does a linear scan of S (in O(n) worst‐case time). (Since at least n/log n “lucky” elements are in the index they will be found in O(log n) time, while the worst-case for any query is O(n).) The overall preprocessing time is O(n) because both the selection of the “fast” subset and the building of the fast substructure take O(n) time.
+
+Here is a more detailed description:
+
+──────────────────────────────
+Preprocessing (Building the Data Structure):
+
+1. Let S be a set of n numbers.
+2. Choose an arbitrary subset R ⊆ S having exactly k = ⎣n/log n⎦ elements. (For example, you might take the first ⎣n/log n⎦ numbers from S in some fixed order.)
+3. Build an array (or BST) that contains the elements in R. Since k = n/log n, using standard comparison‐based sorting (or building a balanced BST) takes time
+  O(k log k) = O((n/log n) · log (n/log n)) ⊆ O(n).
+4. In addition, store S in an unsorted array or list (you already have S; no extra work is needed here).
+
+Thus the overall preprocessing time is O(n).
+
+──────────────────────────────
+The Find Operation:
+
+When asked to “find(x)” (i.e. determine whether x is in S), proceed as follows:
+
+1. Binary Search Step (Fast Path):
+  • Search for x in the sorted array (or BST) built on the subset R. Note that this step takes O(log k) = O(log n) worst‐case.
+  • If x is found in R then return “found.” (This happens for at least n/log n of the elements of S.)
+2. Fallback Linear Scan (Slow Path):
+  • If x was not found in the fast structure, then scan the entire set S (i.e. iterate through S checking every element) to see whether x is in S. This step takes O(n) worst-case.
+3. Return the result (found or not).
+
+──────────────────────────────
+Analysis:
+
+• The worst‐case running time of find(x) is O(n) (if x is not in R, one must do the full scan).
+• For any query where the searched element x is one of the n/log n preselected “fast” elements, the first step returns the answer in O(log n) worst‐case.
+• The construction of the data structure takes O(n) worst‑case time.
+
+──────────────────────────────
+Remarks:
+
+This solution is acceptable in a non‐dynamic model: after the data structure is built it only supports find queries. Also note that by “sacrificing” fast lookup for only a subset of S (but a fairly large fraction, namely n/log n elements), we can guarantee that for these many elements the find operation is fast, while still keeping the overall worst‐case find time to O(n) and the build time to O(n).
+
+An alternative description of the solution is: “Pick a set R of n/log n ‘shortcut’ keys from S, and store them in a balanced BST. To search x, first check the BST in O(log n) time; if x is not among these, perform a full linear search of S.” This is exactly what we have described above.
+
+This algorithm meets the problem’s requirements.

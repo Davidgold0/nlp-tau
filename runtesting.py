@@ -72,22 +72,21 @@ def main(input_folder, output_folder, n_runs=5):
         # Iterate over each row in the DataFrame (excluding header)
         for idx, row in df.iterrows():
             
-            if idx+1 >= 12:
-                question = row[0]
-                if pd.isnull(question):
-                    continue
+            question = row[0]
+            if pd.isnull(question):
+                continue
 
-                question_index = idx + 1  # Because of header
-                question_folder = os.path.join(excel_output_dir, f"Question_{question_index}")
-                os.makedirs(question_folder, exist_ok=True)
+            question_index = idx + 1  # Because of header
+            question_folder = os.path.join(excel_output_dir, f"Question_{question_index}")
+            os.makedirs(question_folder, exist_ok=True)
 
-                # get answers from Student-Teacher model
-                asyncio.run(async_create_responses(question, 1, n_runs, question_folder, run_pipline))
+            # get answers from Student-Teacher model
+            asyncio.run(async_create_responses(question, 1, n_runs, question_folder, run_pipline))
 
-                # get answers from gpt-3o-mini model
-                asyncio.run(async_create_responses(question, 6, n_runs, question_folder, run_on_3o_mini))
-                
-                print(f"Processed Question {idx+1} from {file_name}")
+            # get answers from gpt-3o-mini model
+            asyncio.run(async_create_responses(question, 6, n_runs, question_folder, run_on_3o_mini))
+            
+            print(f"Processed Question {idx+1} from {file_name}")
             
 
 if __name__ == "__main__":

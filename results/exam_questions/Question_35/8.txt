@@ -1,0 +1,32 @@
+Question: Let \( U = \{0, 1, \dots, u\} \). Assume that each element of \( U \) can be represented by a single word. Given a subset \( D \subseteq U \) of size \( n \), describe the most efficient probabilistic algorithm that constructs a function \( h: U \to \{0, 1, \dots, 100n\} \) which is injective on \( D \) (i.e., for all \( x, y \in D \), we have \( h(x) \neq h(y) \)). The memory required to represent the function \( h \) should be \( O(n) \). Computing \( h(x) \), given \( x \in D \), should take \( O(1) \) time in the worst case.
+3o-mini: We can solve the problem by using a random perfect‐hashing scheme. In words, the idea is to choose (at random) a universal hash function h from a family of functions that map U into {0, 1, …, 100n} and then “test” whether h is injective (one‐to‐one) on D. Because our range is 100n and D has only n elements, a randomly chosen function from a “good” universal family will be one-to-one on D with reasonably high probability. (In fact, one can show that the probability that two given distinct elements collide is at most 1/(100n), so a union bound over the O(n²) pairs gives a failure probability that is less than 1/2 for n sufficiently large.) Thus, on average we only need a constant number of tries. Once a good function h is found, we can represent it with only a constant (or O(1)) number of words (and with some additional structures the overall space is O(n)) and compute h(x) in O(1) worst‐case time.
+
+One common example of such a universal family is defined as follows:
+
+1. Choose a prime number p such that p > max{u, 100n}. (This guarantees that the arithmetic modulo p “sees” all the words in U and the reduction modulo 100n is well behaved.)
+
+2. For randomly chosen integers a and b with 1 ≤ a < p and 0 ≤ b < p, define
+
+  h(x) = ((a · x + b) mod p) mod (100n).
+
+This function is computed in O(1) time and is represented by just a few numbers (namely the parameters a, b, p, and the constant 100n).
+
+Now, here is the algorithm:
+
+Step 1. Pick a prime p > max{u, 100n}.
+
+Step 2. Repeat:
+  a. Choose random integers a in {1, 2, …, p – 1} and b in {0, 1, …, p – 1}.
+  b. Define h(x)=((a · x + b) mod p) mod (100n).
+  c. For each x ∈ D, compute h(x) and check that no two elements in D collide (for example, by “marking” the h(x) values in an array of length 100n).
+Until h is injective on D.
+
+Since the probability that a randomly chosen h is injective on D is at least a constant (say, at least 1/2 for sufficiently large n), the expected number of iterations is constant. In each iteration, we perform O(n) work (to check for collisions), so the overall expected time is O(n).
+
+Space: The hash function itself is represented by the triple (a, b, p) plus the constant 100n. During the check, we use an array of length 100n, which is O(n) space. Thus, the total additional memory required is O(n).
+
+Evaluation time: Once the function h is chosen, computing h(x) for any x ∈ U takes O(1) worst-case time.
+
+Thus, the above algorithm meets all the requirements: it runs in expected O(n) time, uses O(n) space to represent h, and evaluates in O(1) time per query.
+
+Any answer which essentially describes a randomized perfect‐hash/ universal hashing scheme with the parameters chosen as above is correct.

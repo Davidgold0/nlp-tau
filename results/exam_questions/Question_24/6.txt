@@ -1,0 +1,48 @@
+Question: Given an array of $n$ numbers, describe an algorithm with a time complexity of $O(n)$ that checks whether there is an element that appears at least $n/8$ times in the array. Prove your answer.
+3o-mini: We can solve this problem in O(n) time by adapting the Boyer–Moore majority vote algorithm to handle a frequency threshold of n/8. In general, if you are looking for any element that appears more than n/k times, you only need to keep track of (k–1) candidate elements. Here k = 8, so you need to track at most 7 candidates. Once you have determined these possible candidates, a second pass will count their exact frequencies to check if any appear at least n/8 times.
+
+Below is the step‐by‐step description of the algorithm and its proof.
+
+──────────────────────────────
+Algorithm Description:
+
+1. Initialization:
+   • Create an empty list (or dictionary) for candidates. This will hold at most 7 keys (candidate elements) along with their associated counters.
+
+2. First Pass – Candidate Selection:
+   For each element x in the array:
+   a. If x is already one of the candidates, increment its counter.
+   b. Otherwise, if there are fewer than 7 candidates, add x as a candidate with a counter initialized to 1.
+   c. If x is not currently a candidate and you already have 7 candidates, then reduce the counter for every candidate by 1. If any candidate’s counter drops to 0, remove it from the candidate list.
+
+3. Second Pass – Frequency Verification:
+   • Now that you have at most 7 candidate elements, initialize a counter for each candidate.
+   • Traverse the array again, and for each element, if it matches a candidate, increment that candidate’s verified counter.
+   • Finally, check whether any candidate’s verified counter is at least n/8. If so, report that element; otherwise, conclude that no such element exists.
+
+──────────────────────────────
+Proof of Correctness:
+
+1. Candidate Persistence Property:
+   • Assume an element x appears more than n/8 times. In every round where you decrement all candidates, note that you can have at most 7 distinct candidates that you are “cancelling out” with one occurrence of x (if x itself is not already a candidate).
+   • Since x occurs more than n/8 times, it is “robust” enough to survive these cancellations. More formally, it can be shown that if an element occurs more than n/k times (with k = 8 here), then it will not be completely eliminated by the process that decrements the counts of at most k - 1 different elements.
+   • Thus, if such an x exists, it will remain among the candidates after the first pass.
+
+2. Verification Step:
+   • The first pass guarantees that any element meeting the frequency threshold is among the candidates. However, the list can also contain “false positives” that did not achieve the n/8 count.
+   • Therefore, the second pass counts the frequencies exactly to verify the claim. This ensures that the algorithm correctly reports the existence (or non-existence) of an element with frequency at least n/8.
+
+──────────────────────────────
+Time Complexity Analysis:
+
+• The First Pass: Each of the n elements is processed in constant time (the candidate list has size at most 7, so lookup and decrement operations take O(1) time each). Therefore, this pass takes O(n) time.
+• The Second Pass: Again, each element is looked at once to update the frequency counter for at most 7 candidates. This also takes O(n) time.
+
+Thus, the overall time complexity is O(n) + O(n) = O(n).
+
+──────────────────────────────
+Conclusion:
+
+This algorithm efficiently checks if there is an element that appears at least n/8 times by maintaining a small set (≤ 7 candidates) of possible frequent elements and then verifying them. The correctness follows from the fact that any element with frequency > n/8 can survive the cancellation procedure, and the procedure runs in O(n) time.
+
+This concludes the solution.

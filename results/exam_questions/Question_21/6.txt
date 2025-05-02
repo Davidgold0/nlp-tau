@@ -1,0 +1,64 @@
+Question: Describe a data structure that supports the following operations (where \( n \) is the number of keys currently in the data structure, and it can be assumed that all the keys are distinct):
+
+\begin{itemize}
+    \item \texttt{Insert(a)} – Adds the key \( a \) to the data structure. The operation should be performed in \( O(\log n) \) time.
+    \item \texttt{Delete(a)} – Deletes the key \( a \). The operation should be performed in \( O(\log n) \) time.
+    \item \texttt{Search(a)} – Returns the key \( a \) if it exists, otherwise returns null. The operation should be performed in \( O(\log n) \) time.
+    \item \texttt{Sum(a)} – Returns the sum of all the keys smaller than \( a \). It can be assumed that \( a \) exists in the data structure. The operation should be performed in \( O(\log n) \) time.
+\end{itemize}
+3o-mini: One solution is to use a self-balancing binary search tree (such as an AVL tree or a red–black tree) augmented with extra information at each node. In addition to the usual key, left child, right child (and possibly parent) pointers, each node is augmented with a field (let’s call it sum) that stores the sum of all keys in the subtree rooted at that node.
+
+Here's a more detailed description of each component and operation:
+
+1. Key Structure
+
+   Each node of the tree would contain:
+   - key: the actual key stored in the node.
+   - sum: the sum of the keys for every node in the subtree rooted at this node.
+   - left: pointer/reference to the left child.
+   - right: pointer/reference to the right child.
+   - (Other fields as needed for balancing such as height in an AVL tree or color in a red–black tree.)
+
+2. Insertion (Insert(a))
+
+   When inserting a key a:
+   - Perform the standard tree insertion in O(log n) time.
+   - While unwinding the recursive calls (or backtracking from the inserted node), update the sum field at each node.
+     That is, the sum at a node becomes: 
+            node.sum = node.key + (left child’s sum, if any) + (right child’s sum, if any).
+   - If the tree rebalances (rotations occur), update the sum fields of affected nodes. Each rotation can update a constant number of nodes in O(1) time per rotation.
+   
+   Thus, the overall insertion time remains O(log n).
+
+3. Deletion (Delete(a))
+
+   When deleting a key a:
+   - Perform the standard deletion operation in the self-balancing BST. This takes O(log n) time.
+   - During the deletion process and while unwinding the recursion (or after the node is deleted), update the sum fields for all nodes along the deletion path.
+   - Any rebalancing or rotations are handled in a similar manner to insertion—update the relevant sum fields in O(1) time per rotation.
+   
+   Therefore, deletion is O(log n).
+
+4. Search (Search(a))
+
+   - Search is performed using the standard BST search, comparing a with the keys and traversing left or right accordingly.
+   - This takes O(log n) time as the tree is balanced.
+
+5. Sum Query (Sum(a))
+
+   The Sum(a) operation needs to return the sum of all keys smaller than a. You can assume that the key a exists in the data structure. Here is how you can do this in O(log n) time:
+
+   - Start at the root and initialize result = 0.
+   - Traverse the tree with the following idea:
+     • At each node, compare the key a with the key at the current node.
+     • If a is greater than the current node’s key, then all keys in the left subtree are smaller than a (because of the BST invariant). So add the sum stored at the left child (if it exists) plus the current node’s key to result, and then proceed to the right child to look for additional keys less than a.
+     • If a is less than or equal to the current node’s key, then no node in the right subtree of the current node could be less than a, so simply move to the left child.
+   - Continue this process until you get to the node whose key is exactly a. If you must return the sum of all keys less than a, once you reach the node with key a, add the sum from its left subtree (if not added already), and return the result.
+   
+   Because the tree is balanced and you only traverse one path from the root to a leaf, the Sum(a) operation runs in O(log n) time.
+
+6. Final Comments
+
+   By carefully maintaining the sum field in each node during insertions, deletions, and rotations (for rebalancing), the augmented self-balancing BST allows all operations—Insert, Delete, Search, and Sum—to run in O(log n) time. This makes it a very efficient data structure for the described operations.
+
+This augmented tree is often used in algorithms where fast prefix sums over keys are required, and it provides an elegant way to handle the extra Sum(a) query without compromising on the performance guarantees of standard balanced BST operations.

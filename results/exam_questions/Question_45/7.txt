@@ -1,0 +1,22 @@
+Question: \text{Given an array containing } n \text{ elements. The number of distinct elements is } k \, (k \leq n). \\
+\text{d. Assume the elements are integers between } 1 \text{ and } n^4. \text{ Propose a deterministic algorithm to sort the array.}
+3o-mini: We can sort the array in deterministic linear time by using radix sort. Here’s one way to do it:
+
+1. Note that every integer is in the range 1 to n⁴. This means that when written in base n the numbers have at most 4 digits (since n⁴ in base n is represented as “10000”, i.e. 5 digits but the maximum value we need to accommodate is n⁴–1, which has 4 digits). 
+
+2. We use radix sort by processing from the least‐significant digit (LSD) to the most‐significant digit (MSD). In each pass, we use a stable counting sort (or any other stable algorithm that works in O(n) time) on the corresponding digit.
+
+3. Since there are only 4 digits, each pass takes O(n) time (the counting sort’s time is linear in the number of elements plus the range of the digit values; here the digit range is at most n, which is O(n)). Therefore, the total running time is O(4 · n) = O(n).
+
+4. After processing all four digits, the array is fully sorted as required.
+
+Even though the array might contain only k distinct values (with k ≤ n), the fact that the keys are integers in [1, n⁴] allows us to use radix sort directly. (Alternatively, if k is much smaller than n one could build and sort a list (or a balanced BST) of distinct values and then “expand” the counts back to the original array, but the radix sort method gives a clean O(n) worst‐case guarantee for this range.)
+
+Thus, the deterministic algorithm is:
+
+• Represent each integer in base n (so it has at most 4 digits).
+• For d = 1 to 4 (from least significant digit to most significant):
+  – Use a stable counting sort to sort the array by the dᵗʰ digit.
+• Output the sorted array.
+
+This deterministic radix sort algorithm works in O(n) time and sorts the array as required.

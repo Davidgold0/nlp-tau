@@ -1,0 +1,45 @@
+Question: Describe a data structure whose elements are pairs of keys \( (a, b) \) that supports the following operations (where \( n \) is the number of key pairs currently in the data structure, and it can be assumed that all the key pairs are distinct):
+
+\begin{itemize}
+    \item \texttt{Insert(a, b)} – Adds the key pair \( (a, b) \) to the data structure. The operation should be performed in \( O(\log n) \) time.
+    \item \texttt{Delete(a, b)} – Deletes the key pair \( (a, b) \). The operation should be performed in \( O(\log n) \) time.
+    \item \texttt{Search(a, b)} – Returns the key pair \( (a, b) \) if it exists, otherwise returns null. The operation should be performed in \( O(\log n) \) time.
+    \item \texttt{successor(a, b)} – Returns \( (a, b^*) \) where \( b^* \) is defined as follows: let \( b_1, b_2, b_3, \dots, b_m \) be all the keys such that the pair \( (a, b_i) \) exists in the data structure (for \( 1 \leq i \leq m \)) and is sorted in ascending order. Then, \( b^* \) is the key to the right of \( b \) in the sorted list. If there is no key to the right of \( b \) in the sorted list, return null. The operation should be performed in \( O(\log n) \) time.
+\end{itemize}
+3o-mini: One acceptable solution is to use a balanced binary search tree (such as a red–black tree, AVL tree, etc.) where the elements are the pairs (a, b) sorted lexicographically. That is, we compare two pairs (a₁, b₁) and (a₂, b₂) by first comparing a₁ with a₂; if they are equal, then we compare b₁ with b₂. With this ordering, all operations can be implemented in O(log n) time. Here’s how each operation can work:
+
+1. Insert(a, b):
+  • Use the balanced BST’s standard insert routine with key (a, b).  
+  • Since the BST supports insertions in O(log n) time, the pair is added in the desired time.
+
+2. Delete(a, b):
+  • Use the BST’s deletion procedure to remove the node with key (a, b).  
+  • Again, since deletion in the BST is O(log n), the operation meets the requirement.
+
+3. Search(a, b):
+  • Perform a standard BST search to locate (a, b).  
+  • If the key exists, return (a, b); otherwise, return null.  
+  • This search takes O(log n) time.
+
+4. successor(a, b):
+  • In a balanced BST, one can compute the inorder successor of a given node in O(log n) time.  
+  • However, special care is needed because we only want the successor in the sorted order among the pairs that have the same first component a.  
+  • The procedure is as follows:
+    – First, search for the pair (a, b) in the BST. There are two cases:
+      a. If (a, b) exists: find its inorder successor in the BST (i.e. the next node in the in‐order traversal). Then, if the successor exists and its key is (a, b*), where the a value is equal to the given a, return that pair. Otherwise, if either the successor does not exist or its a component is not equal to a, return null.
+      b. If (a, b) does not exist: you can still perform a “search” (for instance, using a tree “lower_bound” operation) to find the smallest pair that is greater than (a, b). Then check if the first component of the found pair is equal to a. If yes, return it; if not, return null.
+  • Because each of these BST operations takes O(log n) time, the overall operation meets the requirement.
+
+An alternative (but equivalent) approach is to use a two-level data structure:
+
+• The first level is a balanced BST keyed by a.  
+• Each node in this BST stores a secondary balanced BST containing all the b values associated with its key a.
+
+In this structure:
+  – Insert(a, b) operates by first finding (or creating) the node for a in O(log n) (since there can be at most n different a values) and then inserting b into its BST in O(log m) (with m ≤ n), totaling O(log n).  
+  – Delete(a, b) and Search(a, b) are handled similarly.
+  – successor(a, b) is performed by locating the BST for a and then performing an inorder successor (or “next” operation) in the secondary BST.
+
+Either design meets the goal of supporting all operations in O(log n) time.
+
+Thus, by using a balanced binary search tree with lexicographical order or a two-level structure, we can accomplish all of the required operations efficiently.

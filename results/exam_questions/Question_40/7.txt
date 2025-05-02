@@ -1,0 +1,18 @@
+Question: \textbf{Reminder:} In perfect hash, we choose a random universal hash function to map a given space \( U \) of size \( n \) to an array of size \( n \). Let \( n_i \) be the number of elements mapped to cell \( i \). Then, a random universal hash function is used to map the elements mapped to cell \( i \) to another array of size \( n_i^2 \).
+
+\textbf{Question:} 
+
+Define: A nearly universal family of functions is a family of functions from space \( U \) to \(\{0, \ldots, m-1\}\) such that for any pair of keys \( k_1, k_2 \) in \( U \) the condition \( \Pr(h[k_1] = h[k_2]) \leq 1/m^{0.5} \) holds. Suppose we have a nearly universal family when \( |U| = n \). We take a random function from the family and use it to map the elements of \( U \) to an array of size \( m \). What is the best upper bound on the expected number of collisions if \( m = n^4 \)?
+3o-mini: We start by considering how many pairs of keys there could be. With n keys, there are n(n–1)/2 distinct pairs.
+
+Since we are using a nearly universal family, the probability that any two keys collide is at most 1/m^(0.5). Given that m = n⁴, we have m^(0.5) = n². Thus, for any pair (k₁, k₂), the collision probability is ≤ 1/n².
+
+Now, by linearity of expectation, the expected number of colliding pairs is at most:
+
+  Expected collisions ≤ (n(n–1)/2) * (1/n²)
+
+For large n, n(n–1) is roughly n², so:
+
+  Expected collisions ≈ (1/2)n² / n² = 1/2
+
+Thus, the best upper bound on the expected number of collisions is 1/2, which is O(1).

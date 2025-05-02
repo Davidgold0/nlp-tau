@@ -1,0 +1,34 @@
+Question: Given two AVL trees of size \( n \) each, is it possible to merge them in \( O(\sqrt{n}) \) time? Prove using an algorithm or a contradiction.
+3o-mini: We will show that you can merge two AVL trees of size n each in O(√n) time—in fact, you can do even better by merging them in O(log n) time. Since for all sufficiently large n we have
+
+  O(log n) ⊆ O(√n),
+
+this immediately implies that an O(√n) merge is achievable.
+
+Before giving the algorithm, recall two facts about AVL trees:
+
+1. An AVL tree is a balanced binary search tree whose height is O(log n) when there are n nodes.
+2. There is a well‐known “join” (or “merge”) operation for AVL trees; if you have two AVL trees T1 and T2 such that every key in T1 is less than every key in T2, then you may merge them into a single AVL tree in time proportional to the difference in their heights. (One standard method is to remove the maximum element from T1, let that become the new root, and attach the remaining T1 and T2 as its left and right subtrees, rebalancing as necessary.)
+
+Now, here is one way to merge two AVL trees T1 and T2 (of size n each) when we know that every key in T1 is less than every key in T2:
+
+  Algorithm Merge(T1, T2):
+  1. Remove the maximum element, say x, from T1. (This takes O(log n) time because T1 has height O(log n).)
+  2. Now, “join” the two AVL trees T1 (with the maximum removed) and T2 using x as the new root:
+    • Make x the new root.
+    • Let x.left point to T1 and x.right point to T2.
+    • Rebalance the AVL tree as required.
+    This join step takes time proportional to the difference in the heights of T1 and T2. Since both trees are AVL trees of size roughly n, their heights are O(log n), so this step takes O(log n) time.
+
+Since O(log n) is certainly O(√n), the total time is O(√n).
+
+To put this in perspective, suppose someone were to claim that merging two AVL trees could not be done in O(√n) time. Then we would have a contradiction because we have already described an algorithm that, under the assumption that the keys in T1 are less than those in T2, works in O(log n) time. (Even if the trees do not have nonoverlapping keys, one can use a similar split‐and‐join approach: split one tree according to a pivot value and then join the resulting trees appropriately. Each split or join takes O(log n) time, which is still within O(√n) for large n.)
+
+Thus, we have proved that if you have two AVL trees of size n each, they can indeed be merged in O(√n) time.
+
+Note:
+• The O(√n) running time is a very generous upper bound here. In fact, since AVL join and split operations take O(log n) time, the merge operation is even faster than O(√n) asymptotically.
+• Converting the trees to sorted arrays and then rebuilding the AVL tree would cost O(n) time, which is far worse than our join‐based method.
+
+Conclusion:
+Yes, it is possible to merge two AVL trees of size n each in O(√n) time; in reality, one can merge them in O(log n) time, which is a stronger result.

@@ -1,0 +1,82 @@
+Question: A pair of values in an array are called consecutive if they are different and, after sorting, they appear in adjacent positions in the array.  
+
+Given an array of natural numbers of size \( n \), propose an algorithm (with the best worst-case complexity) that checks whether there exists a pair of consecutive values whose total occurrences together are at least \( \left\lceil \frac{n}{2} \right\rceil \) 
+(that is, the number of times a certain value appears plus the number of times its consecutive value appears is at least \( \left\lceil \frac{n}{2} \right\rceil \).
+3o-mini: We can solve the problem in two main phases. First, we “count” the occurrences of each number, and then we check the sorted list of distinct keys (obtained from the frequency dictionary) to see if any two adjacent keys (which by the definition are “consecutive” values) have a combined frequency of at least ⎡n/2⎤.
+
+Below is a step‐by‐step description of an algorithm that does this, along with a discussion of its worst‐case complexity.
+
+──────────────────────────────
+Step 1. Build a Frequency Table
+
+• Initialize an empty dictionary (or hash table) called freq.
+• For each element a in the array A of size n, do:
+  freq[a] = freq.get(a, 0) + 1
+
+This step counts how many times each number appears. Since each access and insertion in the hash table is O(1) on average, the entire step runs in O(n) time.
+
+──────────────────────────────
+Step 2. Get Sorted List of Distinct Numbers
+
+• Extract the list of keys from freq into an array L.
+• Sort L by the numeric values.
+
+Now, remember that two numbers are “consecutive” (by the problem’s definition) if in sorted order they appear next to each other (even if they aren’t consecutive integers in the arithmetic sense). Thus, iterating over adjacent numbers in L is exactly what we need. Sorting L takes O(d log d) time where d is the number of distinct numbers. In the worst case d = n, so this step is O(n log n).
+
+──────────────────────────────
+Step 3. Check Each Pair of Adjacent Keys
+
+• Let T = ⎡n/2⎤.
+• For i from 0 to len(L) – 2, do:
+  – Let x = L[i] and y = L[i+1].
+  – Compute total = freq[x] + freq[y].
+  – If total ≥ T, then report that a valid pair exists (and you can return the pair or just “yes”).
+• If no such pair is found after the loop, report that no valid pair exists.
+
+Since the loop goes over at most all distinct keys (which is O(n) in the worst-case), this step runs in O(n).
+
+──────────────────────────────
+Overall Complexity
+
+• Frequency Table: O(n)
+• Sorting: O(n log n) worst case (if no bound on the natural numbers is assumed)
+• Checking pairs: O(n)
+
+Thus, the worst-case time complexity is O(n log n). (Note: If the natural numbers come from a bounded range, you can use counting sort or radix sort to bring this to O(n).)
+
+──────────────────────────────
+Pseudocode
+
+Below is a pseudocode version of the algorithm:
+
+ function hasConsecutivePair(A, n):
+  T = ceil(n / 2)
+  freq = new empty dictionary
+  for i = 0 to n - 1:
+   freq[A[i]] = freq.get(A[i], 0) + 1
+  
+  L = list of keys in freq
+  sort(L)         // O(d log d), worst-case O(n log n)
+  
+  for i = 0 to len(L) - 2:
+   x = L[i]
+   y = L[i+1]
+   if (freq[x] + freq[y] ≥ T):
+    return true     // A valid pair exists
+  
+  return false
+
+──────────────────────────────
+Discussion
+
+This algorithm is optimal in the sense that you must read all n numbers at least once (O(n)) and any method that obtains the sorted order of distinct values will take at least O(d log d). Without additional assumptions about the range of the natural numbers, O(n log n) is the best worst-case time you can achieve. If the numbers are bounded by a constant (or by O(n)), then you can use a linear sorting method to achieve an overall time complexity of O(n).
+
+──────────────────────────────
+Conclusion
+
+The proposed algorithm:
+1. Uses a hash table to count frequencies in O(n) time.
+2. Sorts the distinct keys and checks each adjacent pair in O(n log n) worst-case time.
+3. Returns true if any adjacent (i.e., “consecutive”) pair has a total occurrence count of at least ⎡n/2⎤; otherwise, it returns false.
+
+This meets the requirements and has the best worst-case complexity under the general assumption that no bounds are placed on the numbers.

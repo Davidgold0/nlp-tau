@@ -1,0 +1,79 @@
+Question: A pair of values in an array are called consecutive if they are different and, after sorting, they appear in adjacent positions in the array.  
+
+Given an array of natural numbers of size \( n \), propose an algorithm (with the best worst-case complexity) that checks whether there exists a pair of consecutive values whose total occurrences together are at least \( \left\lceil \frac{n}{2} \right\rceil \) 
+(that is, the number of times a certain value appears plus the number of times its consecutive value appears is at least \( \left\lceil \frac{n}{2} \right\rceil \).
+3o-mini: We can solve the problem in two main steps. First, we “compress” the array into a frequency table so that for every distinct value we know how many times it occurs. Then, since by definition two distinct values are “consecutive” if they appear consecutively in the sorted list of distinct numbers (even if they are not numerically adjacent, as in 1 and 10 when they are the only two values), we sort the keys and simply check every adjacent pair to see if their total frequency is at least ⌈n/2⌉.
+
+Below is a description of one acceptable algorithm along with an analysis of its complexity.
+
+──────────────────────────────
+Outline of the Algorithm
+
+1. Build a frequency table:
+   • Initialize an empty hash table (or dictionary) F.
+   • For each number x in the array A of size n, do:
+       F[x] ← F[x] + 1   (if x is not already in F, initialize F[x] = 1)
+   • Complexity: O(n) time.
+
+2. Extract and sort the distinct keys:
+   • Let Keys be the set of keys in F.
+   • Sort Keys in non-decreasing order.
+   • In the worst case (when all n numbers are distinct) the sorting takes O(n log n) time.
+
+3. Check consecutive pairs:
+   • Traverse the sorted list Keys. For each pair (Keys[i–1], Keys[i]) (for i = 1, …, length(Keys)–1), do:
+       If F[Keys[i–1]] + F[Keys[i]] ≥ ⌈n/2⌉ then return that that pair is found.
+   • Complexity: O(n) in the worst case (when there are O(n) distinct elements).
+
+4. If no such pair is found, return that no consecutive pair meets the condition.
+
+──────────────────────────────
+Pseudocode
+
+Assume we have a helper function Sort(L) that sorts a list L.
+
+  function find_consecutive_pair(A: array of natural numbers):
+      n ← length(A)
+      // Step 1: Build frequency table
+      F ← an empty hash table
+      for each x in A do
+          if x is in F then
+              F[x] ← F[x] + 1
+          else
+              F[x] ← 1
+
+      // Step 2: Extract and sort the keys (distinct values)
+      Keys ← list of keys in F
+      Sort(Keys)
+
+      // Step 3: Check every adjacent pair of keys
+      threshold ← ceil(n/2)
+      for i from 1 to length(Keys) - 1 do
+          if F[Keys[i-1]] + F[Keys[i]] ≥ threshold then
+              return ("Yes", (Keys[i-1], Keys[i]))
+              
+      // Step 4: No consecutive pair found
+      return ("No", null)
+
+──────────────────────────────
+Complexity Analysis
+
+• Building the frequency table is O(n).
+• Sorting the list of keys takes O(d log d) worst-case, where d is the number of distinct values. In the worst-case, d = n, so this step is O(n log n).
+• Scanning the sorted list takes O(n).
+
+Thus the overall worst-case time complexity is O(n log n).
+
+──────────────────────────────
+Discussion
+
+Note that it is possible to use a balanced binary search tree (BBST) to build the frequency table while keeping the keys in sorted order. Inserting n elements into a BBST takes O(n log n) worst-case, and an in-order traversal then takes O(n) time; so the overall complexity remains O(n log n).
+
+Under some additional assumptions (for example, if the natural numbers come from a known, small range) one might use a linear-time counting sort to sort the keys and achieve O(n) time overall. However, when the range is arbitrary, O(n log n) is the best worst-case complexity that we can guarantee.
+
+──────────────────────────────
+Conclusion
+
+One acceptable algorithm is to count frequencies, sort the distinct keys, and then check every adjacent pair (in the sorted order) to see if their frequency sum is at least ⌈n/2⌉. This algorithm runs in O(n log n) worst-case time.
+
+This is a correct and efficient solution for the problem as stated.

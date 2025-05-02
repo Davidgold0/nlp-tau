@@ -1,0 +1,36 @@
+Question: **In this question, we will discuss the Quicksort algorithm. Throughout the question, we assume the input is an array of length \( n \), and we are interested only in arrays where all elements are distinct. As is known, each sorting algorithm has an associated binary tree that represents the comparisons the algorithm performs for all possible inputs.**
+
+We are interested in the Quicksort algorithm where the pivot element is always chosen to be the first element of the segment of the array the algorithm is working on (rather than being chosen randomly), and we will focus on the comparison tree corresponding to this algorithm.
+
+**(A) What is the smallest depth of a leaf in this comparison tree as a function of \( n \)?**
+3o-mini: We will show that even if one “gets lucky” with the input order, the comparisons made by (this version of) Quicksort cannot be fewer than on the order of n·log(n). In fact, one may prove that if we let d(n) be the number of comparisons performed by this version of Quicksort on some “best‐case” input (that is, the depth of a leaf in the comparison tree) then
+
+  • d(0) = d(1) = 0, and
+  • for n ≥ 2,
+    d(n) = (n – 1) + d(k) + d(n – 1 – k) for some k between 0 and n–1.
+
+Because the pivot is always chosen to be the first element, the only “choice” we have in designing a very “efficient” input is to arrange the remaining elements so that the pivot happens to be nearly the median. (Any other arrangement makes one of the recursive calls very large and increases the total work.)
+
+In the ideal case the pivot is the median, so that the two subarrays have “roughly equal sizes.” (For example, when n = 2^r – 1 one may obtain equality by choosing k = 2^(r–1) – 1.) In that situation one obtains the recurrence
+
+  d(n) = (n – 1) + d(⌊(n–1)/2⌋) + d(⌈(n–1)/2⌉).
+
+One may show by a short induction (or by solving the recurrence on the “nice” sequence n = 2^r – 1) that in this best‐case scenario
+
+   d(n) = (n+1)·log₂(n+1) – 2(n+1) + 2           [when n+1 is a power of 2]
+
+so that in any case the best–possible number of comparisons is Θ(n·log n).
+
+Thus, to answer the question:
+
+──────────────────────────────
+Answer to (A):
+
+The smallest depth of a leaf in the comparison tree (i.e. the minimum number of comparisons that this version of Quicksort can ever make on an array of n distinct elements) is on the order of n·log n. In fact, one acceptable answer is
+
+  (n+1)·log₂(n+1) – 2(n+1) + 2     (if n+1 is a power of 2),
+
+so that in general the minimum number of comparisons is Θ(n·log n).
+──────────────────────────────
+
+Any answer giving Θ(n·log n) (or an equivalent closed‐form expression) is correct.

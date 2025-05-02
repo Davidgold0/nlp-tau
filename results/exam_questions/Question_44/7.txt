@@ -1,0 +1,20 @@
+Question: \begin{enumerate}
+    \item Given an array containing n elements. The number of distinct elements is k (𝑛 ≤ 𝑘).
+    \item Sort the following asymptotic orders without explanation (𝑛 ≤ 𝑘):
+    \begin{itemize}
+        \item n \log n,
+        \item n,
+        \item n \log k,
+        \item n + k \log k,
+        \item n^2
+    \end{itemize}
+\end{enumerate}
+3o-mini: One acceptable answer was to write the five orders (with n and k related by k ≤ n in a typical setting) as follows:
+
+  O(n)  <  O(n·log k)  ≤  O(n + k·log k)  ≤  O(n·log n)  <  O(n²).
+
+Note that in the common situation when k = Θ(n) (that is, when almost every element is distinct) we have
+  n·log k = n·log n and n + k·log k = Θ(n·log n),
+so the three “middle” orders all become Θ(n·log n).
+
+There is no explanation here since only a sorted list was requested.

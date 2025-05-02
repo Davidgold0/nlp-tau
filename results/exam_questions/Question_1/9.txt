@@ -1,0 +1,53 @@
+Question: A pair of values in an array are called consecutive if they are different and, after sorting, they appear in adjacent positions in the array.  
+
+Given an array of natural numbers of size \( n \), propose an algorithm (with the best worst-case complexity) that checks whether there exists a pair of consecutive values whose total occurrences together are at least \( \left\lceil \frac{n}{2} \right\rceil \) 
+(that is, the number of times a certain value appears plus the number of times its consecutive value appears is at least \( \left\lceil \frac{n}{2} \right\rceil \).
+3o-mini: We can solve the problem in two main steps:
+
+1. Build a frequency table for the array.
+2. Examine each pair of "consecutive" values (in the sense defined below) using the frequency table.
+
+Recall that the problem defines two values as consecutive if they are different and, after sorting the array, they appear in adjacent positions. (Note that they are not necessarily numerically consecutive; for example, if the distinct values in the array are {1, 5, 9}, then 1 and 5 are “consecutive” in this sense because no other distinct value lies in between them, even though 1 and 5 are not consecutive integers.)
+
+One acceptable algorithm is as follows:
+
+─────────────────────────────  
+Algorithm CHECK-CONSECUTIVE-PAIR(A, n):
+
+1. Create an empty dictionary (or hash table) H.
+
+2. For each element x in array A:
+  H[x] = H.get(x, 0) + 1  
+         // This builds the frequency table in O(n) worst-case
+
+3. Let L be the list of keys in H.  
+         // These are the distinct values in the array
+
+4. Sort L in increasing order.  
+         // If there are k distinct values, this step takes O(k log k). In the worst case k = n, so O(n log n).
+
+5. Let required = ceil(n / 2).
+
+6. For i = 0 to length(L) – 2 do:
+  a. If H[L[i]] + H[L[i+1]] ≥ required then
+   return “Yes, there is a pair (L[i], L[i+1]) whose total frequency is at least ceil(n/2).”
+
+7. If no such pair is found, return “No.”
+
+─────────────────────────────  
+
+Time Complexity Discussion:
+• Building the frequency table is O(n).
+• Sorting the list of distinct keys is O(k log k), where k ≤ n, so in the worst-case it is O(n log n).
+• The final scan is O(k), i.e. O(n) in the worst-case.
+Thus, the overall worst-case complexity is O(n log n).  
+(Note: If the input numbers come from a small range, one might use counting sort to reduce the sorting step to O(n) time.)
+
+This algorithm meets the requirement (with the best worst‐case complexity we can achieve in general) because it does not do more work than necessary and takes O(n log n) worst-case time.
+
+─────────────────────────────  
+Additional Comments:
+An alternative approach might involve using a hash table to check for “neighbors” in O(1) time per lookup, but because “consecutive” here means “adjacent in the sorted order of distinct keys” (and not numerically consecutive by one), you still must extract and sort the distinct keys in order to know which ones are adjacent.
+
+─────────────────────────────  
+Thus, the proposed algorithm is correct and has the best worst-case complexity of O(n log n) (or O(n) if additional assumptions on the input range allow counting sort).

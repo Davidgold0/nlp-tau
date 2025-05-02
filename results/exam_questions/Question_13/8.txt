@@ -1,0 +1,13 @@
+Question: Given a min-heap, with no duplicate keys.
+Each node \( x \) has an additional field \( s \), which is initialized to \( \text{nil} \). We want the field \( s \) of each node \( x \) to contain a pointer to the successor of \( x \). Assume that access to the heap elements is available (i.e., the heap is not a black box). The heap structure itself should not be changed. Propose an algorithm that achieves this, with the best possible overall worst-case time complexity, given that the keys are integers in the range from 1 to \( 2n \).
+3o-mini: We can achieve the desired result in O(n) worst‐case time. The keys are integers in the range 1 to 2n and there are n nodes (with no duplicate keys), so we can use an auxiliary array to “bucket” the nodes by key. Here’s one way to do it:
+
+1. Create an array A[1…2n] and initialize all entries to nil.
+2. Traverse all nodes in the heap (this can be done in O(n) time since the heap is given as an array or through pointers). For each node x with key k, set A[k] = x.
+3. Now, iterate over the keys from 1 to 2n. Use a variable (say, last) to keep track of the previous node encountered. Every time you find A[k] ≠ nil:
+  a. If last is not nil, set last.s := A[k] (i.e., set the successor pointer for the previous node).
+  b. Update last := A[k].
+
+Since there are at most n non-nil entries in A, this second pass also runs in O(n + (2n)) = O(n) time.
+
+Thus, the overall algorithm runs in O(n) worst-case time while preserving the heap structure.

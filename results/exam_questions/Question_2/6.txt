@@ -1,0 +1,68 @@
+Question: Given an array \( A \) containing \( n \) integers.  
+Given a number \( x \) that appears in \( A \), we define the multiplicity of \( x \) in array \( A \) as the number of times \( x \) appears in \( A \).  
+We want to create a sorted array \( B \) of size \( n \), which will contain the multiplicity of each number appearing in \( A \).  
+
+Propose an algorithm that solves the problem with the best expected time complexity.  
+3o-mini: We can solve the problem in overall expected O(n) time by “counting” the frequencies using a hash table and then using an integer‐sorting method (like counting sort) to sort the resulting B array.
+
+Suppose A[0…n–1] is our given array. First, note that when we say “the multiplicity of a number x,” we mean the number of times x occurs in A. What we need is a sorted array B (of size n) such that for every index i, B[i] equals the multiplicity of A[i]. For example, if
+
+  A = [3, 5, 3, 1, 5, 5]
+
+then the multiplicities are:
+  frequency(3) = 2,
+  frequency(5) = 3, and
+  frequency(1) = 1.
+
+Thus, the unsorted B would be:
+  B = [2, 3, 2, 1, 3, 3]
+
+and then sorting B gives:
+  Bsorted = [1, 2, 2, 3, 3, 3].
+
+Here is a step‐by‐step algorithm:
+
+Step 1. Count the Frequencies.
+  • Initialize an empty hash table T.
+  • For each element x in A, do:
+    T[x] = T.get(x, 0) + 1.
+  This runs in expected O(n) time if the hash table provides constant‐time operations on average.
+
+Step 2. Build Array B.
+  • Allocate an array B of size n.
+  • For each index i from 0 to n – 1, set:
+    B[i] = T[A[i]].
+  Again, this takes O(n) time.
+
+Step 3. Sort Array B.
+  • Note that every value in B is an integer between 1 and n (the frequency of any element cannot exceed n). In this case, we can use a counting sort, which sorts integer keys in O(n + k) time, where here k is O(n). Hence, counting sort will run in O(n) time.
+  • Alternatively, any O(n log n) sorting algorithm would also work, but counting sort gives the best expected performance.
+
+The overall time is thus O(n) + O(n) + O(n) = O(n) expected time.
+
+Pseudocode:
+
+-------------------------------------------------------------
+function computeSortedFrequencies(A[0…n–1]):
+    // Step 1: Compute frequency counts
+    T ← new empty hash table
+    for i from 0 to n–1 do:
+        if T.containsKey(A[i]) then
+            T[A[i]] ← T[A[i]] + 1
+        else
+            T[A[i]] ← 1
+
+    // Step 2: Construct array B where B[i] is the frequency of A[i]
+    B ← new array of size n
+    for i from 0 to n–1 do:
+        B[i] ← T[A[i]]
+    
+    // Step 3: Sort array B using counting sort (since values are between 1 and n)
+    B_sorted ← countingSort(B, range = 1 … n)
+    
+    return B_sorted
+-------------------------------------------------------------
+
+CountingSort(B, range) is assumed to be a standard counting sort implementation which runs in O(n + range) time.
+
+Thus, the best expected time complexity of the algorithm is O(n).

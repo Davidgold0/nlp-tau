@@ -1,0 +1,17 @@
+Question: We construct a hashing table of size \(m\) using the chaining method. The hash function is randomly selected from a universal family of hash functions. \(n\) distinct elements have already been inserted into the table. Now, we perform a search for an element \(x\) that is already in the table. Provide the best possible bound (not asymptotic) on the expected number of elements in the list where \(x\) is located.
+3o-mini: We start by noting that with chaining the hash table consists of m linked lists (chains) and that the hash function is chosen from a universal family. In a universal family, for any two distinct elements x and y, the probability that they collide (i.e. hash to the same slot) is at most 1/m.
+
+Now, suppose n distinct elements have been inserted. When we search for an element x that is known to be in the table, the list (chain) where x is located will contain x plus any other element y that collided with x (i.e. where h(y) = h(x)). For each y ≠ x, let I₍y₎ be the indicator variable that is 1 if h(y) = h(x) and 0 otherwise. By the universal hashing property, for any y ≠ x we have
+
+  E[I₍y₎] ≤ 1/m.
+
+Thus, the expected number of elements in the chain containing x is
+
+  1 (for x itself) + Σ₍y ∈ S, y ≠ x₎ E[I₍y₎]
+       ≤ 1 + (n - 1)/m.
+
+So, the best possible (non-asymptotic) bound on the expected number of elements examined (i.e. the length of the list containing x) is exactly
+
+  1 + (n - 1)/m.
+
+This bound is tight in the sense that if the probability of collision is exactly 1/m for every pair, then the expected chain length is exactly 1 + (n - 1)/m.

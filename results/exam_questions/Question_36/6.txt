@@ -1,0 +1,18 @@
+Question: We define a zig-zag array, for which there exist some indices \( n \leq j \leq i \leq 1 \) such that all elements in the array between 1 and \( i \) are in increasing order, all elements between \( i \) and \( j \) are in decreasing order, and all elements between \( j \) and \( n \) are in increasing order. We call \( i \) the peak element and \( j \) the valley element. 
+
+Provide upper and lower bounds for the problem: Input: Array. Output: Returns TRUE if the array is a zig-zag array.
+3o-mini: We can show that any algorithm that verifies whether an array is a zig‐zag array must essentially inspect every element, yielding a linear lower bound. For example, one standard method is as follows:
+
+1. Scan the array from the beginning while the elements are in (strictly) increasing order. Let i be the first index where the order breaks.
+2. Starting from index i, scan while the elements are (strictly) decreasing. Let j be where the decreasing trend ends.
+3. From index j onward, check that the array is (strictly) increasing all the way to the end.
+
+Each of these steps takes at most O(n) time, so the entire algorithm runs in O(n) time.
+
+Furthermore, in the worst case (for example, if the zig‐zag property holds and you have to check every element to be sure), the algorithm must read every element. Thus no algorithm can do better than reading the entire array – a lower bound of Ω(n).
+
+In summary, 
+• Upper bound: O(n)
+• Lower bound: Ω(n)
+
+Therefore, the problem’s time complexity is Θ(n).

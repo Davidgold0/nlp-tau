@@ -1,0 +1,36 @@
+Question: Given an array with $n$ numbers.
+
+\textbf{B.} Describe a deterministic algorithm with time complexity $O(n \log n)$ that returns the number of distinct elements in the array. Prove your answer.
+3o-mini: We can solve the problem with the following two-step algorithm:
+
+Step 1: Sort the Array
+• Use any deterministic sorting algorithm with O(n log n) worst-case performance (for example, merge sort or heapsort) to sort the array.
+• After sorting, any duplicate elements will appear next to one another.
+
+Step 2: Count Distinct Elements
+• Initialize a counter to 1 (assuming the array is non-empty).
+• Iterate once through the sorted array from the second element to the end.
+• For each element, compare it with the previous element.
+• If an element is different from the previous one, increment the counter.
+• When the iteration finishes, the counter contains the number of distinct elements.
+
+Pseudocode:
+
+-----------------------------------------------------
+function countDistinct(A[0...n-1]):
+    if n == 0:
+        return 0
+    sort(A)  // O(n log n) sorting using merge sort or heapsort
+    count = 1
+    for i from 1 to n-1:
+        if A[i] ≠ A[i-1]:
+            count = count + 1
+    return count
+-----------------------------------------------------
+
+Proof of Time Complexity:
+• Sorting the array takes O(n log n) time.
+• The subsequent single loop takes O(n) time.
+• Therefore, the overall time complexity is O(n log n + n) = O(n log n).
+
+This algorithm is deterministic, works in O(n log n) time, and correctly returns the number of distinct elements in the array.

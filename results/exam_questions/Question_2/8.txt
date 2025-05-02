@@ -1,0 +1,85 @@
+Question: Given an array \( A \) containing \( n \) integers.  
+Given a number \( x \) that appears in \( A \), we define the multiplicity of \( x \) in array \( A \) as the number of times \( x \) appears in \( A \).  
+We want to create a sorted array \( B \) of size \( n \), which will contain the multiplicity of each number appearing in \( A \).  
+
+Propose an algorithm that solves the problem with the best expected time complexity.  
+3o-mini: We can solve the problem in expected O(n) time. One acceptable solution is to first compute the frequency of each number and then “output” the multiplicities in sorted order (since the only values you output are numbers between 1 and n, you can use a linear‐time sorting method).
+
+Below is one way to do it:
+
+───────────────────────────── 
+Algorithm Outline
+
+1. Count the frequencies:
+   • Create an empty hash table (or dictionary) called F.
+   • For each element x in the input array A (of size n), do:
+   if x is not in F then
+    F[x] ← 1
+   else
+    F[x] ← F[x] + 1
+   • At the end of this loop, F[x] equals the multiplicity of x.
+
+2. Build the unsorted array of multiplicities:
+   • We want an output array B of size n. Notice that if a number x appears f = F[x] times in the original array, then you want f copies of f in array B.
+   • Initialize an empty array B (of size n).
+   • For each key x in F, do:
+   append the value F[x] into the array B, F[x] times.
+   • Now B is an array of n numbers, but they are not necessarily sorted.
+
+3. Sort the array B:
+   • The entries of B are integers in the range 1 to n (since a number’s multiplicity cannot exceed n).
+   • Use a counting sort (or bucket sort) to sort array B in O(n) time.
+   • The resulting array is your desired sorted B.
+
+───────────────────────────── 
+Pseudocode
+
+Assume A is an array of n integers.
+
+ function CreateSortedMultiplicities(A):
+  // Step 1: Count frequencies using a hash table F.
+  F = new empty hash table
+  for each x in A do:
+   if F does not contain key x then
+    F[x] = 1
+   else
+    F[x] = F[x] + 1
+  
+  // Step 2: Build the unsorted list B of multiplicities.
+  B = new array of length n
+  index = 0
+  for each key x in F do:
+   f = F[x]
+   for i = 1 to f do:
+    B[index] = f
+    index = index + 1
+  
+  // Step 3: Sort B using counting sort.
+  B = CountingSort(B, maximum = n)
+  return B
+
+ 
+ function CountingSort(B, maxVal):
+  // Create an array C of counts initialized to 0.
+  C = array of length (maxVal + 1) filled with 0
+  for each element b in B do:
+   C[b] = C[b] + 1
+  
+  // Build the sorted array.
+  sortedB = new array of the same length as B
+  index = 0
+  for i = 1 to maxVal do:
+   for j = 1 to C[i] do:
+    sortedB[index] = i
+    index = index + 1
+  return sortedB
+
+───────────────────────────── 
+Explanation of the Complexity
+
+• The hash table counting in Step 1 runs in O(n) expected time.
+• In Step 2, the total number of iterations of the inner loop equals the sum of all frequencies, which is n.
+• Counting sort in Step 3 runs in O(n + k) time, where k = n.
+• Thus, the overall expected time complexity is O(n).
+
+This algorithm meets the requirements of the problem with the best expected time complexity.
