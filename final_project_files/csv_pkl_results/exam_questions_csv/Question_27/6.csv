@@ -1,0 +1,37 @@
+Question: Given an array of $n$ integers between $0$ and $2^n$.
+"It is given that each number in the array is a multiple of the upper bound value of $2^N$, divided by $N^3$. Propose an algorithm to sort the array."
+"3o-mini: We can take advantage of the extra “structure” in the input. Although the numbers lie between 0 and 2ⁿ (so they appear to be n‑bit integers), each number is known to be an integer multiple of"
+  L = (2ⁿ)/(n³).
+"In other words, every element x in the array can be written as"
+  x = k · L   with  0 ≤ k ≤ n³.
+"Thus, while x might be very large (up to 2ⁿ), the “interesting part” of x is really the multiplier k, and that k can only take on at most n³ + 1 different values. In fact, notice that:"
+"   • L is very large (by a factor of about 2ⁿ) compared to n³,"
+"   • and so although x is represented with n bits, the “effective number of bits” needed to represent k is only about log₂(n³) = 3·log₂ n."
+The idea is then to “compress” each number x by computing
+  q = x / L = x · (n³/2ⁿ).
+"Since every x is a multiple of L, q is an integer in the range [0, n³]. Now instead of sorting the possibly huge numbers x, we can sort the much smaller integers q. There are several ways to do this efficiently:"
+───────────────────────────── 
+Method 1. Radix Sort
+───────────────────────────── 
+"Since every q has only O(log n) bits (precisely, about 3 log n bits), we can use radix sort with an appropriate base (say, base n or base 2^w for a fixed word size) to sort the n numbers in O(n) time (the number of passes will be O(log n) divided by the number of bits processed per pass, which is constant)."
+───────────────────────────── 
+Method 2. Bucket (Counting) Sort
+───────────────────────────── 
+"Alternatively, one may note that the range of possible q’s is 0 to n³, which is polynomial in n. If higher space is allowed we can create an auxiliary array (or “buckets”) of size n³ + 1, count the frequency of each q and then produce the sorted order in O(n + n³) time. (This is linear in the maximum number if n³ is taken as a function of n—but since n³ is a polynomial, one usually views this as “linear in the size of the key‐space”, though it might not be acceptable if you really want a linear-time algorithm in the worst case with respect to n.) "
+"A more “space‐efficient” approach is to use bucket sort with n buckets, where each bucket corresponds to an interval of q–values. Since there are only n numbers distributed among n buckets, the expected number of numbers per bucket is constant, and the sorting inside each bucket (say by insertion sort) will be very fast. (Of course, in the worst-case one bucket might hold almost all n numbers so one must be a bit careful if worst-case guarantees are desired. But under reasonable assumptions or using more sophisticated bucketing one can achieve linear time.)"
+───────────────────────────── 
+Outline of a Radix Sort Algorithm
+───────────────────────────── 
+1. Preprocess each element x in the array:
+"  a. Compute q = x · (n³/2ⁿ). (Since x is an integer which is known to be a multiple of (2ⁿ)/(n³), this division is exact.)"
+2. Use radix sort (with an appropriate base) on the array of q’s.
+"3. Once you have sorted the q’s, the corresponding x’s will be in sorted order."
+"4. (Optionally, if you need to output the sorted x’s, you may either store pointers or do a final pass to convert the q’s back (using x = q · L).)"
+"Because each integer x has only O(log n) “effective” bits (through q), the radix sort will take O(n) time."
+─────────────────────────────
+Thus one acceptable answer to the problem is:
+"Step 1. For each element in the array, compute q = x · (n³/2ⁿ).  "
+Step 2. Use radix sort on these q values (which have only about 3 log n bits).  
+Step 3. Output the corresponding elements in sorted order.
+This algorithm runs in O(n) time (with the usual assumptions about linear-time radix sort on O(log n)-bit integers) and uses the given structure of the numbers.
+"Any method that “compresses” the numbers to their small multipliers (q’s) and then sorts them (whether by radix, bucket, or even counting sort if the space is not a concern) is acceptable."

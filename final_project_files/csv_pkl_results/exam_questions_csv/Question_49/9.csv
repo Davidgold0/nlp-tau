@@ -1,0 +1,20 @@
+Question: Two AVL trees of size \( n \) each are given. Can they be merged in \( O(n) \) time? Prove using an algorithm or disprove.
+"3o-mini: Yes, two AVL trees of size n each can be merged in O(n) time. One way to see this is by taking advantage of the fact that an AVL tree’s in‐order traversal produces a sorted sequence of elements. Here’s an outline of an algorithm that does the merge in O(n) time:"
+1. Inorder Traversal:  
+"  Perform an inorder traversal on each AVL tree. Since each tree has n nodes, this takes O(n) time per tree. At the end, you will have two sorted arrays (or lists) of keys."
+2. Merge Sorted Arrays:  
+"  Merge the two sorted arrays using the standard merging procedure (like in merge sort). Since each array has n elements, this merge step takes O(n) time."
+3. Build a Balanced AVL Tree:  
+"  Given the merged sorted array of 2n elements, you can build a balanced binary search tree (which will be AVL balanced) in O(n) time by recursively selecting the middle element as the root and doing the same for the left and right subarrays.  "
+"  Algorithmically, the idea is:"
+"    • If the array is empty, return null."
+    • Let m be the middle index.
+    • Create a new node with the element at m.
+    • Recursively build the left subtree from the subarray to the left of m and the right subtree from the subarray to the right of m.
+  This construction takes O(n) time overall.
+Proof of Total Time Complexity:
+  - Inorder traversals: 2 × O(n) = O(n)
+  - Merging arrays: O(n)
+  - Building the AVL tree: O(2n) = O(n)  
+"  Thus, the entire algorithm runs in O(n) time."
+This algorithm shows that merging two AVL trees (assuming you can allocate O(n) extra space for the arrays) can indeed be achieved in O(n) time.

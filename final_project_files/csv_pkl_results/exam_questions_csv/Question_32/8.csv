@@ -1,0 +1,7 @@
+"Question: We construct a hashing table of size \(m\) using the chaining method. The hash function is randomly selected from a universal family of hash functions. \(n\) distinct elements have already been inserted into the table. Now, we perform a search for an element \(x\) that is already in the table. Provide the best possible bound (not asymptotic) on the expected number of elements in the list where \(x\) is located."
+"3o-mini: We want to know the expected number of elements in the chain (or list) where the element x is found. Since the hash function is chosen from a universal family, for any other element y ≠ x, the probability that y hashes to the same slot as x is at most 1/m."
+"x is already in the table, so its chain always has at least one element. For each of the remaining n – 1 elements, define an indicator variable I_y which is 1 if y and x hash to the same table slot, and 0 otherwise. By the property of universal hashing, for any y we have"
+  E[I_y] ≤ 1/m.
+"Thus, the expected number of elements in the chain containing x is"
+  1 + ∑(over y ≠ x) E[I_y] ≤ 1 + (n – 1)/m.
+This is the best possible (exact) bound on the expected number of elements in the list where x is located.

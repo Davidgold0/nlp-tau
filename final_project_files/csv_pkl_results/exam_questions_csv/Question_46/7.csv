@@ -1,0 +1,5 @@
+"Question: \textit{Given a series of n elements, what is the time complexity for finding the k smallest elements in the series (for k < n).}"
+3o-mini: There are a couple of common approaches:
+"• One way is to use a max‐heap of size k. You scan the n elements and maintain the k smallest seen so far. Each time you add an element, you may need to do a logarithmic (in k) adjustment. This leads to an O(n log k) time complexity."
+"• Another approach is to use a selection algorithm (like Quickselect) to find the kth smallest element in O(n) average time. Once you have this threshold, you can partition the array to get all k smallest elements. (If you need them in sorted order, you can then sort the k elements in O(k log k) time, for a total of O(n + k log k).)"
+"Thus, if you simply need the k smallest elements (and order does not matter), you can achieve an O(n) average time complexity with a selection algorithm (or even a worst‐case linear algorithm using the median-of-medians method). If you use the heap approach, the complexity is O(n log k)."

@@ -1,0 +1,14 @@
+"Question: Natasha has more than $\$1$ but less than $\$10$ worth of dimes. When she puts her dimes in stacks of 3, she has 1 left over. When she puts them in stacks of 4, she has 1 left over. When she puts them in stacks of 5, she also has 1 left over. How many dimes does Natasha have?"
+"3o-mini: Let n be the number of dimes. Since each dime is worth 10 cents, having more than $1 means n > 10, and less than $10 means n < 100."
+The problem states:
+"• n leaves a remainder of 1 when divided by 3, so n ≡ 1 (mod 3),"
+"• n leaves a remainder of 1 when divided by 4, so n ≡ 1 (mod 4),"
+"• n leaves a remainder of 1 when divided by 5, so n ≡ 1 (mod 5)."
+"This means that n – 1 is divisible by 3, 4, and 5. The least common multiple of 3, 4, and 5 is 60, so we can write:"
+"  n – 1 = 60k, where k is a positive integer."
+"Thus, n = 60k + 1."
+Checking the range for n (11 ≤ n < 100):
+"• For k = 1: n = 60(1) + 1 = 61, which is in the range."
+• For k = 0: n = 1 (too small).
+• For k ≥ 2: n ≥ 121 (too large).
+"Therefore, Natasha has 61 dimes."

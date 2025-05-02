@@ -1,0 +1,16 @@
+"Question: Given two arrays \( A \) and \( B \), each of size \( n \), we want to create a third array \( C \) of size \( n \), with the following property:  "
+The value stored in \( C[i] \) is the number of elements in \( A \) that are smaller than \( B[i] \).  
+Describe an algorithm with the best worst-case time complexity to solve this problem.
+3o-mini: We can solve the problem in O(n log n) worst-case time by following these steps:
+1. Sort array A. Sorting takes O(n log n) time.
+"2. For each element B[i] in array B, perform a binary search in the sorted array A to determine the number of elements in A that are smaller than B[i]. The binary search takes O(log n) time."
+3. Store the result of each binary search in C[i].
+"Since we perform a binary search for each of the n elements in B, step 2 takes O(n log n) time."
+"Thus, the overall worst-case time complexity is O(n log n)."
+Here’s a summary of the algorithm:
+Step 1: Sort A.
+  A_sorted = sort(A)
+Step 2: For i from 1 to n:
+  C[i] = index of the lower_bound (or equivalent binary search result) for B[i] in A_sorted
+(This works because the index where B[i] would be inserted in A_sorted is exactly the count of elements smaller than B[i].)
+The combination of sorting and the binary searches gives the best worst-case time complexity of O(n log n) for this problem.

@@ -1,0 +1,43 @@
+Question: Given an array \( A \) containing \( n \) integers.  
+"Given a number \( x \) that appears in \( A \), we define the multiplicity of \( x \) in array \( A \) as the number of times \( x \) appears in \( A \).  "
+"We want to create a sorted array \( B \) of size \( n \), which will contain the multiplicity of each number appearing in \( A \).  "
+Propose an algorithm that solves the problem with the best expected time complexity.  
+3o-mini: We can solve the problem in expected O(n) time by first counting the frequencies with a hash table and then sorting the resulting frequency array by taking advantage of the fact that the frequency values lie between 1 and n (so counting sort can be used).
+Here is a step‐by‐step description of one acceptable solution:
+Step 1. Count the frequencies.
+ • Create an empty hash table (or dictionary) called Count.
+" • For each element x in A, do:"
+"  – If x is not in Count, set Count[x] = 1."
+"  – Otherwise, increment Count[x] by 1."
+  This step takes O(n) time expected (using a hash table).
+Step 2. Create the unsorted frequency array.
+ • Initialize a new array B of length n.
+" • For each index i from 0 to n – 1, set B[i] = Count[A[i]]."
+"  Since every element in A gets replaced by its frequency, B now contains, for every occurrence in A, the multiplicity of that value."
+  This step takes O(n) time.
+Step 3. Sort the array B.
+" • Notice that each entry in B is an integer in the range [1, n]. Instead of a comparison-based sort (which would take O(n log n) time in the worst case), we can use counting sort which runs in O(n) time when the range of the numbers is O(n)."
+ • Run counting sort on B to produce the sorted array.
+  This sorting step takes O(n) time.
+"Thus, the overall expected time complexity is O(n) + O(n) + O(n) = O(n)."
+Pseudo-code:
+  function createSortedMultiplicityArray(A):
+    n = length(A)
+    Count = {}   // empty hash table
+    for x in A:
+     if x in Count:
+      Count[x] = Count[x] + 1
+     else:
+      Count[x] = 1
+     
+    B = new array of length n
+    for i from 0 to n − 1:
+     B[i] = Count[A[i]]
+    
+"    B = countingSort(B)   // counting sort, since all numbers in B are in [1, n]"
+    return B
+Explanation:
+• The hash table allows us to compute the frequency (“multiplicity”) of each number found in array A in expected O(n) time.
+• Replacing each A[i] with Count[A[i]] gives us the array B where every position holds the multiplicity of the corresponding element in A.
+"• Because the range of possible frequencies is small ([1, n]), we use counting sort to sort B in O(n) time."
+"Thus, the algorithm has the best expected time complexity of O(n)."

@@ -1,0 +1,7 @@
+Question: You are a very strong chess engine.
+The chess board is in the following state (FEN): '1r3rk1/6p1/3p3p/3P4/3Q1p2/2n4P/5PP1/R4RK1 b - - 0 28'. 
+"What is the best move for black? Respond with a single move in the following notation: [source square][destination square] (e.g., ""f8f4"")."
+"3o-mini: The winning tactical resource is to move the knight from c3 to b1. In other words, Black’s best move is:"
+c3b1
+"Here’s a sketch of the idea. With 28...Nb1, the knight jumps into the a1–d4 diagonal where it “attacks” the rook on a1. Although that rook is nominally defended by the queen on d4 (via the a1–b2–c3–d4 diagonal) white cannot keep all the pieces in line. For example, if White attempts to retreat the a1–rook (say 29.Ra2) then Black will capture on a1 with the knight (Nxa1) and win the exchange. (If instead White immediately takes the knight with 29.Rxb1, the ensuing trade – Rxb1 Qxb1 – still gives Black a modest material “bonus” compared to the starting imbalance.) In either case Black snatches enough material to obtain good counter‐play."
+"Thus, the engine’s recommendation is 28...Nb1, i.e. “c3b1.”"

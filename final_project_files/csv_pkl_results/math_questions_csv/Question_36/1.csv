@@ -1,0 +1,129 @@
+Question: Let $\theta$ be an acute angle such that_x000D_
+\[\sin 5 \theta = \sin^5 \theta.\]Compute $\tan 2 \theta.$
+Teacher: Let’s start by understanding the problem and planning our approach. We have an acute angle θ satisfying
+  sin(5θ) = (sin θ)⁵.
+A good plan is as follows:
+1. Express sin(5θ) in terms of sin θ. (Recall the multiple-angle formula for sin(5θ).)
+2. Set the expression equal to (sin θ)⁵.
+3. Rearrange and factor the equation.
+"4. Notice that since θ is acute, sin θ ≠ 0, so you can divide by sin θ."
+"5. This will lead to a simpler equation in terms of sin²θ, which you can solve by substituting x = sin²θ."
+"6. Once you determine sin θ (or sin²θ), find tan θ."
+"7. Finally, use the double-angle formula for tangent to compute tan(2θ)."
+Let’s begin with the first step: Write sin(5θ) in terms of sin θ. What do you get when you express sin(5θ) using the multiple-angle formula? Please share your work for this step.
+"Student: To express \(\sin(5\theta)\) in terms of \(\sin \theta\), we can use the multiple-angle formula for sine. The formula for \(\sin(5\theta)\) is:"
+\[
+\sin(5\theta) = 16 \sin^5 \theta - 20 \sin^3 \theta + 5 \sin \theta.
+\]
+"Now that we have this expression, we can set it equal to \((\sin \theta)^5\):"
+\[
+16 \sin^5 \theta - 20 \sin^3 \theta + 5 \sin \theta = \sin^5 \theta.
+\]
+"Next, we can rearrange this equation. What should we do next?"
+Teacher: Great work expressing sin(5θ) in terms of sin θ! Your next step is to rearrange the equation by moving (sin θ)⁵ to the left-hand side so you can set the equation equal to zero. 
+"In other words, start with"
+  16 sin⁵θ – 20 sin³θ + 5 sinθ = sin⁵θ
+"Subtract (sin θ)⁵ from both sides, and then see what common factor you can factor out. Can you show me how you would rearrange and factor the equation?"
+Student: Student: Sure! Let's rearrange the equation by subtracting \((\sin \theta)^5\) from both sides:
+\[
+16 \sin^5 \theta - 20 \sin^3 \theta + 5 \sin \theta - \sin^5 \theta = 0.
+\]
+This simplifies to:
+\[
+"(16 - 1) \sin^5 \theta - 20 \sin^3 \theta + 5 \sin \theta = 0,"
+\]
+which becomes:
+\[
+15 \sin^5 \theta - 20 \sin^3 \theta + 5 \sin \theta = 0.
+\]
+"Now, we can factor out the common term \(5 \sin \theta\):"
+\[
+5 \sin \theta (3 \sin^4 \theta - 4 \sin^2 \theta + 1) = 0.
+\]
+"Since \(\sin \theta \neq 0\) for an acute angle, we can focus on the quadratic part:"
+\[
+3 \sin^4 \theta - 4 \sin^2 \theta + 1 = 0.
+\]
+Let’s set \(x = \sin^2 \theta\). Then we rewrite the equation as:
+\[
+3x^2 - 4x + 1 = 0.
+\]
+What should we do next to solve for \(x\)?
+Teacher: Excellent work! You've set up the quadratic equation in x as
+  3x² – 4x + 1 = 0.
+"The next step is to solve this equation for x. You could try factoring, or if that's not straightforward, use the quadratic formula. Please go ahead and solve this quadratic equation for x (that is, for sin²θ). What value(s) do you get?"
+"Student: To solve the quadratic equation \(3x^2 - 4x + 1 = 0\), I will use the quadratic formula, which is given by:"
+\[
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+\]
+"In our equation, \(a = 3\), \(b = -4\), and \(c = 1\). Plugging in these values, we have:"
+\[
+x = \frac{-(-4) \pm \sqrt{(-4)^2 - 4 \cdot 3 \cdot 1}}{2 \cdot 3}
+\]
+Calculating the discriminant:
+\[
+(-4)^2 - 4 \cdot 3 \cdot 1 = 16 - 12 = 4
+\]
+Now substituting back into the formula:
+\[
+x = \frac{4 \pm \sqrt{4}}{6} = \frac{4 \pm 2}{6}
+\]
+This gives us two possible solutions:
+1. \(x = \frac{4 + 2}{6} = \frac{6}{6} = 1\)
+2. \(x = \frac{4 - 2}{6} = \frac{2}{6} = \frac{1}{3}\)
+"Since \(x = \sin^2 \theta\), we discard \(x = 1\) because \(\theta\) is acute and \(\sin \theta\) cannot equal 1. Therefore, we have:"
+\[
+\sin^2 \theta = \frac{1}{3}.
+\]
+"Next, we can find \(\sin \theta\):"
+\[
+\sin \theta = \sqrt{\frac{1}{3}} = \frac{1}{\sqrt{3}}.
+\]
+"Now, we need to find \(\tan \theta\). We can use the identity \(\tan \theta = \frac{\sin \theta}{\cos \theta}\). To find \(\cos \theta\), we use the Pythagorean identity:"
+\[
+\cos^2 \theta = 1 - \sin^2 \theta = 1 - \frac{1}{3} = \frac{2}{3}.
+\]
+"Thus,"
+\[
+\cos \theta = \sqrt{\frac{2}{3}} = \frac{\sqrt{2}}{\sqrt{3}}.
+\]
+"Now, we can compute \(\tan \theta\):"
+\[
+\tan \theta = \frac{\sin \theta}{\cos \theta} = \frac{\frac{1}{\sqrt{3}}}{\frac{\sqrt{2}}{\sqrt{3}}} = \frac{1}{\sqrt{2}}.
+\]
+"Finally, we want to find \(\tan(2\theta)\) using the double-angle formula for tangent:"
+\[
+\tan(2\theta) = \frac{2\tan \theta}{1 - \tan^2 \theta}.
+\]
+Now substituting \(\tan \theta = \frac{1}{\sqrt{2}}\):
+\[
+\tan(2\theta) = \frac{2 \cdot \frac{1}{\sqrt{2}}}{1 - \left(\frac{1}{\sqrt{2}}\right)^2} = \frac{\frac{2}{\sqrt{2}}}{1 - \frac{1}{2}} = \frac{\sqrt{2}}{\frac{1}{2}} = 2\sqrt{2}.
+\]
+"Thus, the final answer for \(\tan(2\theta)\) is:"
+\[
+\boxed{2\sqrt{2}}.
+\]
+"Teacher: You’ve worked through the steps very well, and your reasoning is correct. You began by writing sin(5θ) in terms of sin θ using the multiple–angle formula, rearranged the equation, and factored out the common term. Then, by setting x = sin²θ, you solved the quadratic to find sin²θ = 1/3 (since the other solution, x = 1, is extraneous for an acute angle). Using the Pythagorean identity, you correctly computed cos θ and hence tan θ, and finally applied the double–angle formula for tangent to find tan(2θ)."
+Your final answer is 2√2$
+Student: Thank you! I appreciate your guidance throughout the problem. To summarize our work:
+"1. We started with the equation \(\sin(5\theta) = \sin^5 \theta\) and expressed \(\sin(5\theta)\) using the multiple-angle formula, leading to:"
+   \[
+   \sin(5\theta) = 16 \sin^5 \theta - 20 \sin^3 \theta + 5 \sin \theta.
+   \]
+2. We rearranged this to form the equation:
+   \[
+"   15 \sin^5 \theta - 20 \sin^3 \theta + 5 \sin \theta = 0,"
+   \]
+   and factored out \(5 \sin \theta\):
+   \[
+   5 \sin \theta (3 \sin^4 \theta - 4 \sin^2 \theta + 1) = 0.
+   \]
+"3. We set \(x = \sin^2 \theta\) and solved the quadratic equation \(3x^2 - 4x + 1 = 0\) using the quadratic formula, which gave us \(x = \frac{1}{3}\) as the valid solution."
+"4. From \(x = \sin^2 \theta\), we found \(\sin \theta = \frac{1}{\sqrt{3}}\) and then calculated \(\cos \theta = \frac{\sqrt{2}}{\sqrt{3}}\)."
+5. We computed \(\tan \theta = \frac{1}{\sqrt{2}}\) and used the double-angle formula to find:
+   \[
+   \tan(2\theta) = 2\sqrt{2}.
+   \]
+"Thus, the final answer is indeed \( \boxed{2\sqrt{2}} \). Thank you for your help in breaking down the problem step by step!"
+"Teacher: You've done a fantastic job guiding yourself through the problem, step by step. You correctly expanded sin(5θ) with the multiple–angle formula, rearranged and factored to obtain the quadratic in sin²θ, and then solved for the valid solution sin²θ = 1/3. Using the Pythagorean identity, you found cos θ and computed tan θ. Finally, you applied the double–angle formula to find tan(2θ) and concluded with the correct final answer."
+Your final answer is 2√2$

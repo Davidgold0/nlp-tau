@@ -1,0 +1,25 @@
+"Question: **In this question, we will discuss the Quicksort algorithm. Throughout the question, we assume the input is an array of length \( n \), and we are interested only in arrays where all elements are distinct. As is known, each sorting algorithm has an associated binary tree that represents the comparisons the algorithm performs for all possible inputs.**"
+"We are interested in the Quicksort algorithm where the pivot element is always chosen to be the first element of the segment of the array the algorithm is working on (rather than being chosen randomly), and we will focus on the comparison tree corresponding to this algorithm."
+**(A) What is the smallest depth of a leaf in this comparison tree as a function of \( n \)?**
+"3o-mini: We wish to know the minimum number of comparisons that the Quicksort algorithm (with a “first‐element pivot” rule) might perform on an array of n distinct numbers. In other words, we are looking for the smallest possible depth (that is, the fewest comparisons on some root‐to‐leaf path) in the algorithm’s deterministic comparison tree."
+How do we get a “good” (i.e. shallow) path? Notice that at each recursive call Quicksort does the following:
+ • It chooses as pivot the first element of the current segment.
+ • It then “partitions” the rest of the array by comparing each of the other elements to the pivot.
+"Thus, on a call that has m elements the algorithm always makes exactly m–1 comparisons and then recurses on the two subarrays determined by the result of those comparisons."
+"Now, if we could “magically” arrange the input so that every time the pivot turns out to be the median of the current segment, the partition would be as balanced as possible. (For the chosen rule the only way to get a balanced partition is to have the input be arranged so that in each segment the first element is the median of that segment according to the final sorted order.) In that best‐case scenario the recurrence for the total number of comparisons f(n) is"
+"  f(0) = f(1) = 0, and for n ≥ 2,"
+  f(n) = (n – 1) + f(⌊(n – 1)/2⌋) + f(⌈(n – 1)/2⌉).
+"Let’s examine a very clean case. Suppose n is one more than a power of 2 (or even take n to be a power of 2 by a slight tweak). In particular, for n = 2ᵏ (ignoring off‐by-one issues) a good exercise shows that the recurrence approximately yields"
+  f(2ᵏ) = 2ᵏ·(k – 1) + 1
+or
+  f(n) ≈ n·(log₂ n – 1) + 1.
+"Thus, in this most favorable case the number of comparisons grows as"
+  Θ(n log n).
+"Since each comparison corresponds to one level down in the decision tree, the “smallest depth” leaf is exactly the best‐case number of comparisons for a given input."
+To summarize:
+ • The absolute best case for this version of Quicksort is achieved when each pivot turns out to be the median of the current subarray.
+ • The recurrence for the minimum number of comparisons is
+   f(n) = (n–1) + f(⌊(n–1)/2⌋) + f(⌈(n–1)/2⌉)
+" • For n a power of two, one obtains f(n) = n·log₂ n – n + 1."
+" • In asymptotic terms, the minimum depth (i.e. the best‐case running time in terms of comparisons) is Θ(n log n)."
+"Thus, the answer is: The smallest depth of a leaf in the comparison tree is Θ(n log n) (and, for n a power of 2, exactly n·log₂n – n + 1 comparisons)."

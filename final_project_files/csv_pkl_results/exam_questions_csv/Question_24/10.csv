@@ -1,0 +1,21 @@
+"Question: Given an array of $n$ numbers, describe an algorithm with a time complexity of $O(n)$ that checks whether there is an element that appears at least $n/8$ times in the array. Prove your answer."
+"3o-mini: We can solve this problem using the Misra–Gries algorithm, which is a generalized form of the Boyer–Moore majority vote algorithm. The idea is to maintain a fixed number of candidate counters (at most 7 in our case) while scanning the array. Because any element occurring at least n/8 times can have at most 7 distinct elements (if there were 8 such distinct elements, their total occurrences would be at least n, which is impossible), it suffices to maintain 7 candidates."
+Here is the step‐by‐step algorithm:
+1. Create an empty dictionary (or list) for candidates with a maximum size of 7.
+2. Process each element of the array as follows:
+"   a. If the current element is already a candidate, increment its count."
+"   b. Else, if there are fewer than 7 candidates, add the element with count 1."
+"   c. Otherwise (if there are already 7 candidates and the element is not among them), decrement the count of every candidate by 1. Remove any candidate whose count drops to 0."
+"3. After the first pass, the candidates in the dictionary are the only possible candidates that could occur at least n/8 times. They are potential “heavy hitters” but we need to verify them."
+4. Make a second pass through the array to count the actual occurrences of each candidate.
+"5. For each candidate, if its verified count is at least n/8, return that the array contains an element that appears at least n/8 times. If none of the candidates meet the threshold, then report that no such element exists."
+Let’s now explain why the algorithm is correct and runs in O(n) time.
+Proof of Correctness:
+"• By our choice of threshold (n/8), note that there can be at most 7 elements that appear n/8 times because 8 × (n/8) = n. Thus, if an element appears that many times, it is among those 7 most frequent items."
+"• The candidate maintenance step ensures that if an element has frequency greater than n/8, it cannot be completely “canceled out” by the elimination steps. So after the first pass, every element that actually appears at least n/8 times is guaranteed to be one of the candidates."
+"• The second pass accurately counts the occurrences of each candidate, so we can verify whether any candidate truly meets the required frequency."
+Time Complexity:
+"• The first pass processes each element exactly once and, in the worst case, decrements a constant (at most 7) number of candidates. Hence, this part is O(n)."
+"• The second pass goes through the array once more to verify counts, which is O(n) as well."
+"• Overall, the algorithm runs in O(n) time."
+"Thus, the algorithm described meets the requirement: it checks in O(n) time whether there is an element that appears at least n/8 times in the array."

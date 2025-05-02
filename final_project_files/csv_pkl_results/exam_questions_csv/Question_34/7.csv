@@ -1,0 +1,44 @@
+"Question: We build a hashing table of size \( m \) using the linear probing method. The keys of the elements inserted into the table are taken from the set \( \{0, 1, \dots, 2m-1\} \). We use the following hash function:"
+\[
+h(k) = \left\lfloor \frac{k}{2} \right\rfloor.
+\]
+"We insert the elements \( 1, 2, \dots, m \) into the table in increasing order. How much time does it take to insert all the elements into the table using the standard insertion algorithm? Provide an asymptotic bound."
+"3o-mini: We will show that if you insert the keys 1, 2, …, m into a hash table of size m using linear probing and the hash function"
+  h(k) = ⎣k/2⎦
+the standard insertion algorithm takes on the order of m² time overall.
+Below is one way to understand why.
+1. Background on Linear Probing
+"When using linear probing, if a key k hashes to the address h(k) but that spot is already taken, you check the next slot (h(k)+1) mod m, then the next, and so on until you find an empty slot. Thus, if there are several keys “competing” for a similar set of hash addresses, the later keys will incur many “probes” (checks) as they run down a long block of filled cells."
+2. How the Given Hash Function Works
+The hash function is
+  h(k)=⎣k/2⎦.
+"Thus, for example:"
+"  • h(1)=⎣1/2⎦ = 0,"
+"  • h(2)=⎣2/2⎦ = 1,"
+"  • h(3)=⎣3/2⎦ = 1,"
+"  • h(4)=⎣4/2⎦ = 2,"
+"  • h(5)=⎣5/2⎦ = 2, etc."
+"Notice that keys “pair up”: for k = 2t and k = 2t + 1 (for t ≥ 1) we have h(k) = t. Also note that since our keys are 1, 2, …, m (and m << 2m, which is the size of the key space), every bucket except bucket 0 gets two keys hashing into it (bucket 0 only gets key 1 in our insertion sequence)."
+3. The Insertion Order and the Consequences
+"Because we insert keys in increasing order, look at a small example with m = 8:"
+"  • Insert key 1: h(1)=0, slot 0 is empty, so insert with 1 probe."
+"  • Insert key 2: h(2)=1, slot 1 is empty → 1 probe."
+"  • Insert key 3: h(3)=1, but slot 1 is taken (by key 2), so check slot 2 (empty) → 2 probes."
+"  • Insert key 4: h(4)=2, but slot 2 is now taken (by key 3), so try slot 3 → 2 probes."
+"  • Insert key 5: h(5)=2, slots 2 and 3 are filled, so it goes into slot 4 → 3 probes."
+"  • Insert key 6: h(6)=3, but slot 3 is taken (by key 4), so it goes to slot 5 → 3 probes."
+"  • Insert key 7: h(7)=3, finds slots 3, 4, 5 occupied → inserted in slot 6 → 4 probes."
+"  • Insert key 8: h(8)=4, finds that slots 4, 5, 6 are occupied → goes to slot 7 → 4 probes."
+Notice that as we progress the number of probes required for each key increases because of collisions among keys that share the same “home” spot. The later keys face long “chains” of occupied cells that cause many linear probes before an empty slot is found.
+4. Asymptotic Analysis
+In the final table the keys wind up placed in increasing order (in this example the table ends up filled from slot 0 to slot 7). Another way to view the cost is as follows:
+  Cost for key k = (1 + number of cells from h(k) to the cell where key k is inserted).
+"If you sum the cost over all m keys, you get"
+  Total cost = m + (sum of “shifts” that occurred).
+"It turns out that the shifts add up roughly to (m(m–1)/2 – sum of h(k)), where h(k) = ⎣k/2⎦. A quick calculation shows that"
+  ∑ₖ₌₁^m ⎣k/2⎦ ≈ Θ(m²).
+"Thus, the total number of probes, and hence the total time for insertion, is"
+  Θ(m²). 
+"Even though many average-case analyses of linear probing under uniform hashing yield constant expected time per insertion, here the specific hash function and the chosen order of insertions force many collisions, resulting in a quadratic overall running time."
+5. Final Answer
+"In conclusion, the standard insertion algorithm for this setting takes Θ(m²) time (i.e. quadratic time in the table size m)."

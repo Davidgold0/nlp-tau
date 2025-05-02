@@ -1,0 +1,30 @@
+"Question: Given an array of $n$ numbers. In all questions, we want to find an element that repeats a certain number of times in the array. If there is more than one such element, we should return one of them."
+Propose an algorithm to find the repeating element in each of the following cases:
+"\textbf{a.} It is known that there is an element that repeats at least $L$ times. In this case, randomness can be used."
+"3o-mini: We can solve part (a) by “guessing” a candidate and then verifying it. Since we know that some element appears at least L times, if we pick an index uniformly at random then the probability that we pick one of those L (or more) copies is at least L/n. Using randomness, the idea is to sample a candidate element and then count its frequency. One acceptable randomized algorithm is described below."
+──────────────────────────────
+Algorithm RandomRepeating(L):
+1. Repeat forever:
+"   a. Pick an index i uniformly at random from {1, 2, …, n}."
+   b. Let x = A[i].
+   c. Scan the array A and count (say “count”) how many times x appears.
+"   d. If count ≥ L, return x."
+──────────────────────────────
+Explanation:
+"• Since we know there is an element (call it x*) that occurs at least L times, the probability that a random index picks x* is at least L/n."
+"• Thus, in each iteration the chance of “hitting” the frequent element is at least L/n. (Of course, if there are several frequent elements, then picking any one of them is acceptable.)"
+"• In the worst-case the algorithm might need several iterations, but the expected number of iterations is about n/L; in each iteration we do a linear scan (O(n) time) to count occurrences, leading to an expected running time of O(n·(n/L)) = O(n²/L). (Depending on L the performance may be very good.)"
+"One can also improve the constant factors by, for instance, picking a fixed set of random indices first and then doing one pass over the array to count the occurrences of only those candidates:"
+──────────────────────────────
+Alternative Two‐Pass Randomized Algorithm:
+1. Randomly select m = c·(n/L) indices (where c is a constant to ensure high probability) and let S be the set of the corresponding elements (eliminating duplicates).
+2. Initialize a hash table (or a counter array) for the elements in S.
+3. Do one pass over the array A:
+"   For each element y in A, if y is in S then increment its counter."
+"4. For each candidate in S, check if its counter is at least L. If so, return that candidate."
+──────────────────────────────
+Explanation:
+"• In step 1, the chance to miss the heavy hitter (x* which repeats ≥ L times) is low, because the probability that none of the m samples equals x* is (1 – L/n)^m, which becomes small when m ≈ n/L."
+"• Then only one pass over the array is needed to count the candidates, so the total work is O(n) (plus the cost of drawing the m samples, which is O(n/L))."
+Both algorithms use randomness: the first one repeatedly “guesses” a candidate whereas the second one uses a small random sample to “filter” out a set of candidates and then verifies by counting in one pass.
+These approaches meet the requirement to “return one of the elements” that appears at least L times.

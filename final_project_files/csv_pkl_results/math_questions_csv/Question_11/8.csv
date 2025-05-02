@@ -1,0 +1,18 @@
+"Question: Natasha has more than $\$1$ but less than $\$10$ worth of dimes. When she puts her dimes in stacks of 3, she has 1 left over. When she puts them in stacks of 4, she has 1 left over. When she puts them in stacks of 5, she also has 1 left over. How many dimes does Natasha have?"
+"3o-mini: Let n be the number of dimes Natasha has. Since each condition leaves a remainder of 1 when stacking the dimes, we can express this as:"
+  n ≡ 1 (mod 3)
+  n ≡ 1 (mod 4)
+  n ≡ 1 (mod 5)
+"This means that n - 1 must be divisible by 3, 4, and 5. The least common multiple (LCM) of 3, 4, and 5 is 60; hence, we write:"
+  n - 1 = 60k  for some integer k
+"Thus, n = 60k + 1."
+"We are also told Natasha has more than $1 but less than $10 in dimes. Since each dime is $0.10, this means:"
+  10 dimes > $1  and  100 dimes < $10
+So n must be between 11 and 99. Let's check with k = 1:
+  n = 60(1) + 1 = 61
+"Since 61 is between 11 and 99, Natasha has 61 dimes. Checking the conditions:"
+  61 ≡ 1 (mod 3) → 61 mod 3 = 1
+  61 ≡ 1 (mod 4) → 61 mod 4 = 1
+  61 ≡ 1 (mod 5) → 61 mod 5 = 1
+"Everything checks out, and in terms of value, 61 dimes equal $6.10, which is between $1 and $10."
+"Thus, Natasha has 61 dimes."

@@ -1,0 +1,32 @@
+"Question: We build a hashing table of size \( m \) using the linear probing method. The keys of the elements inserted into the table are taken from the set \( \{0, 1, \dots, 2m-1\} \). We use the following hash function:"
+\[
+h(k) = \left\lfloor \frac{k}{2} \right\rfloor.
+\]
+"We insert the elements \( 1, 2, \dots, m \) into the table in increasing order. How much time does it take to insert all the elements into the table using the standard insertion algorithm? Provide an asymptotic bound."
+"3o-mini: We will show that when we insert keys 1, 2, …, m using the hash function"
+  h(k) = ⎣k/2⎦
+"with linear probing into a table of size m (with keys chosen from {0, 1, …, 2m–1}), the total time ends up being on the order of m²."
+Let’s explain in detail.
+Step 1. The Hash Function
+For any key k the hash function is
+  h(k) = ⎣k/2⎦.
+"Notice that for each integer j from 0 up, there are at most two keys that hash to j (namely, 2j and 2j+1). (In our insertion sequence of 1 to m, note that key 0 is not inserted so for j = 0 only key 1 appears.) Thus many keys “want” to go to the same table locations."
+Step 2. Linear Probing and the Order of Insertion
+"We insert the keys in increasing order: 1, 2, …, m. Under linear probing the algorithm checks the slot h(k) and then subsequent slots (wrapping around if needed) until it finds an empty slot. An important observation is that with each insertion the table’s content forms a contiguous block starting from index 0 (because there are no deletions)."
+"When inserting the i‑th key (for i from 1 to m), suppose its intended slot (given by h(k)) is a number j. At that time exactly i–1 slots (namely, indices 0 through i–1) are filled. Inserting key k requires checking starting at index j. If j is less than i (which it usually is), then the algorithm will “skip over” the section of already-occupied slots."
+Step 3. Estimating the Cost per Insertion
+Let’s look at a few examples:
+• Key 1: h(1) = ⎣1/2⎦ = 0. (Table is empty.) Probes = 1.
+• Key 2: h(2) = ⎣2/2⎦ = 1. (Slot 1 is empty since only slot 0 is used.) Probes = 1.
+"• Key 3: h(3) = ⎣3/2⎦ = 1. (Slot 1 is now occupied by key 2, so we try slot 2.) Probes = 2."
+"• Key 4: h(4) = ⎣4/2⎦ = 2. (Slot 2 is now occupied by key 3, so the algorithm goes to slot 3.) Probes = 2."
+"• Key 5: h(5) = ⎣5/2⎦ = 2. (Now slots 2 and 3 are occupied, so key 5 goes to slot 4.) Probes = 3."
+"In general, because each h(k) is essentially k/2 (or slightly less), one finds that the number of probes for the i‑th inserted key is roughly proportional to i/2. More precisely, it turns out that:"
+"  • If i is odd, the cost is (i+1)/2 probes."
+"  • If i is even, the cost is i/2 probes."
+Step 4. Total Insertion Time
+"Thus, summing over i = 1 to m the cost per insertion gives"
+  T(m) ≈ ∑ (roughly i/2) = (1/2) ∑₍i=1₎^m i = (1/2) · (m(m+1)/2) ≈ m²/4.
+In Θ‑notation this is Θ(m²).
+Answer: The standard insertion procedure takes Θ(m²) time.
+"Thus, although each individual successful insertion might appear to be a constant‐time operation in many hashing schemes, the particular structure of the hash function combined with the ordered insertion leads to a quadratic total running time."

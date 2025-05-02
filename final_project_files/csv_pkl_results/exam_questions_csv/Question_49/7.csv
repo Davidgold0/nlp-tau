@@ -1,0 +1,24 @@
+Question: Two AVL trees of size \( n \) each are given. Can they be merged in \( O(n) \) time? Prove using an algorithm or disprove.
+"3o-mini: We will show that two AVL trees, each of size n, can indeed be merged in O(n) time. One way to do this is to “flatten” (convert) each AVL tree into a sorted array, merge the two sorted arrays, and then construct a new balanced BST (which will satisfy the AVL properties) from the merged array. Here’s a step‐by‐step description of the algorithm and its analysis."
+————————————————————————————
+Step 1. Inorder Traversal
+"Perform an inorder traversal of each AVL tree. This traversal produces a sorted array of the keys (or items) from each tree. Since each traversal visits each node exactly once, the time for each tree is O(n). So for two trees, the total time is O(n)."
+————————————————————————————
+Step 2. Merging the Sorted Arrays
+"Once we have two sorted arrays (each of length n), we can merge them into one sorted array of size 2n using the classic merge algorithm (as in merge sort). This merging procedure takes O(n) time."
+————————————————————————————
+Step 3. Constructing a Balanced BST from the Sorted Array
+A balanced binary search tree can be built from a sorted array in O(n) time using the following recursive method:
+  1. Choose the middle element of the array to be the root.
+  2. Recursively do the same for the left half and right half to form the left and right subtrees.
+"Because at each level of recursion we are simply picking a median and dividing the array, the work done per level is linear, and the recursion depth is O(log n), but overall the procedure is O(n)."
+"The resulting tree is very balanced (in fact, it is height balanced in a strong way, since the sizes of left and right subarrays differ by at most one). Thus, it satisfies the AVL tree conditions."
+————————————————————————————
+Time Complexity Analysis
+  - Inorder Traversals: 2 · O(n) = O(n)
+  - Merging Sorted Arrays: O(n)
+  - Building the Balanced BST: O(n)
+"Thus, the overall time is O(n) + O(n) + O(n) = O(n)."
+————————————————————————————
+Conclusion
+"Yes, two AVL trees of size n each can be merged in O(n) time. The algorithm involves converting the trees to sorted arrays, merging these arrays, and then constructing a balanced BST from the merged array. Each step runs in linear time, which proves that the overall merge operation can be done in O(n) time."

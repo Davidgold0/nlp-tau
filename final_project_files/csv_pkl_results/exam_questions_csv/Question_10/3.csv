@@ -1,0 +1,220 @@
+"Question: Describe an implementation of the DeleteMin operation in a heap (Heap) as we discussed in class, which performs \( O(\log(n)^{0.5}) \) comparisons in the worst-case scenario, or prove that such an implementation is impossible."
+Teacher: Let's begin by breaking down the problem into clear steps. 
+"Step 1: Restate the problem in your own words and explain what you know about the DeleteMin operation in a heap. What does DeleteMin usually do, and how is it typically implemented in terms of comparisons? "
+Please share your thoughts on this first step.
+"Student: Sure! The DeleteMin operation in a heap is used to remove the smallest element from the heap, which is typically found at the root of the heap. In a standard binary min-heap, when we perform DeleteMin, we usually do the following:"
+1. **Remove the root**: We take out the smallest element (the root).
+"2. **Replace the root**: We replace the root with the last element in the heap (the bottom-most, right-most element)."
+"3. **Heapify down**: We then perform a ""heapify down"" operation to maintain the heap property, which involves comparing the new root with its children and swapping it with the smaller child until the heap property is restored."
+"In a typical implementation, this process requires \( O(\log n) \) comparisons because the height of the heap is logarithmic relative to the number of elements, \( n \)."
+"Now, the question asks about an implementation that performs the DeleteMin operation with \( O(\log(n)^{0.5}) \) comparisons in the worst-case scenario. This seems to imply that we need to either find a way to optimize the comparisons significantly or prove that achieving such a performance is impossible."
+I hope this restatement captures the essence of the DeleteMin operation. What would you like me to focus on next?
+Teacher: Great restatement! You've clearly described the standard DeleteMin operation and noted that a typical heap performs about O(log n) comparisons.
+"Now, for our next step, please think about the following: How might one potentially modify the standard heap or its deletion process (the heapify-down operation) to reduce the number of comparisons from O(log n) to O((log n)^0.5)? Alternatively, consider what structural changes might be necessary and whether known lower bounds on comparisons come into play."
+Please share your thoughts on this next step: What modifications or ideas do you have in mind that could lead to reducing the number of comparisons during DeleteMin?
+"Student: Student: Thank you for the guidance! To reduce the number of comparisons during the DeleteMin operation from \( O(\log n) \) to \( O(\log(n)^{0.5}) \), I can think of a few potential modifications or structural changes that might be worth exploring:"
+"1. **Layered Structure**: One idea could be to implement a layered structure where the heap is divided into multiple smaller heaps or levels. Each level could maintain a smaller heap with fewer elements. When performing DeleteMin, we could first check the smallest element in the top layer, and if it is not the minimum, we would only need to perform the heapify operation on a smaller subset of elements, potentially reducing the number of comparisons."
+"2. **Skip Lists or Auxiliary Structures**: Another approach might involve using an auxiliary data structure, such as a skip list or a balanced search tree, to keep track of the minimum elements. This could allow us to quickly find the minimum without having to traverse the entire heap. However, integrating this with the heap structure could complicate the implementation."
+"3. **Hybrid Structures**: We could also consider a hybrid data structure that combines properties of heaps and other structures, like a Fibonacci heap, which allows for more efficient merging and decrease-key operations. However, the DeleteMin operation in Fibonacci heaps still has a worst-case time complexity of \( O(\log n) \), so this might not directly achieve our goal."
+"4. **Randomized Approaches**: Randomization could be another avenue to explore. If we can probabilistically reduce the number of comparisons by choosing which child to compare first or by randomizing the structure of the heap, we might be able to achieve a better average-case performance, though this would still need to hold in the worst case."
+"5. **Lower Bounds**: Finally, it’s important to consider known lower bounds on comparisons. In a binary heap, because of its structure, we generally need to compare elements at each level down to the leaves. If we are restricted to a binary comparison model, achieving \( O(\log(n)^{0.5}) \) comparisons in the worst case might be fundamentally impossible due to these constraints."
+"Considering these ideas, it seems challenging to reduce the number of comparisons as required without fundamentally changing how heaps operate or their structure. "
+What do you think about these ideas? Should I delve deeper into one of these approaches or explore other possibilities?
+"Teacher: Great work exploring different strategies! You've outlined several interesting approaches. For our next step, let's focus on one of your ideas in more detail—perhaps the layered structure approach."
+"Step 2: Delve deeper into the layered structure idea. How might you design such a structure so that the heap is divided into multiple levels or subheaps? Describe what each level might look like, how many elements each level might contain relative to the overall heap, and how you envision the DeleteMin operation working on this layered structure. Please share your thoughts on this step."
+Student: Student: Thank you for the direction! Let’s dive deeper into the layered structure idea for the heap.
+### Layered Structure Design
+1. **Structure Overview**:
+"   - We can envision the heap as being divided into multiple levels, where each level contains a smaller heap. The top level would contain the smallest elements, while subsequent levels would contain progressively larger elements. This way, we can quickly access the minimum elements without having to traverse the entire heap."
+2. **Level Composition**:
+"   - Let’s say we have \( k \) levels in our layered heap. The first level (Level 0) could contain the smallest \( m \) elements, where \( m \) is significantly smaller than \( n \) (the total number of elements in the heap). "
+"   - The second level (Level 1) could hold the next \( m \) smallest elements, and so forth. This means that Level \( i \) would contain elements that are larger than those in Level \( i-1 \) but smaller than those in Level \( i+1 \)."
+"   - The number of elements in each level could be determined based on a logarithmic scale, potentially \( \sqrt{n} \) elements per level, resulting in \( O(\sqrt{n}) \) levels overall."
+3. **Accessing the Minimum**:
+"   - When performing the DeleteMin operation, we would first check the root of Level 0, which contains the smallest element. If we find that the root of Level 0 is indeed the minimum, we can proceed with the standard DeleteMin procedure for that level."
+"   - If the minimum is not found at Level 0, we can simply check the next level down (Level 1) for the next smallest element, and so on, until we find the minimum."
+4. **Heapify Process**:
+"   - After removing the minimum element from Level 0, we would need to maintain the heap property within that level. We could do this by performing a heapify operation that only considers the elements within that specific level, which could reduce the number of comparisons since the size of each level is smaller than the total heap."
+"   - For levels below Level 0, we would need to ensure that the elements still maintain the heap property relative to their parent nodes, which may involve additional comparisons but would be limited to the smaller heaps."
+### Challenges and Considerations
+"- **Maintaining Structure**: One challenge with this layered structure is ensuring that the heap properties are maintained across all levels, especially when elements are added or removed."
+- **Balancing Levels**: We would need to carefully balance the number of elements in each level to ensure that the search for the minimum remains efficient.
+"- **Complexity Analysis**: While this structure might theoretically reduce the number of comparisons needed during DeleteMin, we must analyze whether the worst-case performance can indeed reach \( O(\log(n)^{0.5}) \) or if it still trends closer to \( O(\log n) \) due to structural constraints."
+"In summary, the layered structure could potentially allow for fewer comparisons during DeleteMin by organizing elements into smaller heaps, but it introduces complexities in maintaining the heap properties and requires careful design."
+What do you think about this detailed exploration of the layered structure? Should I consider any additional factors or move on to the next step?
+"Teacher: That was an excellent and thorough breakdown of the layered structure idea! You’ve identified a promising avenue by dividing the heap into multiple subheaps or levels and discussed several important challenges, such as maintaining the consistency of the heap order across levels and balancing the distribution of elements."
+"Now, let’s move on to the next step in our thought process."
+"Step 3: Analyze the complexity of your layered structure approach. With your proposed design, try to explain how the number of comparisons in the worst-case scenario would be reduced to O((log n)^0.5). In particular, consider:"
+ a. How many levels (or subheaps) would there be relative to n?
+ b. How many comparisons might be necessary within each level during the DeleteMin operation?
+ c. How do these combine to give an overall complexity of O((log n)^0.5) comparisons?
+Please explain your analysis step for this complexity reasoning. What calculations or reasoning do you have in mind?
+Student: Thank you for the guidance! Let’s analyze the complexity of the layered structure approach step by step.
+### Step 3: Complexity Analysis of the Layered Structure
+#### a. Number of Levels (or Subheaps) Relative to n
+"If we divide the heap into \( k \) levels, we can define the number of elements in each level based on a logarithmic scale. For example, if we have \( n \) total elements, we could have:"
+- Level 0: \( m \) elements (smallest)
+- Level 1: \( m \) elements (next smallest)
+"- Level 2: \( m \) elements, and so on."
+"If we assume each level contains \( m = \sqrt{n} \) elements, then the total number of levels \( k \) would be:"
+\[
+k = \frac{n}{m} = \frac{n}{\sqrt{n}} = \sqrt{n}
+\]
+"Thus, we would have approximately \( \sqrt{n} \) levels in our layered heap structure."
+#### b. Comparisons Necessary Within Each Level During DeleteMin
+"When performing the DeleteMin operation, we first check the root of Level 0. Since Level 0 contains \( m = \sqrt{n} \) elements, performing a heapify operation in this level would require:"
+"- In the worst case, we might need to traverse down the height of this level, which is \( O(\log(\sqrt{n})) = O(\frac{1}{2} \log n) = O(\log n) \)."
+"However, since Level 0 is much smaller than the entire heap, we can expect the number of comparisons to be significantly reduced."
+"If we consider that each subsequent level also has \( \sqrt{n} \) elements, the comparisons required to find the minimum in each level would similarly trend towards \( O(\log(\sqrt{n})) \) for each level."
+#### c. Combining the Comparisons for Overall Complexity
+"Now, let’s analyze the overall complexity. If we have \( \sqrt{n} \) levels and each level requires \( O(\log(\sqrt{n})) \) comparisons, we can calculate the total number of comparisons as follows:"
+"1. **Finding the Minimum**: We would check each level until we find the minimum, which could take \( O(\sqrt{n}) \) comparisons if we need to check every level."
+"2. **Heapify Process**: After removing the minimum from the top level, we would need to perform a heapify operation. Since we only need to maintain the heap property within a single level, we would expect to perform \( O(\log(\sqrt{n})) \) comparisons for this operation."
+"Putting this together, the total number of comparisons in the worst-case scenario would be:"
+\[
+O(\sqrt{n}) + O(\log(\sqrt{n})) = O(\sqrt{n}) + O(\frac{1}{2} \log n) = O(\sqrt{n}) \text{ (dominant term)}
+\]
+"However, the goal is to show that we can achieve \( O((\log n)^{0.5}) \). To do this, we must recognize that while the levels are structured to reduce comparisons, the actual number of levels and the comparisons at each level need to be optimized further."
+### Conclusion
+"In summary, while the layered structure could theoretically reduce the number of comparisons, achieving \( O((\log n)^{0.5}) \) in the worst case appears challenging due to the inherent properties of heaps and the nature of comparisons required. "
+"The layered structure does provide a framework that could potentially optimize certain scenarios, but it may not fundamentally break the \( O(\log n) \) barrier due to the constraints of maintaining the heap properties across levels."
+What do you think about this analysis? Should we explore any specific aspect further or consider a different angle?
+"Teacher: Great effort on laying out your complexity analysis! I noticed you derived that if each level contains √n elements, you end up with √n levels, which leads to an overall complexity closer to O(√n) comparisons. But our goal is to bring this down to O((log n)^0.5). "
+Let's focus on bridging this gap:
+1. Does having √n levels necessarily make sense for achieving O((log n)^0.5) comparisons?  
+2. Can you think of alternative choices for the number of levels and the size of each level—perhaps setting them in terms of log n instead of n—to get closer to O((log n)^0.5)?
+"3. How might adjusting the division of elements between levels (i.e., the size of each subheap and the number of subheaps) affect the overall number of comparisons?"
+"Please share your revised thoughts on these aspects, focusing specifically on the relation between the number of levels and the cost per level, and how you might set these parameters to hit the O((log n)^0.5) target."
+Student: Thank you for the feedback! Let’s take a closer look at how we can adjust the layered structure to potentially achieve \( O((\log n)^{0.5}) \) comparisons.
+### Revised Analysis
+1. **Reevaluating the Number of Levels**:
+"   - Instead of defining the number of levels based on the number of elements \( n \), we can set the number of levels \( k \) in relation to \( \log n \). For instance, we could create \( k = \log n \) levels. This would mean that each level could potentially hold fewer elements, allowing us to minimize the number of comparisons."
+2. **Defining the Size of Each Level**:
+"   - If we have \( k = \log n \) levels, we can distribute the elements such that each level contains \( m = \frac{n}{\log n} \) elements. This way, the number of elements per level decreases as \( n \) increases, maintaining a manageable size within each level."
+"   - With this arrangement, we would have \( O(\log n) \) levels, each containing \( O(\frac{n}{\log n}) \) elements."
+3. **Comparisons Within Each Level**:
+   - The height of each level would be \( O(\log(\frac{n}{\log n})) \). This can be simplified:
+     \[
+     \log(\frac{n}{\log n}) = \log n - \log(\log n)
+     \]
+"   - Thus, the comparisons needed to maintain the heap property within each level would be \( O(\log n) \) in the worst case, but since we have \( \log n \) levels, we need to consider the total comparisons across all levels."
+4. **Total Comparisons**:
+"   - If we have \( O(\log n) \) levels and each level requires \( O(\log n) \) comparisons, the total number of comparisons would be:"
+     \[
+     O(\log n) \times O(\log n) = O((\log n)^2)
+     \]
+"   - However, we want to achieve \( O((\log n)^{0.5}) \). "
+5. **Optimizing the Structure**:
+"   - To refine this structure further, we could aim to create a more balanced distribution:"
+"     - If we define the number of levels as \( k = O(\sqrt{\log n}) \), we can then distribute the elements such that each level contains \( m = O(\frac{n}{\sqrt{\log n}}) \). "
+"     - Now, with \( O(\sqrt{\log n}) \) levels, the number of comparisons needed within each level would be:"
+       \[
+       O(\log(\frac{n}{\sqrt{\log n}})) = O(\log n - \frac{1}{2} \log(\log n)) \approx O(\log n)
+       \]
+     - The total comparisons would then be:
+       \[
+       O(\sqrt{\log n}) \times O(\log n) = O(\log n \cdot \sqrt{\log n}) = O((\log n)^{1.5})
+       \]
+     - This still does not reach our target.
+6. **Final Thoughts**:
+"   - A more effective strategy might be to balance the levels such that each level only has a constant number of elements, say \( O(1) \) or \( O(\log n) \), while still maintaining a logarithmic number of levels."
+"   - This would imply that the number of levels is \( O(\log n) \) with each level containing a small constant number of elements, leading to \( O((\log n)^{0.5}) \) comparisons in the worst case."
+### Conclusion
+"Through this revised analysis, it appears that achieving \( O((\log n)^{0.5}) \) comparisons in the DeleteMin operation might be feasible if we carefully structure the number of levels and size of each level. The challenge remains in ensuring that the heap properties are maintained efficiently while minimizing comparisons."
+What do you think of this refined approach? Should we explore any specific aspect further or consider additional strategies?
+"Teacher: Excellent work so far! You’ve reconsidered the structure by relating the number of levels and subheap sizes to log n rather than n, and you've explored different parameter choices. Let's work together further on this refinement."
+Step 4: Let's nail down the configuration. Consider the following guiding questions:
+"1. If you set the number of levels to be k = O(√(log n)), what should be the size of each level (i.e., the number of elements in each subheap) to best keep the cost of heapifying within a level low?"
+"2. With that configuration, what will be the height of each subheap (i.e., the number of comparisons needed to maintain heap order within that level)? Think about using logarithms in terms of the size of that subheap."
+"3. Finally, combine the cost for traversing or operating on each level with the number of levels to see if you obtain the overall cost of O((log n)^0.5) comparisons in the worst case."
+"Please share your solution to just the next step: namely, choose an appropriate size for each level given k = O(√(log n)) and then analyze the number of comparisons required within a level. What do you think should be the number of elements per level and why?"
+Student: Thank you for your guidance! Let’s focus on determining the appropriate size for each level given that \( k = O(\sqrt{\log n}) \) and analyze the number of comparisons required within each level.
+### Step 4: Configuration of Levels
+1. **Choosing the Size of Each Level**:
+"   - If we have \( k = O(\sqrt{\log n}) \) levels, we want to distribute \( n \) elements across these levels efficiently. "
+"   - To achieve this, we can set the size of each level \( m \) to be:"
+     \[
+     m = \frac{n}{k} = \frac{n}{O(\sqrt{\log n})}
+     \]
+   - This means each level would contain approximately \( O\left(\frac{n}{\sqrt{\log n}}\right) \) elements.
+2. **Height of Each Subheap**:
+"   - The height of a heap is determined by the number of elements it contains. For a subheap of size \( m = O\left(\frac{n}{\sqrt{\log n}}\right) \), the height \( h \) would be:"
+     \[
+     h = O(\log m) = O\left(\log\left(\frac{n}{\sqrt{\log n}}\right)\right)
+     \]
+"   - Simplifying this, we have:"
+     \[
+     \log\left(\frac{n}{\sqrt{\log n}}\right) = \log n - \log(\sqrt{\log n}) = \log n - \frac{1}{2} \log(\log n)
+     \]
+"   - Therefore, the height of each subheap is approximately:"
+     \[
+     O(\log n - \frac{1}{2} \log(\log n)) = O(\log n)
+     \]
+3. **Overall Complexity Calculation**:
+"   - Since we have \( k = O(\sqrt{\log n}) \) levels and each level requires \( O(\log n) \) comparisons to maintain the heap order, we can calculate the overall complexity as follows:"
+     \[
+     \text{Total Comparisons} = k \times O(\log m) = O(\sqrt{\log n}) \times O(\log n)
+     \]
+   - This results in:
+     \[
+     O(\sqrt{\log n} \cdot \log n) = O((\log n)^{1.5})
+     \]
+"   - However, we want to ensure that we can achieve \( O((\log n)^{0.5}) \). "
+### Conclusion:
+"To achieve the desired complexity of \( O((\log n)^{0.5}) \), we need to rethink our distribution of elements. "
+"- One possible adjustment is to limit the number of elements per level even further so that we can achieve a smaller height for each subheap. For example, if we set the number of elements per level to be a constant \( c \) (i.e., \( O(1) \)), we would have:"
+  \[
+  m = O(1) \quad \text{and thus} \quad h = O(\log O(1)) = O(1)
+  \]
+"- This would give us \( O(\sqrt{\log n}) \) levels, each requiring constant comparisons, leading to a total of:"
+  \[
+  O(\sqrt{\log n}) \times O(1) = O((\log n)^{0.5})
+  \]
+This configuration allows us to achieve the target complexity of \( O((\log n)^{0.5}) \) comparisons in the worst case.
+What do you think about this approach? Should we explore any further adjustments or finalize this configuration?
+Teacher: You’ve done a great job analyzing the situation and thinking through a couple of possible configurations. Let’s clarify the next step by focusing on choosing the appropriate size for each level given that we want k = O(√(log n)) levels.
+"Recall the objective is to achieve an overall worst-case cost of O((log n)^0.5) comparisons. With k = O(√(log n)) levels, we want the cost of dealing with each level (in terms of comparisons within that subheap) to be as small as possible. Your analysis went through the possibility of having each level contain O(n / √(log n)) elements, but then the subheap’s height (and cost) became O(log n), which when multiplied by k gives a total of O((log n)^(3/2))—far from our target."
+"Now consider this: If we design each subheap (i.e., level) to contain only a constant number of elements (that is O(1) elements), then the heapifying (or local reordering) in any subheap would require only O(1) comparisons, since a heap of constant size has constant height. With k = O(√(log n)) levels, the total number of comparisons for DeleteMin would then be:"
+  Total comparisons = k × O(1) = O(√(log n)) = O((log n)^(0.5))
+This meets our target.
+"Before moving on, I’d like you to focus just on this step:"
+1. Explain why setting the size of each level to be O(1) (a constant number of elements) results in a constant cost per level when performing operations like heapify.
+"2. Confirm that with k = O(√(log n)) levels, the overall cost then becomes O(√(log n)) comparisons."
+"3. Briefly discuss any trade-offs or challenges you foresee with having constant-size subheaps in the overall structure (for example, how the remaining elements are managed or how the structure maintains the overall heap property)."
+Please work on this step and share your reasoning.
+Student: Thank you for the guidance! Let's focus on the key points regarding setting the size of each level to be \( O(1) \) and its implications for the overall complexity of the DeleteMin operation.
+### Step 4: Setting Each Level to O(1)
+1. **Constant Cost per Level**:
+"   - When we set the size of each level to be \( O(1) \), we are essentially limiting the number of elements in each subheap to a fixed number (for example, 1 or 2). This means that the height of each subheap will also be constant since a heap with a constant number of elements has a maximum height of 1 (in the case of 2 elements, it can be at most 1 comparison)."
+"   - As a result, when we perform operations like heapify within each subheap, the number of comparisons required is also \( O(1) \) because the maximum number of comparisons needed to restore the heap property is limited to a constant number of swaps or comparisons, regardless of the total number of elements in the main heap."
+2. **Total Cost with k = O(√(log n)) Levels**:
+"   - If we have \( k = O(\sqrt{\log n}) \) levels and each level requires \( O(1) \) comparisons to maintain the heap property, the total number of comparisons for the DeleteMin operation can be expressed as:"
+     \[
+     \text{Total Comparisons} = k \times O(1) = O(\sqrt{\log n}) \times O(1) = O(\sqrt{\log n})
+     \]
+   - This confirms that we achieve the desired complexity of \( O((\log n)^{0.5}) \) comparisons in the worst case.
+3. **Trade-offs and Challenges**:
+"   - **Management of Remaining Elements**: One challenge with having constant-size subheaps is managing the remaining elements in the overall heap structure. When the minimum element is removed from a subheap, we need to ensure that the remaining elements are correctly reorganized, which could require additional operations to maintain the overall heap property."
+"   - **Heap Property Maintenance**: Since we are working with multiple levels, it's crucial to ensure that the heap property is preserved not just within each subheap but also across the different levels. This may require additional comparisons when elements are added or removed, particularly if the distribution of elements becomes uneven."
+"   - **Insertion Complexity**: Inserting new elements into this structure could also become complex, as we would need to determine the appropriate level for the new element while maintaining the constant size of each subheap. This could lead to additional overhead if not managed carefully."
+### Conclusion
+"In summary, setting each level to \( O(1) \) allows for constant cost per level during operations like heapify, and with \( k = O(\sqrt{\log n}) \) levels, we achieve an overall complexity of \( O((\log n)^{0.5}) \) comparisons in the worst case. However, we must be mindful of the challenges involved in maintaining the heap property and managing the remaining elements across this layered structure."
+What do you think about this explanation? Should we explore any further aspects or finalize this discussion?
+"Teacher: Great job! You’ve clearly explained why having constant‐size subheaps (O(1) elements per level) ensures that each subheap operation (like heapify) takes only O(1) comparisons, and how having O(√(log n)) levels then yields an overall cost of O(√(log n)) comparisons. You also identified potential challenges—such as managing the distribution of the remaining elements and maintaining the overall heap property across levels—which are important in any practical implementation."
+To summarize our discussion:
+"• By structuring the heap as O(√(log n)) levels with each level a constant size (O(1) elements), operations within each level run in constant time."
+"• Therefore, the DeleteMin operation would require O(√(log n)) total comparisons in the worst-case scenario."
+• One must address trade-offs like efficiently redistributing elements during insertions or deletions and ensuring that the heap property is maintained both within individual subheaps and across the levels.
+"Final answer: Achieving O((log n)^0.5) worst-case comparisons for DeleteMin is possible by decomposing the heap into O(√(log n)) constant-size subheaps, each handled in O(1) time. $"
+Student: Thank you for the summary and guidance throughout this process! To encapsulate all that we've discussed:
+### Final Answer:
+"We can achieve \( O((\log n)^{0.5}) \) comparisons in the worst-case scenario for the DeleteMin operation in a heap by structuring the heap into \( O(\sqrt{\log n}) \) levels, where each level contains a constant number of elements (specifically \( O(1) \)). "
+"1. **Constant Size Subheaps**: Each subheap being of constant size allows heapify operations to be executed in constant time \( O(1) \), as the maximum height of these subheaps is limited to a constant."
+"2. **Total Comparisons**: With \( O(\sqrt{\log n}) \) levels, the total number of comparisons for DeleteMin becomes:"
+   \[
+   O(\sqrt{\log n}) \times O(1) = O(\sqrt{\log n})
+   \]
+   This meets our target for the worst-case complexity.
+"3. **Challenges**: Some challenges include managing the distribution of remaining elements after deletions, ensuring the overall heap property is maintained across levels, and dealing with the complexity of insertions."
+This structured approach allows us to optimize the DeleteMin operation significantly compared to traditional heap implementations. Thank you for guiding me through this analysis! Would you like to delve into any additional aspects or conclude our discussion here?
+"Teacher: Final answer: Achieving O((log n)^0.5) worst-case comparisons for DeleteMin is possible by decomposing the heap into O(√(log n)) constant‐size subheaps, so that each subheap can be heapified in O(1) time and the overall cost becomes O(√(log n)) comparisons. $"

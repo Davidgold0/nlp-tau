@@ -1,0 +1,27 @@
+"Question: Let $P$ be a plane passing through the origin.  When $\begin{pmatrix} 5 \\ 3 \\ 5 \end{pmatrix}$ is projected onto plane $P,$ the result is $\begin{pmatrix} 3 \\ 5 \\ 1 \end{pmatrix}.$  When $\begin{pmatrix} 4 \\ 0 \\ 7 \end{pmatrix}$ is projected onto plane $P,$ what is the result?"
+3o-mini: We are given a plane P through the origin and two pieces of information:
+"1. The projection of vector v₁ = (5, 3, 5) onto P is p₁ = (3, 5, 1)."
+"2. We need to find the projection of vector v₂ = (4, 0, 7) onto P."
+Step 1. Find a normal vector n to the plane.
+"Since p₁ is the projection of v₁ onto P, the difference v₁ - p₁ is orthogonal to P (it is along the normal direction). Compute this difference:"
+"  v₁ - p₁ = (5 - 3, 3 - 5, 5 - 1) = (2, -2, 4)."
+"Thus, one normal vector to the plane is n = (2, -2, 4). (We could also use any nonzero scalar multiple of this vector; for ease, you might use n' = (1, -1, 2).)"
+Step 2. Project v₂ onto the plane.
+The formula for projecting a vector v₂ onto a plane with normal vector n is:
+  Projection onto plane = v₂ - [(v₂ · n) / (n · n)] n.
+"First, compute the dot products."
+"Using n = (2, -2, 4):"
+  Compute v₂ · n:
+"    (4, 0, 7) · (2, -2, 4) = 4×2 + 0×(-2) + 7×4 = 8 + 0 + 28 = 36."
+  Compute n · n:
+    (2)² + (-2)² + (4)² = 4 + 4 + 16 = 24.
+"Thus, the scalar factor is (v₂ · n) / (n · n) = 36/24 = 3/2."
+Step 3. Calculate the projection:
+"  Projection = (4, 0, 7) - (3/2)(2, -2, 4)."
+"Calculate (3/2)(2, -2, 4):"
+"  (3/2)*2 = 3,"
+"  (3/2)*(-2) = -3,"
+  (3/2)*4 = 6.
+Subtracting gives:
+"  (4 - 3, 0 - (-3), 7 - 6) = (1, 3, 1)."
+"Thus, the projection of (4, 0, 7) onto plane P is (1, 3, 1)."

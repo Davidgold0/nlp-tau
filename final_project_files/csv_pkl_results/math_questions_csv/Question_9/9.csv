@@ -1,0 +1,34 @@
+"Question: A sequence $a_1,$ $a_2,$ $a_3,$ $\dots,$ is defined recursively by $a_1 = 1,$ $a_2 = 1,$ and for $k \ge 3,$_x000D_"
+\[a_k = \frac{1}{3} a_{k - 1} + \frac{1}{4} a_{k - 2}.\]Evaluate $a_1 + a_2 + a_3 + \dotsb.$
+3o-mini: We are given the sequence defined by
+"  a₁ = 1, a₂ = 1, and for k ≥ 3, aₖ = (1/3)aₖ₋₁ + (1/4)aₖ₋₂."
+We wish to find the sum S = a₁ + a₂ + a₃ + … .
+Step 1. Write the series starting from k = 3:
+  S = a₁ + a₂ + ∑ₖ₌₃∞ aₖ = 1 + 1 + ∑ₖ₌₃∞ aₖ.
+Step 2. Substitute the recurrence into the summation:
+  ∑ₖ₌₃∞ aₖ = ∑ₖ₌₃∞ [(1/3)aₖ₋₁ + (1/4)aₖ₋₂].
+Step 3. Separate the sums and re-index:
+  ∑ₖ₌₃∞ (1/3)aₖ₋₁ = (1/3) ∑ₖ₌₃∞ aₖ₋₁.
+"  Let j = k – 1. When k = 3, j = 2:"
+  = (1/3) ∑ⱼ₌₂∞ aⱼ = (1/3)(S – a₁) = (1/3)(S – 1).
+"  Similarly, ∑ₖ₌₃∞ (1/4)aₖ₋₂ = (1/4) ∑ₖ₌₃∞ aₖ₋₂."
+"  Let m = k – 2. When k = 3, m = 1:"
+  = (1/4) ∑ₘ₌₁∞ aₘ = (1/4) S.
+Step 4. Write the entire sum S:
+  S = 1 + 1 + (1/3)(S – 1) + (1/4)S.
+  Simplify the constant terms:
+  S = 2 + (1/3)S – 1/3 + (1/4)S.
+  Combine the constants:
+  2 – 1/3 = (6/3 – 1/3) = 5/3.
+  Combine the S terms using a common denominator:
+  (1/3 + 1/4)S = ((4/12 + 3/12)S) = (7/12)S.
+  So we have:
+  S = (5/3) + (7/12)S.
+Step 5. Solve for S:
+  Subtract (7/12)S from both sides:
+  S – (7/12)S = 5/3.
+  Factor S:
+  (5/12)S = 5/3.
+  Multiply both sides by 12/5:
+  S = (5/3) × (12/5) = 12/3 = 4.
+"Thus, the sum of the series is 4."

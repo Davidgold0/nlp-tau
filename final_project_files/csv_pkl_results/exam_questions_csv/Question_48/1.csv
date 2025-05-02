@@ -1,0 +1,219 @@
+"Question: \textbf{In the following section, the time and space complexity of initialization is \(O(1)\), and the space complexity at any given moment is \(O\) of the number of elements in the data structure. Describe how a matrix of size \(m \times m\) can be represented, supporting the operations of insertion at position \((i,j)\), reading from position \((i,j)\), and deletion from position \((i,j)\), in \(O(\log m)\) worst-case time for each operation.}"
+"Teacher: Let's begin by breaking down the problem into manageable pieces. The question is asking us to “represent a matrix of size m×m in such a way that insertion, reading, and deletion at a position (i, j) can all be done in O(log m) worst-case time,” while the initialization is O(1) and the space used is proportional to the number of stored elements."
+"To approach this, here are some guiding steps:"
+"1. Think about an underlying data structure that can represent the matrix sparsely. Since we aren’t storing all m×m entries (only those inserted), what would be a good choice for storing the positions that have values?"
+"2. Consider how you can encode the positions (i, j) or organize them. One idea is to use a balanced binary search tree (or a similar tree structure) that indexes elements by their coordinates, ensuring that operations like insertion, reading, and deletion have O(log m) worst-case complexity."
+"3. Once you choose a structure, plan how each operation would be carried out on that structure. How would you locate the node for (i, j), insert a new node, or remove one? Think of the keys and comparisons (for example, using lexicographical ordering)."
+Let’s start with step 1: determining a good representation for storing the entries of the matrix. Can you describe a data structure (or structures) you might use to represent the matrix entries sparsely and support O(log m) operations? Please explain your thought process for the choice.
+"Student: To represent the matrix entries sparsely and support \(O(\log m)\) operations for insertion, reading, and deletion, I would consider using a combination of a balanced binary search tree (BST) and a hash map."
+### Thought Process:
+"1. **Sparse Representation**: Since we are dealing with a matrix of size \(m \times m\), it is likely that not all entries will be populated. Using a sparse representation allows us to save space and efficiently manage only the populated entries."
+"2. **Balanced Binary Search Tree (BST)**: I would use a balanced BST, such as an AVL tree or a Red-Black tree, where each node represents a position in the matrix. Each node could store the coordinates \((i, j)\) as a key, and the value at that position as the value. The BST allows for \(O(\log m)\) time complexity for insertion, deletion, and search operations based on the properties of the tree."
+"3. **Lexicographical Ordering**: To organize the entries, I would use a lexicographical ordering for the keys. For example, the key could be a tuple \((i, j)\), where \(i\) is the row index and \(j\) is the column index. This way, the BST can efficiently locate the node corresponding to any position \((i, j)\) by comparing the tuples."
+"4. **Hash Map for Fast Access**: In addition to the BST, I could use a hash map where the keys are the tuples \((i, j)\) and the values are the corresponding matrix values. This would allow for \(O(1)\) average time complexity for access and could be used to quickly check if a position exists before performing operations on the BST."
+### Summary of Operations:
+"- **Insertion**: To insert a value at position \((i, j)\), I would first check the hash map to see if it exists. If it does not, I would insert the entry into the BST and the hash map, both in \(O(\log m)\) time."
+"- **Reading**: To read a value from position \((i, j)\), I would check the hash map first. If it exists, I can return the value in \(O(1)\) time. If not, I would search the BST in \(O(\log m)\) time."
+"- **Deletion**: To delete a value at position \((i, j)\), I would first check the hash map to see if the entry exists. If it does, I would remove it from both the BST and the hash map, each operation taking \(O(\log m)\) time."
+This combination of a balanced BST and a hash map allows for efficient sparse representation of the matrix while supporting all required operations in \(O(\log m)\) worst-case time.
+Would you like me to elaborate on any specific part of this approach?
+"Teacher: Great, you've explained your approach in detail! I appreciate your thorough description of using a balanced BST along with a hash map. However, before finalizing the approach, let's focus on one key aspect: how the balanced BST orders the matrix positions."
+"For our next step, please describe in detail how the BST orders the keys representing matrix positions (i, j). In particular, explain:"
+"• How you would compare two keys (i, j) and (i′, j′) so that the BST remains balanced and supports O(log m) operations.  "
+"• How the ordering contributes to efficient insertion, lookup, and deletion."
+"Take a moment to share your thoughts or a small outline on this part, and we can refine it together."
+"Student: To ensure that the balanced binary search tree (BST) maintains its properties and supports efficient operations for the matrix representation, we need to establish a clear method for comparing the keys that represent the matrix positions \((i, j)\). Here’s how I would approach this:"
+### Key Comparison for Ordering:
+1. **Comparison Logic**:
+"   - When comparing two keys \((i, j)\) and \((i', j')\), I would use lexicographical ordering:"
+"     - First, compare the row indices \(i\) and \(i'\):"
+"       - If \(i < i'\), then \((i, j)\) is less than \((i', j')\)."
+"       - If \(i > i'\), then \((i, j)\) is greater than \((i', j')\)."
+"     - If the row indices are equal (\(i = i'\)), then compare the column indices \(j\) and \(j'\):"
+"       - If \(j < j'\), then \((i, j)\) is less than \((i', j')\)."
+"       - If \(j > j'\), then \((i, j)\) is greater than \((i', j')\)."
+"     - If both indices are equal (\(i = i'\) and \(j = j'\)), they are considered equal."
+2. **Maintaining Balance**:
+"   - By using this lexicographical comparison, the BST will maintain a consistent ordering of the keys. This means that all entries in the left subtree of any node will have keys that are less than the node's key, and all entries in the right subtree will have keys that are greater."
+"   - The balanced nature of the BST (like AVL or Red-Black trees) ensures that the height of the tree remains logarithmic with respect to the number of entries, allowing for \(O(\log m)\) operations."
+### Contribution to Efficient Operations:
+1. **Insertion**:
+"   - When inserting a new key \((i, j)\), the lexicographical comparison allows us to traverse the tree from the root to the appropriate leaf position. This traversal will take \(O(\log m)\) time, and once the position is found, we can insert the new node while maintaining the tree's balance."
+2. **Lookup**:
+"   - For reading a value at position \((i, j)\), we can use the same comparison logic to navigate through the tree. The search will similarly take \(O(\log m)\) time, as we can discard half of the tree at each comparison, leading to efficient lookups."
+3. **Deletion**:
+"   - Deleting a node follows the same logic. After locating the node to be deleted using the comparison rules, we can remove it while ensuring the tree remains balanced. The time complexity for deletion will also be \(O(\log m)\)."
+### Summary:
+"Using lexicographical ordering of the keys \((i, j)\) allows for a structured and efficient way to manage the matrix entries within the BST. This ensures that all operations—insertion, reading, and deletion—can be performed in \(O(\log m)\) time, while maintaining the properties of the BST."
+Would you like me to expand on any specific part of this explanation or move on to the next step?
+"Teacher: You've done a great job describing how lexicographical ordering works for comparing matrix positions. Your explanation of comparing the row indices first and then the column indices is clear and correctly demonstrates that this approach keeps the BST well-ordered. It also nicely outlines how this ordering supports efficient search, insertion, and deletion."
+"Before moving on, let's verify a couple of points:"
+• Do you see any potential issues regarding the worst-case time complexity when considering worst-case full matrix entries versus sparse entries?
+• How does maintaining the balance of the BST affect your operations once you've used lexicographical ordering?
+"Now, for the next step, let's focus on the insertion operation. Could you describe in detail the process you would follow to insert a new value at a given position (i, j)? Outline how you would:"
+1. Locate the correct position in the BST using your lexicographical comparison.
+2. Ensure that duplicate entries are handled correctly.
+3. Maintain the balanced property of the BST during insertion.
+"Please work through this next step, and then share your reasoning."
+"Student: To outline the process of inserting a new value at a given position \((i, j)\) in our balanced binary search tree (BST) representation of the matrix, here’s how I would approach it:"
+### Insertion Process
+1. **Locate the Correct Position**:
+   - Start at the root of the BST and use the lexicographical comparison method to navigate through the tree.
+"   - Compare the current node's key (let’s say \((current_i, current_j)\)) with the new key \((i, j)\):"
+"     - If \((i, j)\) is less than \((current_i, current_j)\), move to the left child."
+"     - If \((i, j)\) is greater than \((current_i, current_j)\), move to the right child."
+   - Continue this process until you reach a leaf node (where the left or right child is null). This traversal will take \(O(\log m)\) time.
+2. **Handle Duplicates**:
+"   - If during the traversal we find that \((i, j)\) already exists in the tree (i.e., we reach a node where the key is equal to \((i, j)\)), we should handle this scenario:"
+"     - If the key exists, we can either update the value at that position (if we allow overwriting) or reject the insertion to maintain uniqueness, depending on the requirements of the data structure."
+"   - If we choose to update, we simply replace the existing value with the new one."
+3. **Insert the New Node**:
+"   - If the key \((i, j)\) does not exist, we insert the new node at the position where we found a null child during our traversal. This insertion takes \(O(1)\) time for the actual node creation and linking."
+4. **Maintain the Balanced Property**:
+"   - After inserting the new node, we need to check whether the insertion has violated the balanced property of the BST. This is crucial for ensuring that all operations remain \(O(\log m)\)."
+"   - Depending on the type of balanced BST (e.g., AVL tree or Red-Black tree), we would perform rotations or color changes as necessary:"
+"     - **For AVL Trees**: After insertion, we would check the balance factor of the affected nodes and perform single or double rotations to restore balance."
+"     - **For Red-Black Trees**: We would ensure that the properties of the Red-Black tree are maintained, which might involve recoloring nodes and performing rotations."
+### Summary of Insertion Operation:
+"- The insertion process begins with locating the correct position in the BST using lexicographical comparisons, which takes \(O(\log m)\)."
+- Duplicate entries are handled either by updating the existing value or rejecting the insertion.
+"- Finally, we maintain the balanced property of the BST through necessary rotations or adjustments, ensuring that the overall time complexity remains \(O(\log m)\)."
+Would you like me to elaborate on how to implement the balancing operations or discuss any other part of the insertion process?
+Teacher: You've provided a thorough explanation of the insertion operation. Let's review the key points to ensure everything is clear:
+• You described how to traverse the BST using lexicographical comparision until finding the correct null child position.  
+• You explained the handling of duplicates by checking if the key already exists and then either updating the value or rejecting the insertion.  
+"• You mentioned that once the new node is inserted, rebalancing (via rotations or recoloring, depending on the type of balanced BST) is necessary to maintain the logarithmic height."
+"Before moving on, I'd like you to reflect on these parts:"
+"1. When handling duplicates, what considerations might you have regarding updating versus rejecting an insertion?  "
+2. Can you explain briefly why maintaining the balance after insertion is crucial for ensuring O(log m) operations even as the number of entries grows?
+"Please address these points, then we can proceed to the next step."
+Student: ### Reflection on Insertion Considerations
+1. **Handling Duplicates**:
+"   - When deciding whether to update the existing value or reject the insertion of a duplicate key \((i, j)\), several considerations come into play:"
+"     - **Use Case Requirements**: If the application requires that each position in the matrix represents a unique value, then rejecting the insertion is the appropriate choice. However, if it’s acceptable to have multiple updates to the same position (for example, in a dynamic matrix where values change frequently), then updating the existing value would be more beneficial."
+"     - **Performance Implications**: Allowing updates can simplify the logic and reduce the need for additional checks, while rejecting duplicates might require additional mechanisms to handle the state of the matrix."
+"     - **Data Integrity**: Depending on the context, maintaining the integrity of the data might dictate one approach over the other. For instance, if the matrix is used for calculations, it might be essential to keep the latest value."
+2. **Importance of Maintaining Balance**:
+"   - Maintaining the balance of the BST after insertion is crucial for ensuring that the height of the tree remains logarithmic relative to the number of entries. If the tree becomes unbalanced (for example, resembling a linked list), the time complexity for operations such as insertion, deletion, and lookup could degrade to \(O(m)\) in the worst case, negating the efficiency we aim for."
+"   - A balanced tree guarantees that the operations can be performed in \(O(\log m)\) time, which is important for performance, especially as the number of entries grows. This balance is what allows the BST to efficiently manage the sparse representation of the matrix, ensuring that we can quickly access and manipulate the data."
+"### Next Step: Reading from Position (i, j)"
+"Now that we’ve thoroughly discussed the insertion operation, let’s move on to the next operation: reading a value from position \((i, j)\). Please outline how you would perform this operation, including:"
+1. The process of locating the key in the BST using your lexicographical comparison.
+2. How you would handle cases where the key does not exist.
+3. The time complexity of the reading operation.
+"Once you provide your outline, we can refine it together."
+"Teacher: Great work on reflecting about insertion! Now, let's move on to the reading operation. As a reminder, the goal for reading from position (i, j) is to find the value stored at that position using the same lexicographical ordering in the BST."
+"To begin, please outline your approach for reading:"
+"1. How will you traverse the BST using lexicographical comparison to locate the key (i, j)?"
+2. What should you do if the key is not found in the tree?
+"3. And finally, what is the overall time complexity for this operation?"
+Take your time to work through this step and share your outline for the reading operation.
+Student: ### Reading Operation Outline
+"To read a value from a given position \((i, j)\) in the balanced binary search tree (BST) representation of the matrix, I would follow these steps:"
+1. **Traverse the BST Using Lexicographical Comparison**:
+   - Start at the root of the BST.
+   - Use the lexicographical comparison method to navigate through the tree:
+"     - Compare the current node's key (let's say \((current_i, current_j)\)) with the key \((i, j)\):"
+"       - If \((i, j)\) is less than \((current_i, current_j)\), move to the left child."
+"       - If \((i, j)\) is greater than \((current_i, current_j)\), move to the right child."
+     - Continue this process until either:
+"       - You find a node where the key matches \((i, j)\), or"
+"       - You reach a null child, indicating that the key does not exist in the tree."
+2. **Handling Key Not Found**:
+"   - If during the traversal you reach a null child without finding a matching key, this indicates that there is no value stored at position \((i, j)\)."
+"   - In this case, you can return a specific value (like `null`, `None`, or a sentinel value) to signify that the position is empty or does not exist in the matrix."
+3. **Time Complexity**:
+"   - The time complexity for the reading operation is \(O(\log m)\). This is because the traversal of the BST, using the lexicographical comparisons, allows us to eliminate half of the tree at each step, maintaining the logarithmic depth of the tree."
+### Summary of Reading Operation:
+"- The reading operation involves traversing the BST using lexicographical comparisons to locate the key \((i, j)\)."
+"- If the key is found, the corresponding value is returned. If not, an indication of absence is provided."
+- The overall time complexity for this operation is \(O(\log m)\).
+"Would you like to discuss any specific parts of this reading operation, or shall we move on to the deletion operation?"
+"Teacher: Excellent work! Your outline for the reading operation is clear and on point. You correctly described how to traverse the BST using lexicographical comparisons, what to do when a key isn't found (by returning a sentinel like null or None), and why the time complexity remains O(log m). This demonstrates a solid understanding of the process."
+"Now let's move on to the deletion operation. For the deletion operation at position (i, j), please outline your approach by addressing the following:"
+1. How would you traverse the BST using lexicographical comparison to locate the node to delete?
+"2. Once found, describe how you handle the deletion of the node (consider cases like node with no children, one child, or two children)."
+"3. Explain how you ensure that the BST remains balanced after the deletion, including any necessary rotations or rebalancing steps."
+4. State the overall time complexity for deletion under these operations.
+Work through this step and share your outline for the deletion operation.
+Student: ### Deletion Operation Outline
+"To delete a value at a given position \((i, j)\) in the balanced binary search tree (BST) representation of the matrix, I would follow these steps:"
+1. **Traverse the BST Using Lexicographical Comparison**:
+   - Begin at the root of the BST.
+   - Use the same lexicographical comparison method to navigate through the tree:
+"     - Compare the current node's key (let's say \((current_i, current_j)\)) with the key \((i, j)\):"
+"       - If \((i, j)\) is less than \((current_i, current_j)\), move to the left child."
+"       - If \((i, j)\) is greater than \((current_i, current_j)\), move to the right child."
+"     - Continue this process until you find the node with the key \((i, j)\) or reach a null child, indicating that the key does not exist."
+2. **Handle the Deletion of the Node**:
+"   - Once the node with key \((i, j)\) is found, we need to consider three cases based on the number of children the node has:"
+     - **Case 1: Node with No Children (Leaf Node)**:
+       - Simply remove the node by setting the corresponding pointer (left or right child of the parent) to null.
+     - **Case 2: Node with One Child**:
+"       - Remove the node and link its parent directly to its child (either left or right), effectively bypassing the node being deleted."
+     - **Case 3: Node with Two Children**:
+       - Find the node's in-order predecessor (the maximum node in the left subtree) or in-order successor (the minimum node in the right subtree).
+       - Replace the value of the node to be deleted with the value of the in-order predecessor or successor.
+"       - Then, delete the in-order predecessor or successor (which will now have at most one child) using one of the first two cases."
+3. **Ensure the BST Remains Balanced**:
+"   - After deletion, we need to check if the BST remains balanced. The specific steps will depend on the type of balanced BST being used (e.g., AVL tree or Red-Black tree):"
+"     - **For AVL Trees**: After deletion, we would check the balance factor of the affected nodes starting from the parent of the deleted node up to the root. If any node becomes unbalanced (balance factor not in the range of -1 to 1), we perform rotations (single or double) to restore balance."
+"     - **For Red-Black Trees**: Similar to AVL trees, we check the properties of the Red-Black tree after deletion. If any properties are violated (e.g., red-red violation), we would perform recoloring and rotations as necessary."
+4. **Time Complexity**:
+"   - The overall time complexity for the deletion operation is \(O(\log m)\). This is because locating the node to delete requires \(O(\log m)\) time, and the actual deletion (including re-linking and rebalancing) can also be performed in \(O(\log m)\) time due to the properties of balanced trees."
+### Summary of Deletion Operation:
+"- The deletion process involves traversing the BST using lexicographical comparisons to locate the node with key \((i, j)\)."
+"- Depending on the number of children, the node is removed appropriately (no children, one child, or two children)."
+"- After deletion, we ensure the BST remains balanced through necessary rotations or adjustments."
+- The overall time complexity for this operation is \(O(\log m)\).
+"Would you like to discuss any specific aspects of the deletion operation, or shall we review the entire approach to ensure everything is cohesive?"
+"Teacher: Great work outlining your deletion operation! Your explanation covers the essential parts: traversing the BST using lexicographical comparisons, handling the three deletion cases (leaf, one child, two children), and then rebalancing the tree to ensure that subsequent operations maintain an O(log m) time complexity."
+"Before we finalize this part, I'd like you to reflect on the following:"
+"1. How do you ensure that after deleting a node (especially one with two children), the replacement (via in-order successor or predecessor) preserves the order properties of the BST?"
+2. Can you explain why it is necessary to perform rotations or recolorings after deletion and how that guarantees that future operations remain O(log m) even in the worst-case scenario?
+"Once you’ve addressed these clarifications, please provide a final integrated summary of your overall approach for representing the matrix, including how you handle insertion, lookup, and deletion with a balanced BST using lexicographical ordering. Take your time, and share your consolidated reasoning when you're ready."
+Student: ### Reflection on Deletion Operation
+1. **Preserving Order Properties After Deletion**:
+"   - When deleting a node with two children, we replace it with its in-order predecessor (the maximum node in the left subtree) or in-order successor (the minimum node in the right subtree). This replacement is crucial because:"
+"     - The in-order predecessor or successor is guaranteed to have either zero or one child, which simplifies the deletion process."
+"     - By replacing the value of the node to be deleted with that of the in-order predecessor or successor, we ensure that the binary search tree (BST) properties are preserved. The in-order predecessor will always be less than the node being replaced, and the in-order successor will always be greater, maintaining the correct ordering in the tree."
+2. **Importance of Rotations or Recolorings**:
+"   - After deleting a node, particularly in a balanced BST like an AVL tree or Red-Black tree, the tree may become unbalanced. Maintaining balance is necessary because:"
+"     - If the tree becomes unbalanced, the height of the tree could increase, leading to worst-case time complexities for operations becoming \(O(m)\) instead of \(O(\log m)\)."
+"     - Rotations (in AVL trees) or recoloring and rotations (in Red-Black trees) help restore the properties of the tree, ensuring that it remains balanced. This balance allows future operations—insertions, deletions, and lookups—to continue to execute in logarithmic time."
+### Final Integrated Summary of the Approach
+"To represent a matrix of size \(m \times m\) efficiently, we utilize a balanced binary search tree (BST) along with lexicographical ordering of keys, which allows for efficient insertion, reading, and deletion operations. Here’s a consolidated overview of the approach:"
+1. **Data Structure Choice**:
+"   - A balanced BST (e.g., AVL tree or Red-Black tree) is chosen to store matrix entries, where each node represents a position in the matrix with keys as tuples \((i, j)\) and values as the corresponding matrix values. This structure supports sparse representation, allowing for efficient handling of only populated entries."
+2. **Insertion Operation**:
+"   - To insert a value at position \((i, j)\):"
+     - Traverse the BST using lexicographical comparison to find the correct position.
+     - Handle duplicates by either updating the existing value or rejecting the insertion based on requirements.
+"     - Insert the new node and maintain the balanced property of the BST through necessary rotations or adjustments, ensuring \(O(\log m)\) time complexity."
+3. **Reading Operation**:
+"   - To read a value from position \((i, j)\):"
+     - Traverse the BST using the same lexicographical comparisons.
+"     - If the key is found, return the corresponding value; if not, return a sentinel value indicating absence."
+     - The time complexity for this operation is \(O(\log m)\).
+4. **Deletion Operation**:
+"   - To delete a value at position \((i, j)\):"
+     - Locate the node to delete by traversing the BST with lexicographical comparisons.
+"     - Handle the deletion based on the number of children (no children, one child, or two children)."
+"     - If the node has two children, replace it with its in-order predecessor or successor to preserve BST properties."
+"     - After deletion, ensure the BST remains balanced through rotations or recoloring, maintaining \(O(\log m)\) time complexity."
+"Overall, this approach effectively represents the matrix while ensuring that all operations—insertions, readings, and deletions—can be performed in \(O(\log m)\) worst-case time, fulfilling the requirements of the problem statement. "
+Would you like to discuss any further details or move on to any other topics?
+Teacher: You've done an excellent job summarizing the approach. Let’s reiterate your final integration:
+"To represent a matrix of size m×m efficiently, we use a balanced binary search tree (such as an AVL tree or a Red‑Black tree) that stores only the non‑empty entries. Each node in the BST keeps a key, which is the tuple (i, j) representing a position in the matrix, ordered lexicographically (first comparing i then j). This ordering allows us to traverse the tree efficiently for insertion, lookup, and deletion. When inserting, we use this ordering to locate the correct leaf position, handle duplicates by either updating or rejecting the insertion based on requirements, and then perform necessary rotations or recolorings to keep the tree balanced—thus ensuring O(log m) time for the operation. Reading involves traversing the tree with the same lexicographical comparisons to locate a node, returning the associated value if found or an indicator (like null) if not, also in O(log m) time. Deletion similarly traverses to locate the node to remove, handles the three cases (leaf, one child, or two children—with the two‑child case resolved by replacing the node with its in‑order predecessor or successor), and then rebalances the tree. In all, the operations maintain O(log m) worst‑case time for insertion, lookup, and deletion, while initialization is O(1) and space used is only proportional to the stored entries."
+$
+"Student: Thank you for the detailed summary! You've effectively captured the key elements of the approach to representing a sparse matrix using a balanced binary search tree. Your explanation clearly outlines how each operation (insertion, reading, and deletion) is handled, the importance of maintaining the tree's balance, and the overall time complexities involved."
+To recap:
+"- **Data Structure**: A balanced BST (like an AVL tree or Red-Black tree) is used to store entries of the matrix, with keys as tuples \((i, j)\) and values as the corresponding matrix values."
+"- **Insertion**: Involves locating the correct position using lexicographical comparisons, handling duplicates appropriately, and ensuring the tree remains balanced through rotations or adjustments."
+"- **Reading**: Involves traversing the tree to find the key and returning the corresponding value or a sentinel value if the key is absent, all in \(O(\log m)\) time."
+"- **Deletion**: Requires locating the node, handling three cases based on the number of children, replacing nodes as necessary to maintain BST properties, and rebalancing the tree afterward."
+"This approach efficiently supports all required operations while adhering to the specified complexities, making it a robust solution for managing a sparse matrix."
+"If you have any further questions or if there's anything specific you would like to explore next, please let me know!"
+Teacher: Excellent! You've now arrived at a strong final synthesis of the approach. Here’s the consolidated final answer:
+"To represent an m×m matrix, we store only the nonempty entries in a balanced binary search tree (such as an AVL or Red‑Black tree) where each entry is stored as a key–value pair. The key is a tuple (i, j) that represents the matrix position, and these keys are compared lexicographically (first by i, then by j). This ordering allows us to efficiently traverse the tree in O(log m) time per operation. For insertion, we traverse the tree to find the proper leaf position, handle duplicate keys by either updating the value or rejecting the insertion, and then perform necessary rotations or recolorings to maintain balance. For reading, we traverse the tree with the same comparisons to find the key (i, j) and return its value or signal absence if not found; this operation also takes O(log m) time. For deletion, we locate the node using lexicographical ordering, handle the three cases (no children, one child, or two children—with the two‑child case resolved via the in‑order predecessor or successor), and finally rebalance the tree, ensuring that the operation remains O(log m). Meanwhile, initialization is O(1) and the space used is proportional to only the number of stored entries."
+$

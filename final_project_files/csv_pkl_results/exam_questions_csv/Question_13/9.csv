@@ -1,0 +1,12 @@
+"Question: Given a min-heap, with no duplicate keys."
+"Each node \( x \) has an additional field \( s \), which is initialized to \( \text{nil} \). We want the field \( s \) of each node \( x \) to contain a pointer to the successor of \( x \). Assume that access to the heap elements is available (i.e., the heap is not a black box). The heap structure itself should not be changed. Propose an algorithm that achieves this, with the best possible overall worst-case time complexity, given that the keys are integers in the range from 1 to \( 2n \)."
+3o-mini: The idea is to first “bucket‐sort” the nodes using the fact that the keys are in a small range (1 to 2n) so that we can later traverse the keys in increasing order and set up the successor pointers. Note that the heap’s structure is not changed—you only add the extra pointers. Here’s one way to do it:
+1. Create an array B of size 2n + 1 (or 2n if you shift the indices appropriately) initially filled with nil.
+"2. Traverse all n nodes in the heap (since you have access to all the elements) and for each node x, store its pointer in the array at index x.key. (Since the keys are in the interval 1 to 2n and there are no duplicates, each key will occur exactly once.)"
+"3. Now, initialize a variable prev to nil. Then, for i = 1 to 2n, do:"
+"  if B[i] is not nil, then:"
+"   if prev is not nil, set prev.s = B[i] (i.e. point the previous node’s s field to the current node),"
+   set prev = B[i].
+"4. (Optionally, you can set prev.s = nil for the last element, but since it was already nil, this step is not strictly necessary.)"
+"Since you traverse the nodes once (O(n)) and then scan through an array of size O(n) (precisely 2n entries, which is O(n)), the overall worst‐case time complexity of this algorithm is O(n)."
+"Thus, by “bucket‐sorting” the nodes using the key as the index, we obtain the successors for all nodes in O(n) worst-case time, which is the best possible under the given constraints."

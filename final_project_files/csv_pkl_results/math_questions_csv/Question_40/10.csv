@@ -1,0 +1,40 @@
+"Question: $P$ is the midpoint of $\overline{BD}$. $AP = BP = 4$, $\overline{AP} \perp \overline{BD}$, $\overline{BD} \perp \overline{DC}$, $\overline{AB} \perp \overline{BC}$. In simple radical form, what is the perimeter of pentagon $ABCDP$? [asy]_x000D_"
+size(150); defaultpen(linewidth(0.8)); import geometry;_x000D_
+"pair A = origin, B = (4,4), C = (12,-4), D = (4,-4), P = (4,0);_x000D_"
+draw(A--P--B--cycle);_x000D_
+draw(B--D--C--cycle);_x000D_
+"draw(rightanglemark(A,B,C,15));_x000D_"
+"draw(rightanglemark(A,P,B,15));_x000D_"
+"draw(rightanglemark(B,D,C,15));_x000D_"
+"label(""$A$"",A,SW); label(""$B$"",B,N); label(""$C$"",C,SE); label(""$D$"",D,SW); label(""$P$"",P,E); label(""$4$"",A--P,S); label(""$4$"",B--P,E);_x000D_"
+_x000D_
+[/asy]
+3o-mini: We begin by assigning coordinates to the points as suggested by the diagram:
+"• Let A = (0, 0)."
+"• Let B = (4, 4)."
+"• Since AP = 4 and P lies on the perpendicular from A to BD, and the given diagram shows P = (4, 0), let P = (4, 0)."
+"• P is the midpoint of BD and BP = 4. Since B = (4, 4), the midpoint being (4, 0) implies D = (4, –4)."
+"• We are told BD ⟂ DC; with D at (4, –4) this makes DC horizontal. The diagram sets C = (12, –4)."
+"Now, verify the other given conditions:"
+"1. AP = distance from A = (0, 0) to P = (4, 0) = 4."
+"2. BP = distance from B = (4, 4) to P = (4, 0) = 4."
+3. AP ⟂ BD: AP is horizontal and BD is vertical.
+4. BD ⟂ DC: BD is vertical and DC is horizontal.
+"5. AB ⟂ BC: Using A = (0, 0), B = (4, 4), C = (12, –4), a check shows AB has slope 1 and BC has slope (–4–4)/(12–4) = –8/8 = –1, confirming the perpendicularity."
+"The pentagon ABCDP has vertices A, B, C, D, P. We compute the side lengths:"
+"1. AB: from (0, 0) to (4, 4)"
+  Length = √[(4–0)² + (4–0)²] = √(16 + 16) = √32 = 4√2.
+"2. BC: from (4, 4) to (12, –4)"
+  Length = √[(12–4)² + (–4–4)²] = √(8² + (–8)²) = √(64 + 64) = √128 = 8√2.
+"3. CD: from (12, –4) to (4, –4)"
+  Length = 12–4 = 8.
+"4. DP: from (4, –4) to (4, 0)"
+  Length = 0 – (–4) = 4.
+"5. PA: from (4, 0) to (0, 0)"
+  Length = 4.
+"Adding these side lengths, the perimeter is:"
+Perimeter = AB + BC + CD + DP + PA
+  = 4√2 + 8√2 + 8 + 4 + 4
+  = (4√2 + 8√2) + (8 + 4 + 4)
+  = 12√2 + 16.
+"Thus, in simple radical form, the perimeter of pentagon ABCDP is 16 + 12√2."

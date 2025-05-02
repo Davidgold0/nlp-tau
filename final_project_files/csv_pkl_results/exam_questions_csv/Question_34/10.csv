@@ -1,0 +1,46 @@
+"Question: We build a hashing table of size \( m \) using the linear probing method. The keys of the elements inserted into the table are taken from the set \( \{0, 1, \dots, 2m-1\} \). We use the following hash function:"
+\[
+h(k) = \left\lfloor \frac{k}{2} \right\rfloor.
+\]
+"We insert the elements \( 1, 2, \dots, m \) into the table in increasing order. How much time does it take to insert all the elements into the table using the standard insertion algorithm? Provide an asymptotic bound."
+"3o-mini: We will show that if we insert the keys 1, 2, …, m (assume m is even for simplicity; a similar argument works for odd m) into a hash table of size m using linear probing and with the hash function"
+  h(k) = ⎣k/2⎦
+then the total time required is on the order of m².
+Below is one way to analyze the process.
+Step 1. How the hash function distributes the keys
+Notice that
+  h(k) = ⎣k/2⎦.
+"Thus, keys that differ by 1 often have the same hash value. For example:"
+"  h(1) = 0,"
+"  h(2) = 1,"
+"  h(3) = 1,"
+"  h(4) = 2,"
+"  h(5) = 2,"
+"  h(6) = 3, etc."
+"For m even (say m = 2n), the keys 1, 2, …, 2n are inserted in increasing order. Notice that for i ≥ 1 the two keys 2i and 2i+1 (or 2i–1 and 2i, depending on the parity) will have the same hash value i. (More precisely, h(2i) = i and h(2i+1) = i.) Thus many keys “want” to be placed in the same table cell."
+Step 2. How collisions and linear probing work
+"Recall that in linear probing if a key hashes to a cell that’s already taken, we check subsequent cells one by one until we find an empty slot. Consequently, when two keys have the same hash value, the second one must be placed in the next available slot. But if other later insertions also cause keys to be placed nearby (or “spill‐over”), then many keys inserted later must “probe” over a long contiguous block of filled slots."
+"For instance, let’s simulate a small example:"
+ • Insert key 1. h(1) = ⎣1/2⎦ = 0. Place 1 in slot 0.
+ • Insert key 2. h(2) = 1. Slot 1 is free so place key 2 there.
+ • Insert key 3. h(3) = 1. Slot 1 is occupied (by key 2) so we probe to slot 2. Place key 3 in slot 2.
+ • Insert key 4. h(4) = 2. Slot 2 is now occupied (by key 3) so probe to slot 3. Place key 4 in slot 3.
+ • Insert key 5. h(5) = 2. Slots 2 and 3 are occupied so probe to slot 4.
+ • And so on.
+Step 3. Quantifying the work
+Let’s look at the main “trouble‐maker”: every hash value i (except possibly for the first bucket) is used by two keys. One key gets placed close to its hash “home” (taking 1 cell access) while the second key will have to skip over some cells that may already have been filled by keys hashing to earlier values.
+"If we let “displacement” denote the number of extra probes (beyond checking its home slot) that a key must perform, then the work for that key is 1 (for the original cell) plus its displacement. One may show by carefully examining the order of insertions (or by a recursive argument on the chain formed by successive collisions) that the displacements add up roughly as follows (for m = 2n):"
+ • The key hashing to 0 (i.e. key 1) has displacement 0.
+" • For hash value 1, one key is inserted in slot 1 (displacement 0) and the other is forced into slot 2, giving a displacement of 1."
+" • For hash value 2, the first key that hashes there might be forced to slot 3 (displacement 1) and then the next one to slot 4 (displacement 2)."
+" • For hash value 3, the displacements become 2 and 3."
+" • And in general, for bucket i (i = 1, 2, …, n–1), the two keys that hash to i incur displacements that are roughly (i–1) and i."
+"Thus, the extra work (beyond the 1 probe per key) is about"
+  Σ[i=1 to n–1] [(i–1) + i] ≈ Σ[i=1 to n–1] (2i – 1).
+"This sum equals roughly (n – 1)². (A quick check: when n = 5, (n – 1)² = 16; indeed, if you tally the exact displacements from a simulation you will find a sum on that order.) In addition, every key always takes at least 1 probe. Thus the total number of probes is about"
+  m + (n – 1)².
+"Since m = 2n, the dominant term is (n – 1)² = Θ(n²) which is Θ(m²)."
+Step 4. Conclusion
+The standard insertion algorithm (which performs the linear probe on each collision) ends up doing on the order of m² work to insert m keys (because of the many collisions caused by the very “clustered” hash function h(k) = ⎣k/2⎦ on the given set of keys).
+"Thus, the running time is Ω(m²) and O(m²), so asymptotically it takes Θ(m²) time."
+Answer: Θ(m²).

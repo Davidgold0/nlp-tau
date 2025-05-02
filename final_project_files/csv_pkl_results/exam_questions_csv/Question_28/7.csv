@@ -1,0 +1,25 @@
+"Question: A data structure is required that supports the following operations on elements containing two fields: \texttt{id} and \texttt{amount}. At any given time, the number of elements in the structure does not exceed $N$."
+\begin{enumerate}
+"    \item \texttt{Add(i,x)}: Increases the value of the \texttt{amount} field of the element (the only one) with \texttt{id} = $i$, by $x$ if it exists. Otherwise, if no such element exists, it adds an element with \texttt{id} = $i$, \texttt{amount} = $x$ (no pointer is given to the element)."
+"    \item \texttt{whoIsMax()}: Returns the \texttt{id} for which the \texttt{amount} field is maximal (if more than one exists, returns one of them)."
+"    \item \texttt{Reduce(i,y)}: Decreases the \texttt{amount} of the element with \texttt{id} = $i$ by $y$ (no pointer is given to the element)."
+\end{enumerate}
+"Assume that all \texttt{id}s are in the range $[1, 3n]$."
+Describe a deterministic data structure that supports operations 1 and 2 in $O(1)$ time in the worst case (there is no need to implement operation 3).
+"3o-mini: We can solve the problem by “hard‐coding” the ids into an array—as the ids come from [1, 3n]—and by keeping an extra pointer (or variable) to the element with maximum amount. (Note that the Reduce operation is not required to be implemented here, so we only need to worry about updates that increase amounts.)"
+Here’s the idea:
+"1. Create an array Table[1..3n] where each index i stores either a pointer to an element having id = i (and its current amount), or a null pointer if no such element exists. Since we have a fixed range on the ids, we get direct access to any element (i.e. Table[i]) in O(1) time."
+"2. Maintain an extra variable, maxPtr (or simply max), that always points to an element (or stores its id) that currently has the largest amount among those stored in the data structure."
+Now let’s describe how each operation works.
+"Operation 1: Add(i, x)"
+ a. Look up the entry at Table[i]. This is a constant-time operation.
+" b. If Table[i] is not null (the element already exists), update its amount by adding x. Otherwise, create a new element with id = i and amount = x, and store its pointer in Table[i]."
+" c. Next, compare the new (or updated) element’s amount with the amount of the element pointed to by max. (If the data structure was previously empty, treat this element as the new maximum.)"
+" d. If the new element’s amount is greater, set max = Table[i]. (Otherwise, leave max unchanged.) All these tests and updates require only O(1) time."
+Operation 2: whoIsMax()
+" Return max->id (or simply max, if you store the id itself in that variable). This takes O(1) time because max is maintained as part of the update process."
+"The key observation is that by using a direct-address table (with an array of size 3n) we avoid any dictionary or tree overhead for looking up an element by id, and by keeping a candidate for the maximum, we only need to update that pointer when an addition produces a new maximum. (In our case, where amounts never decrease on an Add, this pointer is only updated when necessary.) "
+"Thus, with this structure:"
+" • Add(i, x) runs in worst-case O(1) time."
+ • whoIsMax() runs in worst-case O(1) time.
+This deterministic structure meets the requirements of the problem.

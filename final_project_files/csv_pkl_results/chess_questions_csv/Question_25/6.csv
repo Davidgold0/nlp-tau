@@ -1,0 +1,6 @@
+Question: You are a very strong chess engine.
+The chess board is in the following state (FEN): '6r1/1P5p/3bp3/8/8/2Rk1K2/7P/3N4 b - - 0 44'. 
+"What is the best move for black? Respond with a single move in the following notation: [source square][destination square] (e.g., ""f8f4"")."
+3o-mini: The best move is d3d4. 
+"To explain briefly without overwhelming details: Black is in check from White’s rook on c3 (its ray directly hits the king on d3). Neither interposing nor capturing the checking rook is possible because the only “capture‐by‐the king” (Kxc3) would walk into the knight’s cover (the White knight on d1 attacks c3). That leaves only king moves. A careful look at all available king–moves shows that moving to d2 or d4 are the only safe choices. Of these, the engine analysis finds that Kd4 (in coordinate notation “d3d4”) is best—it not only escapes the check but also seeks maximum activity in the ensuing endgame (even though White can follow by promoting the pawn, Black’s resources will be best placed after this move). "
+"Thus, the answer is: d3d4."

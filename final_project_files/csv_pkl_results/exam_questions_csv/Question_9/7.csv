@@ -1,0 +1,22 @@
+"Question: **In this question, we will discuss the Quicksort algorithm. Throughout the question, we assume the input is an array of length \( n \), and we are interested only in arrays where all elements are distinct. As is known, each sorting algorithm has an associated binary tree that represents the comparisons the algorithm performs for all possible inputs.**"
+"We are interested in the Quicksort algorithm where the pivot element is always chosen to be the first element of the segment of the array the algorithm is working on (rather than being chosen randomly), and we will focus on the comparison tree corresponding to this algorithm."
+**(A) What is the smallest depth of a leaf in this comparison tree as a function of \( n \)?**
+3o-mini: We will show that there is some input for which the quicksort (with the first‐element pivot rule) makes
+  T*(n) = n·log₂n − n + 1
+"comparisons (when n is a power of 2), so that the smallest depth of a leaf in the comparison tree is Θ(n·log n)."
+Let’s explain.
+Recall how this version of quicksort works on an array of n distinct elements:
+"1. If the array (or current segment) has at most one element, no comparisons are made."
+"2. Otherwise, the algorithm uses the first element as the pivot. It then scans the rest of the array (n − 1 elements), comparing them to the pivot and placing them into one of two subarrays: those less than the pivot and those greater than it."
+3. It then recursively sorts the two subarrays.
+"If we imagine the entire execution as a binary comparison tree where each internal node corresponds to a comparison made during some partition step and every leaf corresponds to a final “sorted” outcome, then each leaf’s depth is the total number of comparisons performed on that run."
+"Now, one may “choose” (by picking a suitable input permutation) the “best‐case” ordering for this algorithm. In our case the best-case is achieved when at every recursive step the pivot (which is always the first element) happens to be “just right” – namely, it is the median of the current segment. (Note that even though the pivot rule is fixed, we are allowed to think about the input permutation; the best-case is the one for which the input is arranged so that the first element is the median of its segment at every recursive call.)"
+"Suppose then that the pivot is always exactly the median. In that situation, if the current segment is of length r, then partitioning that segment takes r − 1 comparisons and splits it into two subarrays of sizes approximately ⎣(r − 1)/2⎦ and ⎡(r − 1)/2⎤. (For simplicity, assume n is a power of 2, so that the splits are exactly even.) Thus, if we denote by T*(n) the minimum number of comparisons performed to sort an array of length n, then we have the recurrence"
+"  T*(n) = (n − 1) + 2·T*(n/2),  with T*(1) = 0."
+A short calculation shows that if n = 2^k then
+  T*(n) = n·k − n + 1 = n·log₂ n − n + 1.
+"Thus the smallest depth of a leaf in the comparison tree (that is, the minimum number of comparisons performed on any input) is exactly T*(n) = n·log₂ n − n + 1 (when n is a power of 2); in any event, it is Θ(n·log n)."
+To summarize:
+Answer to (A): The smallest depth of a leaf in the comparison tree (the best‐case number of comparisons) is
+"  T*(n) = n·log₂ n − n + 1   (for n a power of 2),"
+so in general it is Θ(n·log n).

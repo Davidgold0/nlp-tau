@@ -1,0 +1,33 @@
+Question: Find the minimum value of_x000D_
+\[\frac{\left( x + \dfrac{1}{x} \right)^6 - \left( x^6 + \dfrac{1}{x^6} \right) - 2}{\left( x + \dfrac{1}{x} \right)^3 + \left( x^3 + \dfrac{1}{x^3} \right)}\]for $x > 0.$
+3o-mini: We want to minimize
+  [(x + 1/x)^6 – (x^6 + 1/x^6) – 2] / [(x + 1/x)^3 + (x^3 + 1/x^3)]
+           for x > 0.
+A useful strategy is to set
+  t = x + 1/x.
+"Note that for x > 0, we have t ≥ 2."
+Step 1. Express x^3 + 1/x^3 and x^6 + 1/x^6 in terms of t.
+We know:
+  x^3 + 1/x^3 = t^3 – 3t.
+"Also,"
+  x^6 + 1/x^6 = (x^3 + 1/x^3)^2 – 2 = (t^3 – 3t)^2 – 2 = t^6 – 6t^4 + 9t^2 – 2.
+Step 2. Rewrite the numerator.
+  Numerator = (x + 1/x)^6 – (x^6 + 1/x^6) – 2 = t^6 – [t^6 – 6t^4 + 9t^2 – 2] – 2.
+Simplify:
+  = t^6 – t^6 + 6t^4 – 9t^2 + 2 – 2 = 6t^4 – 9t^2.
+Step 3. Rewrite the denominator.
+  Denom = (x + 1/x)^3 + (x^3 + 1/x^3) = t^3 + (t^3 – 3t) = 2t^3 – 3t.
+Step 4. Form the expression in terms of t:
+  Expression = (6t^4 – 9t^2) / (2t^3 – 3t)
+Factor t from both numerator and denominator:
+  = [t^2(6t^2 – 9)] / [t(2t^2 – 3)]
+  = t(6t^2 – 9) / (2t^2 – 3).
+"Notice that 6t^2 – 9 can be factored as 3(2t^2 – 3), so:"
+  = t * 3(2t^2 – 3) / (2t^2 – 3)
+Cancel the common factor (2t^2 – 3) (which is nonzero since t ≥ 2):
+  = 3t.
+"Thus, the original expression simplifies to 3(x + 1/x)."
+Step 5. Minimize 3(x + 1/x) for x > 0.
+"The function x + 1/x has a minimum value of 2 when x = 1 (by the AM-GM inequality). Therefore, the minimum value of the expression is:"
+  3 * 2 = 6.
+"Thus, the minimum value is 6."

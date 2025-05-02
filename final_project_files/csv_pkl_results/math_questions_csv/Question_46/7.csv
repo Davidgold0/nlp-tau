@@ -1,0 +1,49 @@
+"Question: In the diagram shown here (which is not drawn to scale), suppose that $\triangle ABC \sim \triangle PAQ$ and $\triangle ABQ \sim \triangle QCP$.  If $m\angle BAC = 70^\circ$, then compute $m\angle PQC$. [asy]_x000D_"
+size(150); defaultpen(linewidth(0.8));_x000D_
+"pair B = (0,0), C = (6,0), A = (2,4), Q = (1,0), P = (A + C)/2;_x000D_"
+draw(A--B--C--A--Q--P);_x000D_
+"label(""$B$"",B,S); label(""$A$"",A,N); label(""$C$"",C,S); label(""$P$"",P,E); label(""$Q$"",Q,S);_x000D_"
+[/asy]
+"3o-mini: We will show that, under the given conditions, one may prove that"
+  m∠PQC = 35°.
+Below is one way to “discover” this answer; note that many different approaches exist.
+Let us begin with a convex triangle ABC having m∠A = 70°. (The figure “is not drawn to scale” so that the various points (P and Q) lie in unexpected positions.) In addition the problem hypotheses include
+  (1) △ABC ∼ △PAQ  and  (2) △ABQ ∼ △QCP.
+A very natural way to “label” the correspondences (which eventually leads to the answer) is as follows. (One may show that with the hypotheses below one may in fact prove that – somewhat unexpectedly – triangle ABC is isosceles.)
+Step 1. In the similarity (1) one “chooses” the correspondence
+"  A → P, B → A, C → Q."
+"That is, think of a spiral–similarity with center A carrying side AB into segment AP and side AC into segment AQ. (It is not hard to prove that, with this correspondence, one may prove that"
+  m∠P = m∠(at P in △PAQ) = m∠A (in △ABC) = 70°.)
+"Now, if we let m∠ABC = B and m∠ACB = C, then"
+  70° + B + C = 180°  so that C = 110° – B.
+Also by the similarity the angle at A in △PAQ equals m∠B in △ABC so that
+  m∠A (in △PAQ) = B.
+Step 2. In similarity (2) one “chooses” the correspondence
+"  A → Q, B → C, Q → P."
+"Then the angles of △ABQ and △QCP correspond, so that"
+"  • m∠A in △ABQ = m∠Q in △QCP,"
+"  • m∠B in △ABQ = m∠C in △QCP,"
+  • m∠Q in △ABQ = m∠P in △QCP.
+But observe that (since Q lies on side BC of △ABC) we have
+  m∠ABQ = m∠ABC = B.
+"Next, one shows that the ray AQ (which already appears in similarity (1)) forms, at A, the same angle with AB as does the image of AB (namely, the ray AP); that is,"
+  m∠BAQ = 70° – B.
+"Thus, in triangle ABQ the angles are"
+"  m∠A = 70° – B, m∠B = B, and m∠Q = 180° – [(70° – B) + B] = 110°."
+"Then, by the correspondence in (2) we learn that in △QCP"
+"  m∠P = 110° , m∠C = B , and m∠Q = 70° – B."
+"So, one obtains"
+  m∠PQC = m∠Q (in △QCP) = 70° – B.
+                                     (∗)
+Step 3. At this point one may prove (using the fact that P is chosen to be the midpoint of AC – as in the given Asymptote code – and some standard sine–law arguments in the two similar triangles) that there is no “free parameter” B but that one must have B = 35°. (In other words one may show that the given similarities force triangle ABC to be isosceles with AB = AC so that m∠ABC = m∠ACB = 35°.)
+Then by (∗) we deduce that
+  m∠PQC = 70° – 35° = 35°.
+Thus one may answer 35°.
+"Remark. Although the “correct” answer – namely, 35° – might be found by an inspired “angle–chasing” (or an involved “sine–law” computation) the key is to choose correspondences in the two similarities so that the common points (A, P, Q, C – note that Q lies on BC and P is the midpoint of AC) force one to “pin down” the measure B. Many contestants have discovered that the conditions imply that triangle ABC is isosceles with base BC."
+Answer: 35°.
+_________________________________
+To summarize:
+– We assume m∠A = 70°.
+– Choosing the similarities’ correspondences as above forces m∠ABC = m∠ACB = 35°.
+– A short calculation then shows that m∠PQC = 70° – 35° = 35°.
+So the answer is 35°.

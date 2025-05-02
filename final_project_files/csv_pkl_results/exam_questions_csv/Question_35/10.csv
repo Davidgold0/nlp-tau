@@ -1,0 +1,21 @@
+"Question: Let \( U = \{0, 1, \dots, u\} \). Assume that each element of \( U \) can be represented by a single word. Given a subset \( D \subseteq U \) of size \( n \), describe the most efficient probabilistic algorithm that constructs a function \( h: U \to \{0, 1, \dots, 100n\} \) which is injective on \( D \) (i.e., for all \( x, y \in D \), we have \( h(x) \neq h(y) \)). The memory required to represent the function \( h \) should be \( O(n) \). Computing \( h(x) \), given \( x \in D \), should take \( O(1) \) time in the worst case."
+"3o-mini: We can solve the problem by “perfect‐hashing” the set D into the range {0, 1, …, 100n}. One very natural method is to choose a hash function at random from a 2‑universal hash family and verify that it is collision free on D, restarting if not. (This is a Las Vegas algorithm: it always produces a correct answer, with expected running time that is linear in n.)"
+Here is one concrete solution:
+"1. Choose a prime number p such that p > u. (It is well known that there is always a prime between u and, say, 2u, so p is O(u) but note that we do not really store p in a huge array; its representation size is O(1) if u is “reasonable”.)"
+2. Let m = 100n.
+3. Consider the 2‑universal family of hash functions
+"  h₍ₐ,₍₎(x) = ((ax + b) mod p) mod m,"
+"where a is chosen uniformly from {1, 2, …, p − 1} and b from {0, 1, …, p − 1}."
+"4. Pick a random pair (a, b) as described and then compute h₍ₐ,₍₎(x) for all x ∈ D. (This takes O(n) time overall.) If there is any collision among the hash values for the elements of D (i.e. if h₍ₐ,₍₎ is not injective on D), then choose a new random (a, b) and try again."
+"5. Because the hash family is 2‑universal and a large m (100n) is used, one can show that with probability at least a constant (for example, ≥ 1/2) the chosen h will be injective on D. Hence the expected number of iterations (and thus the expected total time) is constant times O(n)."
+"6. Once a collision–free function h is found, output it. To compute h(x) for any given x, the computation is simply a few arithmetic operations (mod p, then mod m) so h(x) is computed in O(1) worst-case time."
+"7. Finally, the memory needed to represent h is just the storage for the parameters a, b, p, and m; this is O(1) words. (Plus, if you want to allow evaluation on any x ∈ U very quickly, you must make sure that the arithmetic operations modulo p and modulo m are done in O(1) time. However, this is a standard assumption in the word‐RAM model when the numbers involved are of size O(log u) or O(log n).)"
+"Thus, the most efficient probabilistic algorithm is:"
+"• Use the universal hash function h(x) = ((ax + b) mod p) mod (100n) with random a, b,"
+"• Check that h is one-to-one on D (by scanning D and marking hash values, for example), and"
+"• If any collisions occur, repeat with new random a, b."
+This algorithm:
+"– Uses expected O(n) total time (and each run takes O(n) time, with expected constant number of runs),"
+"– Requires only O(n) memory overall (in practice, only O(1) storage is used for the function itself, and O(n) temporary space is used when verifying D),"
+– And allows h(x) to be computed in O(1) worst-case time.
+This is a well‐known method for constructing perfect hash functions.

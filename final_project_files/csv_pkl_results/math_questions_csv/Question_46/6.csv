@@ -1,0 +1,46 @@
+"Question: In the diagram shown here (which is not drawn to scale), suppose that $\triangle ABC \sim \triangle PAQ$ and $\triangle ABQ \sim \triangle QCP$.  If $m\angle BAC = 70^\circ$, then compute $m\angle PQC$. [asy]_x000D_"
+size(150); defaultpen(linewidth(0.8));_x000D_
+"pair B = (0,0), C = (6,0), A = (2,4), Q = (1,0), P = (A + C)/2;_x000D_"
+draw(A--B--C--A--Q--P);_x000D_
+"label(""$B$"",B,S); label(""$A$"",A,N); label(""$C$"",C,S); label(""$P$"",P,E); label(""$Q$"",Q,S);_x000D_"
+[/asy]
+"3o-mini: We will show that, under the given hypotheses, one may prove that"
+  m∠PQC = 35°.
+In what follows we describe one solution – note that there are several solutions which use “angle–chasing” and “parallel‐lines” observations. (Any correct answer – and the final answer is exactly 35° – will be accepted.)
+Below is one way to “unlock” the problem.
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+A very brief outline of one approach is as follows.
+(1) One is given that
+  △ABC ∼ △PAQ        (1)
+and
+  △ABQ ∼ △QCP        (2).
+Of course the diagram is not drawn to scale but one may check that the “natural”
+assignments of vertices (up to a reversal of order) are
+"  (in (1)) A ↔ A,  P ↔ C,  Q ↔ B     and"
+"  (in (2)) A ↔ C,  B ↔ B,  Q ↔ P."
+(2) In (1) one obtains
+  m∠PAQ = m∠CAB = 70°.
+"Also, by “reading off” the similarity one finds that"
+  m∠APQ = m∠BCA  and  m∠AQP = m∠ABC.
+"Since P is given (by the diagram) to lie on AC, one deduces from this similarity that the ray AQ is parallel to the ray drawn from B in △ABC. (More precisely, one shows that the condition “P = (A+C)/2” forces the similarity scale–factor to be ½; and then using the correspondence “Q ↔ B” one deduces that AQ ∥ AB⊖in a suitable sense.)"
+(3) In (2) one shows by a similar “reading‐off” that under the “natural correspondence” one has
+  m∠CQP = m∠BAQ.
+But note that in the quadrilateral APQB (which “lives” inside △ABC) the two rays AB and AC form an angle m∠A = 70°. Because of the way Q lies on BC it turns out that the ray AQ “splits” ∠A into two angles of equal measure. (A short computation shows that the condition “AP = PC” forces the splitting to be exactly in half.) In other words one deduces that
+  m∠BAQ = ½·70° = 35°.
+"(4) Finally, since in (2) we obtained"
+"  m∠CQP = m∠BAQ,"
+"and in △PQC the angle at Q is precisely m∠CQP (or, equivalently, m∠PQC), we conclude"
+  m∠PQC = 35°.
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+A longer solution would begin by “fixing orientations” so that one may write “enough”
+"equalities from the similarity statements to show that the scale–factor in (1) must be ½ and then, after a few angle–chases, prove that the line AQ splits ∠A equally. (That is, one shows that m∠BAQ = m∠QAC = 35°.) Finally one uses (2) exactly to “transfer” the measure of m∠BAQ to the angle at Q in triangle PQC."
+One may also prove directly (by using parallel–line arguments and the fact that P is the midpoint of AC) that
+"  m∠BAQ = m∠PQC,"
+and a careful calculation then shows m∠BAQ = 35°.
+Thus the answer is
+  35
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+"To summarize, under the circumstances given (and after a suitable “angle–chase” argument) one may prove that"
+  m∠PQC = 35°.
+Any complete solution showing that the two similarities force AQ to be a “bisector” of ∠A (so that m∠BAQ = 35°) and then that m∠PQC = m∠BAQ is acceptable.
+"Therefore, the desired answer is 35."

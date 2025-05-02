@@ -1,0 +1,25 @@
+"Question: We build a hashing table of size \( m \) using the linear probing method. The keys of the elements inserted into the table are taken from the set \( \{0, 1, \dots, 2m-1\} \). We use the following hash function:"
+\[
+h(k) = \left\lfloor \frac{k}{2} \right\rfloor.
+\]
+"We insert the elements \( 1, 2, \dots, m \) into the table in increasing order. How much time does it take to insert all the elements into the table using the standard insertion algorithm? Provide an asymptotic bound."
+3o-mini: We claim that inserting m keys by linear probing in this scenario takes Θ(m²) time overall. Here’s an explanation.
+"Suppose the table has m cells, and the keys we insert are 1, 2, …, m. The hash function is"
+  h(k) = ⎣k/2⎦.
+"This means that roughly every two consecutive keys are mapped to the same “bucket” (e.g. h(2) = h(3) = 1, h(4) = h(5) = 2, and so on). When we insert keys in increasing order, the first key in a bucket usually finds its home immediately, but the second key, whose hash value is the same, will be forced to search for the next free slot. In addition, because of the order of insertion the “clusters” (contiguous occupied cells) tend to grow, so that later insertions encounter many collisions before finding an open slot."
+"To illustrate with a small example, let m = 10. Then:"
+"  • For k = 1, h(1) = ⎣1/2⎦ = 0. We place it in slot 0 (cost 1 probe)."
+"  • For k = 2, h(2) = ⎣2/2⎦ = 1. Slot 1 is free (cost 1)."
+"  • For k = 3, h(3) = ⎣3/2⎦ = 1. However, slot 1 is now filled (by k = 2), so we probe slot 2 and insert there (cost 2)."
+"  • For k = 4, h(4) = 2. At the time of insertion, slot 2 is occupied (by k = 3), so we try slot 3 (cost 2)."
+"  • For k = 5, h(5) = 2. Slots 2 and 3 are taken, so insertion goes to slot 4 (cost 3)."
+"Continuing in this manner, one finds that the cost per insertion gradually increases. In our small instance the total cost adds up to 30 probes, and you can check that the final positions of the keys exactly “fill” the array from 0 to 9."
+"A general way to see the quadratic behavior is as follows. Note that in linear probing the number of probes required for a key equals 1 plus the number of successive collisions (occupied cells) encountered. In our insertion order, every key gets placed into an array position that is later than its “preferred” slot h(k). In fact, if we denote the final slot for a key k by π(k), the cost for inserting key k is"
+  (π(k) − h(k) + 1).
+"Since linear probing fills the table (in order) from 0 to m – 1, the sum over the keys is"
+  Total cost = Σ[π(k) − h(k) + 1]
+        = (Σπ(k)) − (Σh(k)) + m.
+"But Σπ(k) is the sum of the indices in the table, i.e. 0 + 1 + … + (m – 1) = m(m – 1)/2, while one may show that Σh(k) is roughly m²/4 (because h(k) = ⎣k/2⎦ and about half the keys share the same h-value). Thus"
+  Total cost ≈ m(m – 1)/2 − m²/4 + m = Θ(m²).
+So the total running time for inserting m keys is quadratic in m.
+"Thus, the asymptotic bound on the time to insert the n = m keys is Θ(m²)."

@@ -1,0 +1,96 @@
+"Question: Wanda is trying to locate the Fermat point $P$ of $\triangle ABC$, where $A$ is at the origin, $B$ is at $(8,-1)$, and $C$ is at $(5,4)$ (the Fermat point is the point such that the sum of its distances from the vertices of a triangle is minimized). She guesses that the point is at $P = (4,2)$, and computes the sum of the distances from $P$ to the vertices of $\triangle ABC$. If she obtains $m + n\sqrt{5}$, where $m$ and $n$ are integers, what is $m + n$?_x000D_"
+_x000D_
+[asy]_x000D_
+"string sp(pair P1, string P2){return ""$"" + P2 + ""\,("" + string(P1.x) + "","" + string(P1.y) + "")$"";}_x000D_"
+"size(150); defaultpen(fontsize(10)); draw((-3,0)--(10,0),Arrows(4)); draw((0,-3)--(0,8),Arrows(4)); pair A=(0,0),B=(8,-1),C=(5,4),P=(4,2); draw(A--B--C--cycle, linewidth(0.7)); draw(A--P, dashed); draw(B--P, dashed); draw(C--P, dashed); label(sp(A,""A""),A,NW); label(sp(B,""B""),B,S); label(sp(C,""C""),C,N); label(sp(P,""P""),P,(-0.5,-2.8)); dot(A); dot(B); dot(C); dot(P);_x000D_"
+[/asy]
+"Teacher: Let's begin by breaking down the problem. We have to find the sum of the distances from point P = (4,2) to the vertices A = (0,0), B = (8,–1), and C = (5,4). Then we need to express that sum in the form m + n√5, and finally find m + n."
+"The first step is to compute the distance from P to one of the vertices. Let’s start with vertex A. Using the distance formula, the distance from P = (4,2) to A = (0,0) is given by:"
+"  d(P, A) = √[(4 – 0)² + (2 – 0)²]."
+Could you calculate that distance and show your work for this step?
+"Student: Sure! To calculate the distance from point \( P = (4, 2) \) to vertex \( A = (0, 0) \), we can use the distance formula:"
+\[
+"d(P, A) = \sqrt{(4 - 0)^2 + (2 - 0)^2}"
+\]
+Calculating each part:
+1. \( (4 - 0)^2 = 4^2 = 16 \)
+2. \( (2 - 0)^2 = 2^2 = 4 \)
+"Now, we can add these two results together:"
+\[
+"d(P, A) = \sqrt{16 + 4} = \sqrt{20}"
+\]
+"Next, we can simplify \( \sqrt{20} \):"
+\[
+\sqrt{20} = \sqrt{4 \cdot 5} = 2\sqrt{5}
+\]
+"So, the distance from \( P \) to \( A \) is \( 2\sqrt{5} \). "
+Would you like me to proceed with calculating the distances from \( P \) to vertices \( B \) and \( C \) next?
+Teacher: Good work on computing the distance from P to A!
+"Now, let's move on to the next step: finding the distance from point P = (4,2) to vertex B = (8,–1)."
+"To do this, use the distance formula:"
+"  d(P, B) = √[(x_B – x_P)² + (y_B – y_P)²]."
+Please calculate the distance from P to B using this formula and show your work.
+"Student: Student: Alright! To calculate the distance from point \( P = (4, 2) \) to vertex \( B = (8, -1) \), we will use the distance formula:"
+\[
+"d(P, B) = \sqrt{(8 - 4)^2 + (-1 - 2)^2}"
+\]
+Calculating each part:
+1. \( (8 - 4)^2 = 4^2 = 16 \)
+2. \( (-1 - 2)^2 = (-3)^2 = 9 \)
+"Now, we can add these two results together:"
+\[
+"d(P, B) = \sqrt{16 + 9} = \sqrt{25}"
+\]
+Simplifying \( \sqrt{25} \):
+\[
+\sqrt{25} = 5
+\]
+"So, the distance from \( P \) to \( B \) is \( 5 \). "
+Shall I continue with the calculation for the distance from \( P \) to vertex \( C \)?
+Teacher: Great job on calculating the distance from P to B!
+"Now, let's move on to the next step: calculating the distance from point P = (4,2) to vertex C = (5,4). Use the distance formula:"
+"  d(P, C) = √[(x_C – x_P)² + (y_C – y_P)²]."
+Can you compute this distance? Please show your work for the calculation from P to C.
+"Student: Sure! To calculate the distance from point \( P = (4, 2) \) to vertex \( C = (5, 4) \), we will use the distance formula:"
+\[
+"d(P, C) = \sqrt{(5 - 4)^2 + (4 - 2)^2}"
+\]
+Calculating each part:
+1. \( (5 - 4)^2 = 1^2 = 1 \)
+2. \( (4 - 2)^2 = 2^2 = 4 \)
+"Now, we can add these two results together:"
+\[
+"d(P, C) = \sqrt{1 + 4} = \sqrt{5}"
+\]
+"So, the distance from \( P \) to \( C \) is \( \sqrt{5} \)."
+"Now that we have the distances from \( P \) to all three vertices, we can summarize them:"
+- Distance from \( P \) to \( A \): \( 2\sqrt{5} \)
+- Distance from \( P \) to \( B \): \( 5 \)
+- Distance from \( P \) to \( C \): \( \sqrt{5} \)
+Shall I now calculate the total sum of these distances?
+"Teacher: Great work on computing the individual distances! Now, let's take the next step. We have:"
+" • d(P, A) = 2√5  "
+" • d(P, B) = 5  "
+" • d(P, C) = √5  "
+The sum of these distances is S = 2√5 + 5 + √5.
+"Please combine like terms in this expression to write S in the form m + n√5, where m and n are integers. Once you've done that, determine the values of m and n, and then compute m + n. What do you get?"
+"Student: To find the sum of the distances, we start with the expression:"
+\[
+S = 2\sqrt{5} + 5 + \sqrt{5}
+\]
+"Now, we can combine the like terms involving \(\sqrt{5}\):"
+\[
+S = (2\sqrt{5} + \sqrt{5}) + 5 = 3\sqrt{5} + 5
+\]
+"Now, we can express \(S\) in the form \(m + n\sqrt{5}\):"
+"- Here, \(m = 5\) and \(n = 3\)."
+"Finally, we compute \(m + n\):"
+\[
+m + n = 5 + 3 = 8
+\]
+"Thus, the final answer is:"
+\[
+\boxed{8}
+\]
+"Teacher: Excellent work! You've correctly found that S = 5 + 3√5, so m = 5 and n = 3, and indeed m + n = 8. "
+8$

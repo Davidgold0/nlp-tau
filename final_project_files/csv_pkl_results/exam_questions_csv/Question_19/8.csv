@@ -1,0 +1,49 @@
+"Question: Describe a data structure whose elements are pairs of keys \( (a, b) \), where each left key in the pair is an integer in the range \([1, 10n]\). It can be assumed that all the key pairs are distinct. The data structure should support the following operations (where \( n \) is the number of key pairs currently in the data structure):"
+\begin{itemize}
+"    \item \texttt{Insert(a, b)} – Adds the key pair \( (a, b) \) to the data structure. The operation should be performed in amortized time \( O(1) \)."
+"    \item \texttt{IncreaseKey((a, b), x)} – This command receives a pointer to the key pair \( (a, b) \) that is in the data structure and a positive number \( x \), and increases the right key by \( x \). The operation should be performed in amortized time \( O(1) \)."
+"    \item \texttt{Delete((a, b))} – This command receives a pointer to the key pair \( (a, b) \) that is in the data structure and deletes it. The operation should be performed in amortized time \( O(\log n) \)."
+\end{itemize}
+"3o-mini: One acceptable solution is to “store the items by indirection” so that most operations work in constant time and deletion (which is “allowed” to be a bit slower) can be done in O(log n) amortized time. (In fact, the deletion described below actually runs in O(1) worst‐case time, which is even better than O(log n); it is allowed because the requirement is only an upper bound.) One such implementation is as follows."
+Overview of the idea
+"• We have key pairs (a, b) where a – the left key – always lies in the range [1, 10n] (that is, it comes from a “small universe”).  "
+• We will store each key pair in a dynamic array (also called a vector) so that insertion can be done by simply appending a new element (amortized O(1)).  
+"• Because a is in a bounded range, we can also allocate an auxiliary “lookup” table (or array) of size proportional to the universe size (here O(n)) and use a as an index into that table. This way, given a key pair we can “store a pointer” (or index) to its location in the array."
+"• Once we have a pointer to the element, IncreaseKey simply updates its b–value in constant time."
+"• Finally, to support deletion we can delete an element from the dynamic array in the usual “swap‐with–last” method, updating the pointer for the swapped item. (Even though this deletion is O(1) worst-case, an O(1) deletion is certainly within the allowed O(log n) amortized time.)"
+Data structure details
+(1) The Main Array:
+" • Let A be a dynamic array that stores all the key pairs currently in the data structure. Each entry in A is a record containing the two keys (a, b) and perhaps a pointer (or simply the index) showing its current position in A."
+" • Insertion always happens at the end of A. (Since A is dynamic, each insertion takes amortized O(1) time.)"
+(2) The Auxiliary Dictionary:
+" • Allocate an auxiliary array H[1…M], where M is chosen to be at least 10n (where n is the current number of key pairs). Because the left key a lies in [1, 10n], we may use a as an index."
+" • H[a] will store a pointer (or index) to the location in A that holds the key pair (a, b). (Since the key pairs are distinct, there is no collision.)"
+Operations
+"• Insert(a, b):"
+" – Create a new record with keys (a, b)."
+ – Append it to A. (Cost amortized O(1).)
+ – Set H[a] to point to the new record.
+" – (Optionally, record in the record its current index in A if that pointer is “baked‐in”.)"
+"• IncreaseKey(pointer_to_(a,b), x):"
+" – Given a pointer (or index) to the record in A, simply update the b–field: b ← b + x."
+ – This is a constant–time operation.
+"• Delete(pointer_to_(a,b)):"
+ – Suppose the pointer tells us that the record is at position i in A.
+" – Also note that the record’s left key is a. First, “remove” the pointer in H by (for example) marking H[a] as empty."
+" – To delete the record from A in O(1) time, swap A[i] with the last element of A."
+ – Let the swapped record have left key a′; update H[a′] so that it now points to its new position (i).
+ – Remove the last element from A.
+" – The deletion consists of a constant number of pointer updates and swaps so it takes O(1) worst–case time – which is, in particular, O(log n) amortized."
+ 
+Discussion
+Notice that with this design:
+" – Insertion is done by appending to an array and updating an auxiliary table. Since dynamic arrays have amortized constant–time appends, Insert is O(1) amortized."
+" – IncreaseKey uses the pointer to directly update b, so it is O(1)."
+" – Delete uses the “swap‐with–last” method which gives fast deletion; even though the requirement was O(log n) amortized, our method runs in O(1) worst–case time."
+ 
+"This solution builds on the fact that the left keys come from a small, fixed universe. In other situations one might need to use a hash table (or even a van Emde Boas tree) to get constant–time access by key—but here an array will do."
+"Alternate answers are possible, as long as the data structure supports:"
+ – Insert in O(1) amortized time.
+ – IncreaseKey (given a pointer) in O(1) amortized time.
+ – Delete (given a pointer) in O(log n) amortized time (or better).
+"In conclusion, one acceptable answer is to use a dynamic array A (holding the key pairs) plus an auxiliary array H (indexed by the left key a) that stores pointers (or indices) into A. This gives us Insert and IncreaseKey in O(1) amortized time, and Delete by “swap‐with–last” in O(1) worst–case time (which is within the allowed O(log n) amortized bound)."

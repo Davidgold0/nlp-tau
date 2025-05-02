@@ -1,0 +1,50 @@
+"Question: Given a collection of sets $s_1, s_2, \dots, s_m$."
+Describe a data structure that supports the following operations:
+\begin{itemize}
+    \item \texttt{MakeItem(i) $\gets$ A} – Create the item $A$ that holds the number $i$.
+"    \item \texttt{Insert(j, A)} – Insert the item $A$ into set $S_j$ (it is assumed that the set $S_j$ exists)."
+"    \item \texttt{Delete(j, A)} – Delete the item $A$ from set $S_j$ (it is assumed that the set $S_j$ exists)."
+    \item \texttt{FindMin(j)} – Return the minimum item from set $S_j$ (it is assumed that the set $S_j$ exists).
+"    \item \texttt{CreateSet(j, Arr)} – Build the set $j$ from an unsorted array of numbers."
+"    \item \texttt{FindMin()} – Return the minimum item among all items in the sets $s_1, s_2, \dots, s_m$."
+\end{itemize}
+"All operations, except for \texttt{CreateSet}, should run in $O(\log n)$ time, where $n$ is the total number of items in sets $s_1, s_2, \dots, s_m$. The \texttt{CreateSet} operation should run in linear time relative to the size of the input array."
+"3o-mini: We can solve the problem by “layering” two data structures. One data structure manages each individual set and provides fast insertion, deletion, and finding the minimum element within that set. A second, auxiliary data structure keeps track of the minimum element of each set so that we can quickly answer the global minimum query. One acceptable solution is described below."
+──────────────────────────────
+Idea in a Nutshell
+"1. For each set Sⱼ, maintain a priority‐queue (or balanced binary search tree) that supports:"
+"   • Insert(j, A)"
+"   • Delete(j, A)"
+   • FindMin(j)
+"   (You must be able to get to the minimum element quickly and, if needed, update the minimum when an insertion or deletion occurs.)  "
+"   (A good choice is a binary heap with pointers so that you can find and update the minimum in O(1) and perform insertions and deletions in O(log |Sⱼ|) time. Alternatively, a balanced BST such as a red–black tree may be used, where the leftmost node gives you the minimum.)"
+"2. Maintain a second “global” min–heap (or balanced BST) which stores one element for each non‐empty set Sⱼ. The element stored for Sⱼ is simply the minimum element stored in Sⱼ. (Since there are at most n items total, even if m ≈ n, the operations here will be O(log n).)"
+"When an element is inserted or deleted in a given Sⱼ we check if that operation has caused the minimum of Sⱼ to change. If so, update the second (global) structure accordingly (by, say, using a decrease–key or update operation in the heap). When you wish to answer FindMin() (over all sets) you simply return the minimum element from this global min–heap."
+──────────────────────────────
+Implementation Details
+Assume that we implement each set Sⱼ as a binary heap stored in an array. (It is important that when you create an item you also store a pointer or index that allows you to later delete that item in O(log n) time.) Then we have the following operations:
+1. MakeItem(i) ← A  
+"   • Create and return an object A that holds the number i (and may be augmented with a pointer/reference to its location in a heap, when inserted)."
+"2. Insert(j, A)  "
+   • Insert A into the heap for set Sⱼ (running in O(log |Sⱼ|) ⊆ O(log n) time).
+"   • If Sⱼ was empty or if A is now the new minimum in Sⱼ, update the key corresponding to Sⱼ in the global min–heap. (This update is done via decrease–key or by re–inserting, which is O(log n).)"
+"3. Delete(j, A)  "
+"   • Delete A from the heap for set Sⱼ (given a pointer to A’s position, this takes O(log |Sⱼ|) time)."
+"   • If A was the minimum element in Sⱼ, then after deletion determine the new minimum (if one exists) and update the global structure for Sⱼ accordingly. (Again, this update costs O(log n).)"
+4. FindMin(j)  
+"   • Return the smallest element in Sⱼ. For a binary heap the minimum is stored at the root; for a balanced BST, one finds the leftmost node. (Either way the operation is O(log n) worst-case.)"
+"5. CreateSet(j, Arr)  "
+"   • Given an unsorted array Arr, build the heap for set Sⱼ in O(|Arr|) time by “heapifying” Arr (this is the standard bottom–up heap–construction).  "
+"   • Compute the minimum element from Arr (this is done for free as the heap is built) and then insert the pair (Sⱼ’s minimum, j) into the global min–heap. (O(log n) cost here is acceptable, but since there is only one heap–update per set, it will be O(|Arr| + log n) overall, which is linear in the size of the input.)"
+6. FindMin()  
+   • Simply return the minimum element from the global min–heap. (This is an O(1) operation if the heap is stored in an array or O(log n) in the worst–case accounting for the pointer chasing; either is acceptable because log n is our desired worst–case.)
+──────────────────────────────
+Complexity Analysis
+"• For every operation except CreateSet, the expensive work is done in one of the two heaps. Each individual heap operation (insert, delete, or decrease key) is O(log n), and m ≤ n.  "
+"• CreateSet(j, Arr) runs in O(|Arr|) time because it uses a bottom–up heap--construction algorithm."
+──────────────────────────────
+Summary of the Data Structure
+"– Each set Sⱼ is stored as a min–heap (or red–black tree) supporting insertion, deletion, and “get minimum” in O(log n) worst–case time."
+– A global min–heap (or balanced BST) contains one key per (non–empty) Sⱼ. The key is the current minimum element in Sⱼ. Global FindMin() simply returns the minimum among these keys.
+– Operations that may change the minimum in a set (Insert and Delete) always update the global min–heap appropriately.
+"This is one acceptable answer, and it meets the requirement that all operations (except CreateSet) run in O(log n) time and CreateSet runs in linear time with respect to the size of the input array."

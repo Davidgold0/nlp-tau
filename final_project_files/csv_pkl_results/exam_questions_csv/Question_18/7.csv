@@ -1,0 +1,34 @@
+"Question: Given \( n \) pairs of keys \( (a_1, b_1), (a_2, b_2), \dots, (a_n, b_n) \), where each key \( a_i \) and each key \( b_j \) (for \( 1 \leq i,j \leq n \)) are integers in the range \([1, 10n]\), describe a data structure that can be built in Worst-case time \( O(n) \) (given \( n \) key pairs) and supports the following operation in Worst-case time \( O(1) \):"
+\texttt{SearchAll(a)} – returns a list of all key pairs for which \( a \) is the left key.
+"3o-mini: We can achieve the desired running times using a direct‐addressing scheme (or “bucket” approach). Note that the left keys come from the set {1, 2, …, 10n}, which is only 10n elements. This is quite small compared to the typical universe of keys, so we can afford to allocate an array of size 10n (or 10n+1) and use it to index directly by the left key."
+One way to do this is in two phases:
+─────────────────────────────  
+Phase 1: Preprocessing – Build the Data Structure
+"1. Allocate an array T of size (10n+1). For each index a (1 ≤ a ≤ 10n), T[a] will eventually point to a list (or subarray) of all pairs (a, b) having a as their left key."
+2. (Option 1: Using linked lists)  
+   • Initialize T[a] to an empty linked list for all a.  
+"   • For each key pair (a, b) given in the input list, insert the pair into the linked list T[a].  "
+   This takes O(n) time since each insertion is O(1).
+3. (Option 2: Using a contiguous array with counting sort)
+"   • First, make an auxiliary count array Count[1…10n] initialized to 0."
+"   • Scan through the n pairs once; for each pair (a, b) increment Count[a].  "
+     This takes O(n) time.
+   • Compute the prefix-sums of Count to obtain starting indices for each key’s bucket. Let H[1…10n] be the array where H[a] is the start index in your final array B for all pairs with left key a. Adjust the counts so that you can know both the starting and ending positions.
+   • Allocate an array B of length n.
+"   • Scan through the key pairs again, and for each pair (a, b) place it in B at the next available position for key a (tracked by H[a]).  "
+"   • Finally, store in T[a] (or in another helper array) the pointer (or index) to the beginning of B’s segment corresponding to key a, and also store the length (which is Count[a])."
+   This entire counting sort process runs in O(n) time.
+Either option gives us a data structure that can be built in worst‐case O(n) time.
+─────────────────────────────  
+Phase 2: Query – SearchAll(a)
+"Now, in the data structure:"
+"- Using the linked list approach, SearchAll(a) simply returns T[a] (a pointer to the linked list), which takes O(1) time."
+"- Using the contiguous array approach, SearchAll(a) returns a pointer (or view) of the subarray of B starting at H[a] with length Count[a]. This is also done in O(1) time (i.e. a constant time “lookup” to obtain the array index and the count)."
+"In both cases, the lookup is done in O(1) worst-case time."
+─────────────────────────────  
+Summary
+We have constructed a data structure that:
+"• Uses an array T indexed directly by the possible left keys (since they are in [1, 10n])."
+• Preprocesses the n key pairs in O(n) worst-case time (either by linked list insertion or by a counting sort–like procedure).
+• Answers the query SearchAll(a) in O(1) worst-case time by directly returning the list (or pointer to the subarray) associated with key a.
+This is the desired solution.

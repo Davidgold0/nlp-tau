@@ -1,0 +1,38 @@
+"Question: Describe a data structure whose elements are pairs of keys \( (a, b) \), where each left key in the pair is an integer in the range \([1, 10n]\). It can be assumed that all the key pairs are distinct. The data structure should support the following operations (where \( n \) is the number of key pairs currently in the data structure):"
+\begin{itemize}
+"    \item \texttt{Insert(a, b)} – Adds the key pair \( (a, b) \) to the data structure. The operation should be performed in amortized time \( O(1) \)."
+"    \item \texttt{IncreaseKey((a, b), x)} – This command receives a pointer to the key pair \( (a, b) \) that is in the data structure and a positive number \( x \), and increases the right key by \( x \). The operation should be performed in amortized time \( O(1) \)."
+"    \item \texttt{Delete((a, b))} – This command receives a pointer to the key pair \( (a, b) \) that is in the data structure and deletes it. The operation should be performed in amortized time \( O(\log n) \)."
+\end{itemize}
+"3o-mini: We will show that you can “reduce” this problem to the well‐known heap problem. In particular, one acceptable answer is to maintain the set of key–pairs (a, b) in a max‐Fibonacci heap keyed on the value b (with a slight twist to account for the fact that b is the “priority” that may later be increased). (One may equally well use a min‐Fibonacci heap if one wishes to “untwist” the ordering, but then IncreaseKey becomes “decrease‐key” and the analysis is the same.) Recall that in a Fibonacci heap (or its max‐heap variant) the following holds:"
+ • Insertion of a new node is performed in O(1) amortized time.
+" • The “change‐key” operation (in our case, IncreaseKey) is performed in O(1) amortized time."
+ • Deletion of a node is performed in O(log n) amortized time.
+Now here is how one may design the data structure:
+────────────────────────────—
+Description of the Data Structure
+"We store each key–pair (a, b) as a node in a max–Fibonacci heap. (We want b to be “promoted” when it becomes larger so that IncreaseKey is done in constant time; note that Fibonacci heaps are famous for their O(1) DecreaseKey operation, and the same ideas apply to increasing a key in a max–Fibonacci heap.) In addition, since the left key a is an integer in the range [1, 10n] (and since all key–pairs are distinct) we can also maintain an auxiliary table (say, an array of size O(n)) where the entry in position a is either empty or a pointer to the node corresponding to the key–pair (a, b). This is useful if you ever need to look up a pair by its left key—but in our operations each command is already given a pointer to the node in question."
+────────────────────────────—
+Operations
+"1. Insert(a, b):"
+"  a. Create a new Fibonacci heap node storing the pair (a, b)."
+  b. Insert the node into the Fibonacci heap. (This takes O(1) amortized time.)
+"  c. (Optionally, if you wish to support look‐ups by a, record a pointer to this node in the auxiliary array at index a.)"
+  Time: O(1) amortized.
+"2. IncreaseKey((a, b), x):"
+"  a. We are given a pointer to the node corresponding to (a, b)."
+  b. Increase its b value by x.
+"  c. Now, in a max–Fibonacci heap, if a node’s key increases it may need to “bubble up” (or be cut, if the heap’s structure is violated). The standard increase–key (or decrease–key in the min–heap version) procedure is applied. (In Fibonacci heaps, this operation is known to be O(1) amortized.)"
+  Time: O(1) amortized.
+"3. Delete((a, b)):"
+"  a. Given a pointer to the node corresponding to (a, b), we can delete it from the Fibonacci heap."
+"  b. The deletion in a Fibonacci heap is done by first increasing the key (if in a min–heap you would do decrease–key) to an extreme value so that the node becomes a root and then performing an extract–max (or extract–min) on the heap. (The details differ in a max versus min version, but in either case the deletion takes O(log n) amortized time.)"
+  c. Also remove the pointer from the auxiliary table if you are maintaining it.
+  Time: O(log n) amortized.
+────────────────────────────—
+Why This Works
+"Because a Fibonacci heap (or its max–variant) is specifically designed to support insertion and key–changes in constant amortized time, and deletion in logarithmic amortized time, it meets the requirements exactly."
+"Also note that the fact that a lies in the fixed range [1, 10n] lets you use an auxiliary array indexed by a to maintain pointers to the nodes (or to enforce that no duplicate a’s are present) in O(1) time; however, this is merely an added convenience and not essential to satisfy the stated operation times."
+────────────────────────────—
+Conclusion
+"A data structure that supports the operations Insert(a, b) in O(1) amortized time, IncreaseKey((a, b), x) in O(1) amortized time, and Delete((a, b)) in O(log n) amortized time is a max–Fibonacci heap (with the keys being the b values) augmented with an auxiliary array (or direct–address table) indexed by a. This is a correct answer to the question."

@@ -1,0 +1,43 @@
+"Question: $P$ is the midpoint of $\overline{BD}$. $AP = BP = 4$, $\overline{AP} \perp \overline{BD}$, $\overline{BD} \perp \overline{DC}$, $\overline{AB} \perp \overline{BC}$. In simple radical form, what is the perimeter of pentagon $ABCDP$? [asy]_x000D_"
+size(150); defaultpen(linewidth(0.8)); import geometry;_x000D_
+"pair A = origin, B = (4,4), C = (12,-4), D = (4,-4), P = (4,0);_x000D_"
+draw(A--P--B--cycle);_x000D_
+draw(B--D--C--cycle);_x000D_
+"draw(rightanglemark(A,B,C,15));_x000D_"
+"draw(rightanglemark(A,P,B,15));_x000D_"
+"draw(rightanglemark(B,D,C,15));_x000D_"
+"label(""$A$"",A,SW); label(""$B$"",B,N); label(""$C$"",C,SE); label(""$D$"",D,SW); label(""$P$"",P,E); label(""$4$"",A--P,S); label(""$4$"",B--P,E);_x000D_"
+_x000D_
+[/asy]
+3o-mini: We start with the coordinates given by the diagram:
+" • A = (0, 0)"
+" • B = (4, 4)"
+" • C = (12, –4)"
+" • D = (4, –4)"
+" • P = (4, 0)"
+Notice that P is indeed the midpoint of BD since
+"  midpoint of B (4, 4) and D (4, –4) = (4, (4 + (–4))/2) = (4, 0)."
+"The conditions AP = BP = 4, and the various right angles, also check out with these coordinates."
+"To find the perimeter of pentagon ABCDP, we need to sum the lengths of the segments:"
+" AB, BC, CD, DP, and PA."
+1. Length of AB:
+" A = (0, 0) and B = (4, 4)"
+  AB = √[(4 – 0)² + (4 – 0)²] = √(16 + 16) = √32 = 4√2.
+2. Length of BC:
+" B = (4, 4) and C = (12, –4)"
+  BC = √[(12 – 4)² + (–4 – 4)²] = √[(8)² + (–8)²] = √(64 + 64) = √128 = 8√2.
+3. Length of CD:
+" C = (12, –4) and D = (4, –4)"
+  CD = √[(4 – 12)² + (–4 – (–4))²] = √[(-8)² + 0²] = √64 = 8.
+4. Length of DP:
+" D = (4, –4) and P = (4, 0)"
+  DP = √[(4 – 4)² + (0 – (–4))²] = √[0² + 4²] = 4.
+5. Length of PA:
+" P = (4, 0) and A = (0, 0)"
+  PA = √[(0 – 4)² + (0 – 0)²] = √[(-4)²] = 4.
+Now add all these lengths:
+ Perimeter = AB + BC + CD + DP + PA
+  = 4√2 + 8√2 + 8 + 4 + 4
+  = (4√2 + 8√2) + (8 + 4 + 4)
+  = 12√2 + 16.
+"Thus, the perimeter of pentagon ABCDP in simple radical form is 16 + 12√2."

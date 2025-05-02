@@ -1,0 +1,22 @@
+"Question: Describe a data structure whose elements are pairs of keys \( (a, b) \) that supports the following operations:"
+\begin{itemize}
+"    \item \texttt{insert(a, b)} – Adds the key pair \( (a, b) \) to the data structure. It is assumed that the pair does not already exist in the structure. This operation should be performed in expected time \( O(1) \)."
+    \item \texttt{SearchAll(a)} – Returns a list of all key pairs where \( a \) is the left key. This operation should be performed in expected time \( O(1) \).
+\end{itemize}
+"3o-mini: The idea is to use a hash table (or hash map) that uses a as the key and maps it to a list (or a dynamic array) that contains all pairs (a, b) with that left key."
+Here's how it works:
+• Data Structure:
+  – Create a hash table where each entry uses a as the key.
+"  – The value associated with each key a is a list (or vector) that stores all b’s such that the pair (a, b) is in the data structure."
+"• Insert(a, b):"
+  – Compute the hash of a.
+"  – If key a is not already in the table, create a new list and insert it into the table."
+"  – Append the pair (a, b) (or just b, since a is known) to the list associated with a."
+"  – Since hash table lookups and list appends are expected O(1) operations, the overall insert operation is O(1)."
+• SearchAll(a):
+  – Compute the hash of a.
+  – Get the list associated with a in the hash table.
+  – Return the list (or a copy of the list if necessary).
+  – This lookup operation is expected O(1).
+"This design meets the requirements: both operations work in expected O(1) time, assuming that the hash function distributes keys uniformly."
+This data structure is very useful in many applications where quick insertion and fast lookup by a primary key are needed.

@@ -1,0 +1,25 @@
+"Question: \textbf{In the following section, the time and space complexity of initialization is \(O(1)\), and the space complexity at any given moment is \(O\) of the number of elements in the data structure. Describe how a matrix of size \(m \times m\) can be represented, supporting the operations of insertion at position \((i,j)\), reading from position \((i,j)\), and deletion from position \((i,j)\), in \(O(\log m)\) worst-case time for each operation.}"
+"3o-mini: We can “simulate” an m×m matrix that grows only as we insert elements by using a dynamic dictionary (or map) keyed by the coordinate pair (i, j). One acceptable solution is to use a balanced binary search tree (BST) that orders keys lexicographically (for example, by converting (i, j) to the number i·m + j). In this BST, each node represents a stored cell of the matrix."
+Here’s roughly how we can support the required operations:
+1. Initialization O(1):
+ • We start with an empty BST. No m×m array is allocated; only the data that is inserted later is stored.
+" • Thus, initializing the structure takes constant time and only O(1) space."
+"2. Insertion at (i, j) in O(log m) worst-case:"
+" • To insert an element at (i,j), we insert a new node in the BST with key (i, j) (or with key i·m + j) and the associated value."
+" • In the worst-case, if there have been many insertions, the BST may have up to O(m²) entries; however, if we assume that at most O(m) elements are in the data structure at any given time (or, more generally, by “m” we refer to the natural row/column bound) then the number of nodes is O(m) and the cost per insertion is O(log m)."
+" • Even if the tree got completely full (i.e. stored m² elements), a BST built on m² elements gives a worst-case search time of O(log(m²)) = O(2 log m) = O(log m)."
+"3. Reading from (i, j) in O(log m) worst-case:"
+" • To read (or lookup) the value at position (i,j), simply search for the key (i, j) in the BST."
+" • This search takes O(log(number of nodes)) time, which — by the same analysis as above — is O(log m) worst-case."
+"4. Deletion from (i, j) in O(log m) worst-case:"
+" • To delete the element at (i,j), search for the key (i, j) in the BST and then remove it."
+" • Again, the BST deletion takes O(log(number of nodes)) = O(log m) worst-case."
+An alternate (but equivalent) approach is to use a two-level structure:
+" a. Maintain an array of m pointers, one for each row. (Since the array size is fixed to m, this uses O(m) space, but if m is the dimension of the matrix, m is a lower-order term compared to m².)"
+ b. Each pointer leads to a balanced BST that contains only the non-empty entries in that row (ordered by the column index j).
+" c. For any operation on (i,j), you first use the i-th pointer (which takes O(1) time) and then do the appropriate operation in the balanced BST for that row (which takes O(log m) worst-case because there can be at most m entries per row)."
+Both designs have the following properties:
+" – Initialization takes O(1) time (or O(m) time in the two-level structure, but if m is considered a fixed parameter then the extra space beyond the inserted elements is negligible)."
+ – The space usage at any given moment is proportional to the number of cells that have been inserted into the structure.
+" – Each of the operations (insertion, lookup, and deletion) take O(log m) worst-case time."
+"Thus, by choosing a dynamic balanced BST (either overall keyed by (i,j) or as an array of row BSTs), we have an efficient representation for a matrix that supports the desired operations in O(log m) worst-case time."

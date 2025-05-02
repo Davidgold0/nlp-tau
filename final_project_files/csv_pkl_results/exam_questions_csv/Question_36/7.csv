@@ -1,0 +1,16 @@
+"Question: We define a zig-zag array, for which there exist some indices \( n \leq j \leq i \leq 1 \) such that all elements in the array between 1 and \( i \) are in increasing order, all elements between \( i \) and \( j \) are in decreasing order, and all elements between \( j \) and \( n \) are in increasing order. We call \( i \) the peak element and \( j \) the valley element. "
+Provide upper and lower bounds for the problem: Input: Array. Output: Returns TRUE if the array is a zig-zag array.
+"3o-mini: We can show that any algorithm for checking whether an array is a zig‐zag must inspect the array in linear time. In other words, you can solve the problem in O(n) time, and in the worst case no algorithm can run in o(n) time (i.e. any algorithm must be Ω(n)); thus, the tight bound is Θ(n)."
+Let’s explain briefly why:
+1. Upper Bound (O(n)):
+   • You can determine if an array is a zig‐zag array by scanning it once.
+   • A possible procedure is to traverse the array and look for the following three phases:
+     - Find the longest initial strictly increasing segment.
+"     - Then, find a strictly decreasing segment."
+"     - Finally, check for a strictly increasing segment to the end."
+"   • Each phase requires a single pass (or uses the same pass), so the overall work is proportional to the number of elements, i.e. O(n)."
+2. Lower Bound (Ω(n)):
+"   • Since the array contains n elements and we must at least “read” every element to decide about the local order (increase or decrease),"
+   • There is no shortcut: in the worst case an algorithm must examine every element once.
+"   • Hence, any algorithm must perform Ω(n) operations in the worst‐case."
+"As a result, the overall decision procedure for whether an array is zig‐zag has a running time of Θ(n)."

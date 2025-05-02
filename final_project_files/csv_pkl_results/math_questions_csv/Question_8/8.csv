@@ -1,0 +1,46 @@
+"Question: In triangle $ABC$, $\tan \angle CAB = \frac{22}{7}$, and the altitude from $A$ divides $\overline{BC}$ into segments of length $3$ and $17$. What is the area of triangle $ABC$?"
+"3o-mini: We are given a triangle ABC in which the altitude from vertex A meets side BC at D. The altitude divides BC into two segments (BD and DC) with lengths 3 and 17 (the order does not affect the final answer). Also, we know that"
+  tan(∠CAB) = 22/7.
+One effective method is to place the triangle on the coordinate plane as follows.
+"Step 1. Place D, the foot of the altitude from A, at the origin, D = (0, 0).  "
+"Since BC is divided into segments of lengths 3 and 17, we can let BC lie along the x-axis. For example, set one configuration as:  "
+"  B = (–3, 0)  and  C = (17, 0)."
+"Step 2. Since AD is perpendicular to BC (which is horizontal), the altitude is vertical. So we place A directly above (or below) D. Choose A = (0, h) with h > 0."
+Step 3. Now compute the vectors from A to B and from A to C:
+"  AB = B – A = (–3 – 0, 0 – h) = (–3, –h),  "
+"  AC = C – A = (17 – 0, 0 – h) = (17, –h)."
+Step 4. The measure of angle CAB is the angle between vectors AB and AC. We can express tan of the angle between two vectors u and v by the formula:
+  tan(θ) = (|u × v|) / (u · v).
+"Calculate the cross product (in 2D, the magnitude of the “cross product” is the absolute value of the determinant):"
+"  |AB × AC| = |det([–3, –h], [17, –h])|  "
+        = |(–3)(–h) – (17)(–h)|  
+        = |3h + 17h| = 20h.
+Calculate the dot product:
+  AB · AC = (–3)(17) + (–h)(–h) = –51 + h².
+"Thus,"
+  tan(∠CAB) = 20h/(h² – 51).
+"We are given that tan(∠CAB) = 22/7, so we set:"
+  20h/(h² – 51) = 22/7.
+Step 5. Solve for h:
+  Multiply both sides by (h² – 51) and 7:
+    7(20h) = 22(h² – 51)
+    140h = 22h² – 1122.
+Rearrange:
+  22h² – 140h – 1122 = 0.
+Divide the entire equation by 2:
+  11h² – 70h – 561 = 0.
+Use the quadratic formula:
+  h = [70 ± √(70² + 4·11·561)]/(2·11).
+Compute the discriminant:
+"  70² = 4900,  4·11·561 = 24684,  thus:"
+  Discriminant = 4900 + 24684 = 29584.
+"Notice that 29584 factors as 16 × 1849, and since 1849 = 43², we have:"
+  √29584 = 4·43 = 172.
+"So,"
+  h = (70 ± 172) / 22.
+"Since h > 0, choose the positive solution:"
+  h = (70 + 172)/22 = 242/22 = 11.
+"Step 6. Finally, find the area of triangle ABC."
+"The base BC has length 3 + 17 = 20. The altitude from A is h = 11. Therefore,"
+  Area = ½ × base × height = ½ × 20 × 11 = 110.
+"Thus, the area of triangle ABC is 110."

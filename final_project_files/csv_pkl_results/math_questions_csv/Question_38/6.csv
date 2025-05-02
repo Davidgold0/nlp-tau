@@ -1,0 +1,16 @@
+"Question: Wanda is trying to locate the Fermat point $P$ of $\triangle ABC$, where $A$ is at the origin, $B$ is at $(8,-1)$, and $C$ is at $(5,4)$ (the Fermat point is the point such that the sum of its distances from the vertices of a triangle is minimized). She guesses that the point is at $P = (4,2)$, and computes the sum of the distances from $P$ to the vertices of $\triangle ABC$. If she obtains $m + n\sqrt{5}$, where $m$ and $n$ are integers, what is $m + n$?_x000D_"
+_x000D_
+[asy]_x000D_
+"string sp(pair P1, string P2){return ""$"" + P2 + ""\,("" + string(P1.x) + "","" + string(P1.y) + "")$"";}_x000D_"
+"size(150); defaultpen(fontsize(10)); draw((-3,0)--(10,0),Arrows(4)); draw((0,-3)--(0,8),Arrows(4)); pair A=(0,0),B=(8,-1),C=(5,4),P=(4,2); draw(A--B--C--cycle, linewidth(0.7)); draw(A--P, dashed); draw(B--P, dashed); draw(C--P, dashed); label(sp(A,""A""),A,NW); label(sp(B,""B""),B,S); label(sp(C,""C""),C,N); label(sp(P,""P""),P,(-0.5,-2.8)); dot(A); dot(B); dot(C); dot(P);_x000D_"
+[/asy]
+"3o-mini: We first compute the distance from P(4,2) to each vertex."
+"Distance from P to A(0,0):"
+  PA = √[(4−0)² + (2−0)²] = √(16 + 4) = √20 = 2√5.
+"Distance from P to B(8,−1):"
+  PB = √[(4−8)² + (2−(−1))²] = √[(−4)² + (3)²] = √(16 + 9) = √25 = 5.
+"Distance from P to C(5,4):"
+  PC = √[(4−5)² + (2−4)²] = √[(−1)² + (−2)²] = √(1 + 4) = √5.
+The total distance is:
+  PA + PB + PC = 2√5 + 5 + √5 = 5 + 3√5.
+"This is of the form m + n√5 with m = 5 and n = 3, so m + n = 5 + 3 = 8."

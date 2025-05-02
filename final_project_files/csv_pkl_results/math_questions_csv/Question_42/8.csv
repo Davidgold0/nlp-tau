@@ -1,0 +1,77 @@
+"Question: In a right triangle, one of the acute angles $\alpha$ satisfies_x000D_"
+\[\tan \frac{\alpha}{2} = \frac{1}{\sqrt[3]{2}}.\]Let $\theta$ be the angle between the median and the angle bisector drawn from this acute angle.  Find $\tan \theta.$
+"3o-mini: We are given a right triangle in which one of the acute angles—say, angle A—satisfies"
+  tan(α/2) = 1/(∛2).
+"Since α is the acute angle at vertex A, it will be convenient to let"
+  u = A/2  so that  tan u = 1/(∛2)
+  and  A = 2u.
+Two segments are drawn from vertex A:
+1. The angle bisector of angle A.
+2. The median to the side BC opposite A.
+"We wish to find tan θ, where θ is the (smaller) angle between the median and the angle bisector."
+A good strategy is to set up the triangle in the coordinate plane in such a way that the computations become straightforward. One convenient choice is to let the triangle have a right angle at vertex B. We then describe the triangle as follows.
+Step 1. Choose coordinates for the vertices.
+"• Place A at the origin:  A = (0, 0)."
+"• Place B on the positive x-axis. For convenience, let B = (1, 0)."
+• Let side AC make an angle A with the positive x-axis. Write
+"  C = (k cos A, k sin A)"
+with k > 0 to be determined.
+"Since the triangle is right with the right angle at B, angle B = 90°. The condition for a right angle at B is that the vectors BA and BC are perpendicular. Compute:"
+"  BA = A – B = (–1, 0),"
+"  BC = C – B = (k cos A – 1, k sin A)."
+The dot product must vanish:
+  BA · BC = (–1)(k cos A – 1) + (0)(k sin A) = –(k cos A – 1) = 0
+which implies
+  k cos A = 1  or  k = 1/ cos A.
+"Thus, the coordinates become:"
+"  C = ( (1/ cos A) cos A, (1/ cos A) sin A ) = (1, tan A)."
+So our triangle’s vertices are:
+"  A = (0, 0), B = (1, 0), C = (1, tan A)."
+Step 2. Find the directions of the two segments from A.
+a) The Angle Bisector:
+"The angle bisector from A divides the angle at A into two equal parts. Since one side (AB) lies along the positive x-axis and the other (AC) makes an angle A with the x-axis, the bisector makes an angle of"
+  A/2 = u
+"with the x-axis. Thus, the direction vector for the bisector is"
+"  ( cos u, sin u )."
+b) The Median:
+"The median from A goes to the midpoint M of side BC. The coordinates of B and C are B = (1, 0) and C = (1, tan A), so their midpoint is:"
+"  M = ( (1 + 1)/2, (0 + tan A)/2 ) = (1, tan A/2 )."
+"Thus, the vector from A to the midpoint is"
+"  AM = (1, tan A/2)."
+Its direction has an angle φ given by
+"  tan φ = (tan A/2) / 1 = tan A/2,"
+so that
+  φ = arctan( tan A/2 ).
+Step 3. Determine the angle between the two segments.
+"Let θ be the (smaller) angle between the median and the angle bisector. Thus,"
+  θ = |φ – u| = | arctan( tan A/2 ) – u |.
+"We wish to find tan θ. To do so, it is useful to express tan A/2 in terms of u. Recall that A = 2u so that we may use the double-angle formula for tangent:"
+  tan A = tan(2u) = (2 tan u)/(1 – tan² u).
+"Then,"
+  tan A/2 = (tan A)/2 = ( (2 tan u)/(1 – tan² u) )/2 = tan u/(1 – tan² u).
+"That is, the median’s direction angle is"
+  φ = arctan( tan u/(1 – tan² u) ).
+"Now, denoting"
+  X = φ = arctan( tan u/(1 – tan² u) )
+"and recalling u = A/2, the difference angle is"
+  θ = |X – u|.
+The tangent of the difference is given by the tangent subtraction formula:
+  tan(X – u) = (tan X – tan u)/(1 + tan X tan u).
+But we have
+  tan X = tan u/(1 – tan² u)
+"and tan u = t, where from earlier:"
+  t = tan u = 1/(∛2).
+"Thus, substituting:"
+  tan θ = | ( (t/(1 – t²)) – t ) / (1 + t*(t/(1 – t²)) ) |.
+Simplify the numerator:
+  t/(1 – t²) – t = t (1/(1 – t²) – 1) = t ( (1 – (1 – t²))/(1 – t²) ) = t (t²/(1 – t²)) = t³/(1 – t²).
+Simplify the denominator:
+  1 + t²/(1 – t²) = (1 – t² + t²)/(1 – t²) = 1/(1 – t²).
+"Thus,"
+  tan θ = | (t³/(1 – t²)) / (1/(1 – t²)) | = t³.
+"But we already have t = 1/(∛2), so"
+  t³ = (1/(∛2))³ = 1/2.
+"Therefore, the answer is"
+  tan θ = 1/2.
+Step 4. Conclusion
+The tangent of the angle between the median and the angle bisector drawn from the acute angle is 1/2.

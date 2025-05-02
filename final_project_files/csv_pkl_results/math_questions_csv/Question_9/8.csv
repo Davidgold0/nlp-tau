@@ -1,0 +1,42 @@
+"Question: A sequence $a_1,$ $a_2,$ $a_3,$ $\dots,$ is defined recursively by $a_1 = 1,$ $a_2 = 1,$ and for $k \ge 3,$_x000D_"
+\[a_k = \frac{1}{3} a_{k - 1} + \frac{1}{4} a_{k - 2}.\]Evaluate $a_1 + a_2 + a_3 + \dotsb.$
+"3o-mini: We are given the sequence with a₁ = 1, a₂ = 1, and for k ≥ 3, "
+  aₖ = (1/3)·aₖ₋₁ + (1/4)·aₖ₋₂.
+We wish to compute the sum S = a₁ + a₂ + a₃ + ⋯.
+Step 1. Write the sum:
+  S = a₁ + a₂ + a₃ + a₄ + ⋯
+"Since a₁ = 1 and a₂ = 1, we have:"
+  S = 1 + 1 + a₃ + a₄ + ⋯
+  S = 2 + (a₃ + a₄ + ⋯)
+Step 2. Express the remaining sum using the recursion.
+"For k ≥ 3, we have:"
+  aₖ = (1/3)·aₖ₋₁ + (1/4)·aₖ₋₂.
+"Thus,"
+  a₃ + a₄ + ⋯ = ∑ₖ₌₃∞ aₖ
+       = (1/3) ∑ₖ₌₃∞ aₖ₋₁ + (1/4) ∑ₖ₌₃∞ aₖ₋₂.
+Step 3. Change the indices of summation.
+For the first sum:
+"  Let j = k – 1. Then when k = 3, j = 2; as k → ∞, j → ∞:"
+    ∑ₖ₌₃∞ aₖ₋₁ = ∑ⱼ₌₂∞ aⱼ = S – a₁ = S – 1.
+For the second sum:
+"  Let j = k – 2. Then when k = 3, j = 1; as k → ∞, j → ∞:"
+    ∑ₖ₌₃∞ aₖ₋₂ = ∑ⱼ₌₁∞ aⱼ = S.
+"Thus, we have:"
+  a₃ + a₄ + ⋯ = (1/3)(S – 1) + (1/4)S.
+Step 4. Set up an equation in S.
+Earlier we had:
+  S = 2 + (a₃ + a₄ + ⋯)
+Substitute the expression we found:
+  S = 2 + (1/3)(S – 1) + (1/4)S.
+Step 5. Solve the equation.
+Multiply through by 12 (the least common denominator) to eliminate fractions:
+  12S = 24 + 4(S – 1) + 3S.
+Simplify:
+  12S = 24 + 4S – 4 + 3S
+  12S = (4S + 3S) + (24 – 4)
+  12S = 7S + 20
+Subtract 7S from both sides:
+  5S = 20
+Divide by 5:
+  S = 4.
+"Thus, the sum of the sequence is 4."

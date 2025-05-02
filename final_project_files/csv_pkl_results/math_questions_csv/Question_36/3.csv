@@ -1,0 +1,97 @@
+Question: Let $\theta$ be an acute angle such that_x000D_
+\[\sin 5 \theta = \sin^5 \theta.\]Compute $\tan 2 \theta.$
+Teacher: Let's begin by outlining our strategy:
+"1. Restate the problem in your own words: We are given that θ is an acute angle satisfying sin(5θ) = (sin θ)⁵, and we need to compute tan(2θ)."
+2. Use the identity for sin(5θ). Do you recall the expansion of sin(5θ) in terms of sin θ? (Hint: sin(5θ) can be written as a polynomial in sin θ.)
+"3. Set up the equation by equating the expanded form of sin(5θ) to (sin θ)⁵, then simplify."
+"4. Factor the equation appropriately and solve for sin θ, keeping in mind that θ is acute."
+"5. Once you find sin θ (and by extension, cos θ), compute tan θ."
+"6. Finally, use the double-angle formula for tangent (tan(2θ) = 2 tan θ/(1 – tan²θ)) to determine the answer."
+Let’s start with step 2: Please write down the expansion for sin(5θ) in terms of sin θ. What does the expansion look like?
+Student: Sure! The expansion of \(\sin(5\theta)\) in terms of \(\sin \theta\) can be derived using the multiple angle formula. The formula for \(\sin(5\theta)\) is:
+\[
+\sin(5\theta) = 5\sin\theta - 20\sin^3\theta + 16\sin^5\theta.
+\]
+"So, we can express \(\sin(5\theta)\) as a polynomial in \(\sin \theta\):"
+\[
+\sin(5\theta) = 5\sin \theta - 20\sin^3 \theta + 16\sin^5 \theta.
+\]
+"Now that we have the expansion, we can move on to step 3. Would you like me to set up the equation by equating this expansion to \((\sin \theta)^5\)?"
+Teacher: Great job recalling the expansion! Now let's move on to step 3. We know from the problem that
+  sin(5θ) = (sin θ)⁵.
+"Using the expansion you provided, this becomes:"
+  5 sin θ − 20 sin³ θ + 16 sin⁵ θ = sin⁵ θ.
+Your next step is to simplify this equation. What do you get after setting up and simplifying this equation? Please show your work for just this step.
+Student: Sure! Starting from the equation we set up:
+\[
+"5 \sin \theta - 20 \sin^3 \theta + 16 \sin^5 \theta = \sin^5 \theta,"
+\]
+we can simplify it by moving \(\sin^5 \theta\) to the left side:
+\[
+5 \sin \theta - 20 \sin^3 \theta + 16 \sin^5 \theta - \sin^5 \theta = 0.
+\]
+This simplifies to:
+\[
+5 \sin \theta - 20 \sin^3 \theta + 15 \sin^5 \theta = 0.
+\]
+"Next, we can factor out \(\sin \theta\) from the equation:"
+\[
+\sin \theta (5 - 20 \sin^2 \theta + 15 \sin^4 \theta) = 0.
+\]
+"Since \(\theta\) is an acute angle, \(\sin \theta\) cannot be zero. Therefore, we focus on the quadratic in terms of \(\sin^2 \theta\):"
+\[
+15 \sin^4 \theta - 20 \sin^2 \theta + 5 = 0.
+\]
+"Let \(x = \sin^2 \theta\). Then, we rewrite the equation as:"
+\[
+15x^2 - 20x + 5 = 0.
+\]
+"Now, we can use the quadratic formula to solve for \(x\):"
+\[
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} = \frac{20 \pm \sqrt{(-20)^2 - 4 \cdot 15 \cdot 5}}{2 \cdot 15}.
+\]
+Calculating the discriminant:
+\[
+(-20)^2 - 4 \cdot 15 \cdot 5 = 400 - 300 = 100.
+\]
+Now substituting back into the quadratic formula:
+\[
+x = \frac{20 \pm \sqrt{100}}{30} = \frac{20 \pm 10}{30}.
+\]
+This gives us two possible solutions for \(x\):
+1. \(x = \frac{30}{30} = 1\)
+2. \(x = \frac{10}{30} = \frac{1}{3}\)
+"Since \(x = \sin^2 \theta\) and \(\theta\) is acute, we discard \(x = 1\) (which corresponds to \(\theta = 90^\circ\)). Thus, we have:"
+\[
+\sin^2 \theta = \frac{1}{3}.
+\]
+"Now, we can find \(\cos^2 \theta\):"
+\[
+\cos^2 \theta = 1 - \sin^2 \theta = 1 - \frac{1}{3} = \frac{2}{3}.
+\]
+"Next, we can compute \(\tan \theta\):"
+\[
+\tan \theta = \frac{\sin \theta}{\cos \theta} = \frac{\sqrt{\frac{1}{3}}}{\sqrt{\frac{2}{3}}} = \frac{1}{\sqrt{2}}.
+\]
+"Finally, we can use the double-angle formula for tangent to find \(\tan(2\theta)\):"
+\[
+\tan(2\theta) = \frac{2 \tan \theta}{1 - \tan^2 \theta} = \frac{2 \cdot \frac{1}{\sqrt{2}}}{1 - \left(\frac{1}{\sqrt{2}}\right)^2} = \frac{\frac{2}{\sqrt{2}}}{1 - \frac{1}{2}} = \frac{\sqrt{2}}{\frac{1}{2}} = 2\sqrt{2}.
+\]
+"Thus, the final answer for \(\tan(2\theta)\) is:"
+\[
+\boxed{2\sqrt{2}}.
+\]
+"Teacher: Excellent work! You've correctly simplified the equation by moving sin⁵θ over and factoring out sinθ, and then replacing sin²θ with x to form the quadratic 15x² – 20x + 5 = 0. Your use of the quadratic formula was spot on, and you rightly discarded x = 1 because it doesn't work for an acute angle. You then correctly computed cos²θ = 2/3, leading to tanθ = 1/√2, and finally used the double-angle formula for tangent to arrive at tan(2θ) = 2√2."
+"Before we wrap up, can you briefly explain why you discarded the solution x = 1 in this context?"
+"Student: Certainly! I discarded the solution \(x = 1\) because it corresponds to \(\sin^2 \theta = 1\), which implies that \(\sin \theta = 1\). This occurs when \(\theta = 90^\circ\). However, in our problem, we are specifically told that \(\theta\) is an acute angle. Acute angles are defined as angles that are less than \(90^\circ\), so \(\theta = 90^\circ\) cannot be considered an acute angle. Therefore, the only valid solution for \(\sin^2 \theta\) in this context is \(x = \frac{1}{3}\), which keeps \(\theta\) within the range of acute angles."
+"Teacher: Great explanation! You correctly reasoned that sin²θ = 1 would imply sinθ = 1, meaning θ = 90°, which is not acute. "
+To summarize our approach:
+• We started by expanding sin(5θ) into 5sinθ – 20sin³θ + 16sin⁵θ.
+"• Then, setting sin(5θ) equal to (sinθ)⁵, we rearranged to get sinθ (5 – 20sin²θ + 15sin⁴θ) = 0."
+"• Since sinθ ≠ 0 (θ is acute), we focused on the quadratic 15(sin²θ)² – 20sin²θ + 5 = 0 by letting x = sin²θ."
+"• Solving this quadratic gave x = 1 and x = 1/3; we discarded x = 1 because that would imply sinθ = 1 (θ = 90°), leaving sin²θ = 1/3."
+"• Using sin²θ + cos²θ = 1, we found cos²θ = 2/3, which led to tanθ = 1/√2."
+"• Finally, applying the double-angle formula tan(2θ) = (2tanθ)/(1 – tan²θ) produced tan(2θ) = 2√2."
+Your detailed explanation for discarding x = 1 was spot on. 
+The final answer is:
+2√2$

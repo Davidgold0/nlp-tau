@@ -1,0 +1,17 @@
+"Question: In B-trees with a minimum degree \( d \) (where each internal node has between \( d \) and \( 2d \) children), the amount of information stored in the leaves is smaller because there is no need to store child pointers. Assume that a disk block is large enough to hold a node at its maximum size and that each node is stored in a separate disk block."
+"To take advantage of the free space in the disk block containing a leaf, we modify the definition of the tree and set that each leaf will contain between \( 2d-1 \) and \( 4d-1 \) elements, instead of between \( d-1 \) and \( 2d-1 \). It is given that the size of an element is equivalent to the size of a pointer, so such an enlarged leaf still fits in a block. As long as the tree has no more than \( 4d \) elements, the tree consists of a single enlarged leaf."
+"This is called a B-tree with enlarged leaves. Briefly describe a top-down insertion algorithm (the algorithm does not modify the tree after the element is inserted into the appropriate leaf, only during the search) for a B-tree with enlarged leaves as described above."
+3o-mini: Below is one acceptable way to describe a top‐down insertion algorithm for a B–tree with enlarged leaves. (Any answer that has the same ideas is correct.)
+"A standard top‐down insertion algorithm “pre‐splits” nodes on the way down so that when you finally arrive at the leaf where the new element belongs, that leaf is not full. In the B–tree with enlarged leaves the only change is that a leaf is allowed to have up to 4d–1 keys (instead of 2d–1), so when “full” we mean that an internal node has 2d children (as usual) and a leaf has 4d–1 keys."
+One acceptable description is as follows:
+"1. Before starting the descent, check whether the root is full. (That is, if the root is an internal node, check if it has 2d children; if it is a leaf, check if it already contains 4d–1 keys.) If it is full, split it and make a new root so that the resulting root is not full."
+2. Set x ← root.
+"3. While x is not a leaf, do the following:"
+  a. Determine the child pointer x.c[i] that should contain the new key (using the usual comparisons).
+"  b. Look at the child x.c[i]. If x.c[i] is full (for an internal node, having 2d children; for a leaf, having 4d–1 keys) then immediately split it. (The split is done as follows: create two nodes (left and right) containing the respective halves of the keys (and children for internal nodes) and move the median key to x as a new separator between the two nodes.)"
+"  c. (After the split, it may be the case that the correct pointer is now either the left or the right of the two from the split. Choose the correct one based on the key value.)"
+  d. Set x to be the chosen child.
+"4. Once x is a leaf (by construction it will have fewer than 4d–1 keys), insert the new key into x in sorted order."
+5. Finish; note that no fixes are needed on the way back up because all necessary splits were done before descending into a non-full node.
+"This algorithm guarantees that when you finally insert into the leaf, there is room for the new element and no post‐insertion rebalancing is needed. All modifications to the tree structure (the splitting of full nodes) occur on the way down, during the search for the proper leaf."
+"Any answer that describes a top–down insertion process with these ideas – namely, checking the “full” condition (using 2d for internal nodes and 4d–1 for leaves), splitting as needed while descending, and then inserting the element into the appropriate leaf – is correct."

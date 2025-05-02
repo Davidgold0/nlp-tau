@@ -1,0 +1,27 @@
+Question: Simplify_x000D_
+\[\cos^2 x + \cos^2 \left( \frac{\pi}{3} + x \right) + \cos^2 \left( \frac{\pi}{3} -  x \right).\]
+3o-mini: We start with the expression
+  cos²x + cos²(x + π/3) + cos²(x − π/3).
+A convenient way to simplify is to use the double-angle identity
+  cos²θ = ½(1 + cos 2θ).
+Rewrite each term:
+"  cos²x = ½(1 + cos 2x),"
+"  cos²(x + π/3) = ½[1 + cos(2x + 2π/3)],"
+  cos²(x − π/3) = ½[1 + cos(2x − 2π/3)].
+Adding these gives:
+  ½(1 + cos 2x) + ½[1 + cos(2x + 2π/3)] + ½[1 + cos(2x − 2π/3)]
+   = ½[3 + cos 2x + cos(2x + 2π/3) + cos(2x − 2π/3)].
+"Now, simplify the sum of the cosine terms:"
+  cos 2x + cos(2x + 2π/3) + cos(2x − 2π/3).
+Recall the cosine sum formula:
+  cos A + cos B = 2 cos[(A + B)/2] cos[(A − B)/2].
+Apply it to cos(2x + 2π/3) + cos(2x − 2π/3):
+  = 2 cos[(2x + 2π/3 + 2x − 2π/3)/2] cos[(2x + 2π/3 − (2x − 2π/3))/2]
+  = 2 cos(2x) cos(2π/3).
+"Since cos(2π/3) = −½, we get:"
+  cos(2x + 2π/3) + cos(2x − 2π/3) = 2 cos 2x (−½) = −cos 2x.
+Now add in the lone cos 2x:
+  cos 2x + (−cos 2x) = 0.
+"Thus, the entire sum becomes:"
+  ½[3 + 0] = 3/2.
+"So, the simplified expression is 3/2."

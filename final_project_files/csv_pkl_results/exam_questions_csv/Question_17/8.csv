@@ -1,0 +1,22 @@
+"Question: Describe a data structure whose elements are pairs of keys \( (a, b) \) that supports the following operations:"
+\begin{itemize}
+"    \item \texttt{insert(a, b)} – Adds the key pair \( (a, b) \) to the data structure. It is assumed that the pair does not already exist in the structure. This operation should be performed in expected time \( O(1) \)."
+    \item \texttt{SearchAll(a)} – Returns a list of all key pairs where \( a \) is the left key. This operation should be performed in expected time \( O(1) \).
+\end{itemize}
+"3o-mini: One simple solution is to use a hash table (or dictionary) where the keys are the left key a. Each entry in the hash table will store the list (or another simple collection, such as a linked list or dynamic array) of all key pairs (a, b) that share the same left key a."
+Here’s how the operations can be implemented:
+"1. insert(a, b):"
+   • Compute the hash for key a.
+"   • If a is already present in the table, append (a, b) to the list associated with a."
+"   • If a is not present, create a new list containing (a, b) and insert it into the hash table at key a."
+"   • Since hash table insertions and list appends (using, for example, a dynamic array with amortized constant time appending) are expected O(1) operations, this meets the requirement."
+2. SearchAll(a):
+   • Compute the hash for key a.
+"   • Retrieve and return the list of all pairs (a, b) stored at that key."
+"   • Since hash table look-ups are expected O(1), this meets the requirement."
+"This structure works because the expensive operation of searching for all pairs with a given left key a is reduced to a direct hash table lookup, while insertion is similarly efficient due to the use of the hash table and the ability to append quickly to the list of pairs."
+The overall data structure maintains the mapping:
+  Hash Table:
+   Key: a
+"   Value: list of pairs (a, b)"
+This design allows both operations to be performed in the desired expected O(1) time.

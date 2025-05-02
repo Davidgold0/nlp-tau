@@ -1,0 +1,54 @@
+"Question: A pair of values in an array are called consecutive if they are different and, after sorting, they appear in adjacent positions in the array.  "
+"Given an array of natural numbers of size \( n \), propose an algorithm (with the best worst-case complexity) that checks whether there exists a pair of consecutive values whose total occurrences together are at least \( \left\lceil \frac{n}{2} \right\rceil \) "
+"(that is, the number of times a certain value appears plus the number of times its consecutive value appears is at least \( \left\lceil \frac{n}{2} \right\rceil \)."
+"3o-mini: We will show that one acceptable solution is to first count the frequency of every number and then, after sorting the distinct values, “slide” through adjacent pairs and check if their combined frequency is at least ⎡n/2⎤. (Note that if the numbers are drawn from a bounded range, one can use counting sort to get an overall O(n) algorithm; however, if they are arbitrary natural numbers then O(n log n) is essentially optimal.)"
+Let’s describe the algorithm and analyze it:
+──────────────────────────────
+Step 1. Count Frequencies
+• Scan through the array a[1 … n] and build a frequency table F with 
+   F(x) = number of times x occurs in the array. 
+• This can be done in O(n) time (using a hash table or a balanced BST for example).
+──────────────────────────────
+Step 2. Sort the Distinct Keys
+"• Let U = {x₁, x₂,…, xₘ} be the set of distinct values (with m ≤ n)."
+• Sort U in increasing order.
+"• When the values are arbitrary natural numbers, sorting takes O(m log m) worst‐case, "
+"  and in the worst case m = n, so O(n log n)."
+──────────────────────────────
+Step 3. Check Adjacent (Consecutive) Pairs
+"• By the problem’s definition, two different values are “consecutive” if, once the array is sorted, "
+"  they appear next to each other. (That is, if U is sorted, then the candidates are (x₁,x₂), (x₂,x₃), …, (xₘ₋₁,xₘ).)"
+• Let T = ⎡n/2⎤.
+"• For i = 1 to m – 1, check if "
+  F(xᵢ) + F(xᵢ₊₁) ≥ T.
+"• If such a pair exists, output “Yes” (or return the pair); otherwise, output “No.”"
+──────────────────────────────
+Overall Complexity
+• Building the frequency table: O(n).
+• Sorting the distinct keys: O(m log m) which is O(n log n) in worst-case.
+• Scanning adjacent pairs: O(m) = O(n).
+• Thus the overall worst-case time is O(n log n) for arbitrary natural numbers.
+"(As mentioned, if it is known that the natural numbers lie in a bounded range, you can replace the sorting step by a counting sort and achieve an overall worst‐case runtime of O(n).)"
+──────────────────────────────
+Pseudocode
+Below is one acceptable pseudocode representation:
+---------------------------------------------------
+function hasConsecutiveWithHighFrequency(a[1...n])
+    T = ceil(n/2)
+    // Step 1: Build frequency table F
+    F = an empty hash table
+    for i from 1 to n do
+"         F[a[i]] = F.get(a[i], 0) + 1"
+    // Step 2: Obtain and sort the distinct keys
+    U = list of all keys in F
+    sort(U)   // O(m log m) worst-case
+    // Step 3: Check adjacent pairs in U
+    for j from 1 to length(U)-1 do
+         if F[U[j]] + F[U[j+1]] >= T then
+             return true
+    return false
+---------------------------------------------------
+──────────────────────────────
+Conclusion
+"This algorithm correctly checks whether there exists a pair of consecutive (i.e. adjacent in the sorted order) values whose total number of occurrences is at least ⎡n/2⎤, and it does so in O(n log n) worst-case time (or O(n) if the numbers are small enough for counting sort)."
+Any answer essentially doing the same steps is acceptable.

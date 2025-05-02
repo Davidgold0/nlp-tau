@@ -1,0 +1,9 @@
+"Question: \text{Given an array containing } n \text{ elements. The number of distinct elements is } k \, (k \leq n). \\"
+\text{d. Assume the elements are integers between } 1 \text{ and } n^4. \text{ Propose a deterministic algorithm to sort the array.}
+"3o-mini: We can sort the array deterministically in linear time by taking advantage of the fact that each number is in the range 1 to n⁴. Notice that n⁴ has at most 4 log₂n bits, so if we write each number in base n then every number has at most 4 “digits.” This observation lets us use a deterministic radix sort via counting sort as a subroutine."
+Here is an outline of the algorithm:
+"1. Represent each integer as a 4‑digit number in base n. (More precisely, since n⁴ can be represented with 4 digits in base n, every integer in the range [1, n⁴] is representable as a sequence of 4 digits.)"
+"2. For each digit position, from the least significant digit to the most significant digit, perform a stable count sort on the entire array based on that digit."
+"3. Since count sort takes O(n + r) time and in this case the base r is n, each pass will take O(n + n) = O(n) time. With 4 passes (one for each digit) the overall running time is O(4n) = O(n)."
+"Thus, by using 4 rounds of counting sort on the digits (in base n), we obtain a deterministic algorithm that sorts the array in linear time."
+This completes the deterministic sorting algorithm for the given problem.

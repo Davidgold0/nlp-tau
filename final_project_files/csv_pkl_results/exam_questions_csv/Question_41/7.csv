@@ -1,0 +1,17 @@
+"Question: The deterministic ""select"" algorithm, which we studied in class, works as follows:"
+a. The array is divided into groups of size 5
+b. Sort each group
+c. Choose a pivot as the median of the medians (recursively)
+"d. Perform ""partition"" with the chosen pivot"
+e. Recursively apply the algorithm on the relevant part.
+"Assume that instead of groups of size 5, we take groups of size 3. "
+"In this question, we will deal with the running time of the new algorithm with groups of size 3."
+What is the cost of step b? 
+Cost:
+Explanation:
+"3o-mini: For each group of 3 elements, sorting takes constant time (a fixed number of comparisons and swaps). Since there are about n/3 groups, the total time for step (b) is O(n/3) = O(n)."
+Explanation:
+"• With groups of size 3, there are roughly n/3 groups."
+"• Sorting a fixed-size group (3 elements) has a constant cost, say c."
+"• Thus, the total cost for sorting all groups is (n/3) × c, which simplifies to O(n)."
+"So, the cost of step (b) is O(n)."

@@ -1,0 +1,54 @@
+"Question: In triangle $ABC$, $\tan \angle CAB = \frac{22}{7}$, and the altitude from $A$ divides $\overline{BC}$ into segments of length $3$ and $17$. What is the area of triangle $ABC$?"
+"3o-mini: We are given a triangle ABC in which the altitude from A to side BC meets BC at D. The foot D on BC divides it into segments of lengths 3 and 17; hence, BC = 3 + 17 = 20. We are also told that"
+  tan(∠A) = 22/7.
+One way to approach this problem is to introduce a coordinate system and set up the points so that the calculations become manageable.
+Step 1. Setting Up the Coordinates
+"Place side BC along the x‑axis. Since D is the foot of the altitude from A to BC, choose it to be the origin, D = (0, 0). The altitude from A is then vertical."
+"The foot D divides side BC into two segments of lengths 3 and 17. (It does not matter which segment is 3 and which is 17; the answer will be the same.) For definiteness, let"
+"  B = (–3, 0)  and  C = (17, 0)."
+"Since the altitude from A lands at D, we put"
+"  A = (0, h),"
+with h > 0 (the unknown altitude which we need to find).
+Step 2. Express tan(∠A) in Terms of h
+"At vertex A, the rays AB and AC yield the angle ∠A. Their corresponding vectors are:"
+"  Vector AB = B – A = (–3 – 0, 0 – h) = (–3, –h),"
+"  Vector AC = C – A = (17 – 0, 0 – h) = (17, –h)."
+One method to find tan(∠A) is to first compute the slopes of lines AB and AC (using the fact that A is not on the x‑axis so the lines have well–defined slopes) and then use the formula for the tangent of the difference between two lines.
+The slope of line AB is:
+  m₁ = (0 – h)/(–3 – 0) = (–h)/(–3) = h/3.
+"Similarly, the slope of line AC is:"
+  m₂ = (0 – h)/(17 – 0) = –h/17.
+Now the difference in slopes gives the tangent of the angle between these lines by the formula
+  tan(∠A) = |(m₁ – m₂)| / (1 + m₁·m₂).
+Substitute the values of m₁ and m₂:
+"  m₁ – m₂ = h/3 – (–h/17) = h/3 + h/17 = (17h + 3h)/(51) = (20h)/51,"
+  m₁ · m₂ = (h/3)(–h/17) = –h²/51.
+"Thus,"
+  tan(∠A) = (20h/51) / (1 − h²/51).
+"We are given tan(∠A) = 22/7, so we have"
+  (20h/51) / (1 − h²/51) = 22/7.
+Step 3. Solve for h
+Multiply both numerator and denominator by 51 to clear fractions:
+  20h / (51 − h²) = 22/7.
+Now cross–multiply:
+"  20h · 7 = 22(51 − h²),"
+  140h = 1122 − 22h².
+Rearrange the equation:
+  22h² + 140h − 1122 = 0.
+Divide the entire equation by 2:
+  11h² + 70h − 561 = 0.
+Solve this quadratic using the quadratic formula:
+  h = [ –70 ± √(70² − 4·11·(–561)) ] / (2·11).
+Compute the discriminant:
+  Δ = 70² + 4·11·561 = 4900 + 4·6171 = 4900 + 24684 = 29584.
+"Notice that 29584 factors as 4·7396, and since 86² = 7396, we have"
+  √29584 = 2·86 = 172.
+"Thus,"
+  h = (–70 ± 172) / 22.
+"Since h must be positive,"
+  h = (172 – 70)/22 = 102/22 = 51/11.
+Step 4. Find the Area of Triangle ABC
+The area of triangle ABC can be computed using base BC = 20 and the altitude from A which is h = 51/11:
+  Area = ½ · (BC) · (altitude) = ½ · 20 · (51/11) = 10 · (51/11) = 510/11.
+"Therefore, the area of triangle ABC is 510/11."
+Final Answer: 510/11.

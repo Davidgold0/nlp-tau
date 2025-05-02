@@ -1,0 +1,15 @@
+"Question: Given \( n \) pairs of keys \( (a_1, b_1), (a_2, b_2), \dots, (a_n, b_n) \), where each key \( a_i \) and each key \( b_j \) (for \( 1 \leq i,j \leq n \)) are integers in the range \([1, 10n]\), describe a data structure that can be built in Worst-case time \( O(n) \) (given \( n \) key pairs) and supports the following operation in Worst-case time \( O(1) \):"
+\texttt{SearchAll(a)} – returns a list of all key pairs for which \( a \) is the left key.
+"3o-mini: We can achieve this by “direct addressing” using an auxiliary array. Since every left key a is an integer in the range [1, 10n], we can allocate an array T[1 … 10n] where each entry T[i] will store (or point to) a list (or linked list) containing all pairs whose left key is i."
+Building the Data Structure:
+1. Allocate an array T[1 … 10n].
+"2. Initialize every entry T[i] to an empty list. (This takes O(10n) time, which is O(n).)"
+"3. Process each of the n given key pairs (a, b). For each pair:"
+"   a. Use a as the index into the array, i.e. access T[a] in O(1) time."
+"   b. Insert the pair (a, b) into the list stored at T[a]. (If you insert at the head of a linked list, this takes O(1) time.)"
+"4. Thus, reading all pairs and inserting them takes O(n) worst-case time."
+Supporting SearchAll(a) in O(1):
+"- When a query SearchAll(a) is issued, simply access T[a] and return the list of pairs stored there. This is an array index operation, which takes O(1) worst-case time."
+Space Complexity:
+"- The array has O(n) space and the total space for lists is O(n) (since each pair appears in exactly one list), so the overall space is O(n)."
+"Thus, the data structure meets both the O(n) worst-case build time and the O(1) worst-case search time requirements."
