@@ -84,7 +84,7 @@ def run_pipline(input_question: str) -> List[Tuple[str,str]]:
     history.append(("Teacher",f"{response_a.content.strip()}"))
 
     cnt = 0
-    while end_session(response_a.content) == False and cnt < 30: # TODO fix this to something smarter
+    while end_session(response_a.content) == False and cnt < 30: 
         cnt += 1
         # student chain takes the latest response from the teacher and the updated history
         student_prompt = student_prompt_template.invoke({"history": format_history(history)})
