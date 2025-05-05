@@ -1,8 +1,0 @@
-"Question: Given a node \( v \) in a red-black tree. \( P_1 \) and \( P_2 \) are the lengths of the shortest path and longest path from \( v \) to a leaf, respectively. Provide a lower bound on the ratio between \( P_1 \) and \( P_2 \). Justify your answer."
-"3o-mini: In a red-black tree, every path from a given node v to a leaf has the same number of black nodes (this number is called the black-height). The shortest such path, P₁, consists only of those black nodes, while the longest path, P₂, may alternate between red and black nodes. However, because red nodes cannot be adjacent (by the red-black tree properties), the longest path can have at most twice as many nodes as the black-height."
-Let bh denote the black-height (the number of black nodes on any path from v to a leaf). Then we have:
-"• Shortest path, P₁ = bh  "
-"• Longest path, P₂ ≤ 2 × bh"
-"Thus, the ratio is bounded by:  "
-  P₁/P₂ ≥ bh/(2×bh) = 1/2
-"Therefore, the lower bound on the ratio between P₁ and P₂ is 1/2."
